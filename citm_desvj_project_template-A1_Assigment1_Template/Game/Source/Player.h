@@ -31,7 +31,7 @@ public:
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
-	bool jump = false;
+	bool isjumpping = false;
 	int pickCoinFxId;
 	bool right;
 

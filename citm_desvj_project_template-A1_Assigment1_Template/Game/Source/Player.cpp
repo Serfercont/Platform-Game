@@ -62,8 +62,17 @@ bool Player::Start() {
 	deadAnim.PushBack({ 402,743,65,66 });
 	deadAnim.PushBack({ 478,743,65,66 });
 	deadAnim.speed = 0.1f;
-	deadAnim.loop = true;
+	deadAnim.loop = false;
 
+	jumpAnim.PushBack({ 97,197,56,66 });
+	jumpAnim.PushBack({ 175,197,56,66 });
+	jumpAnim.PushBack({ 247,197,56,66 });
+	jumpAnim.PushBack({ 324,197,75,66 });
+	jumpAnim.PushBack({ 400,197,75,66 });
+	jumpAnim.PushBack({ 480,197,75,66 });
+	jumpAnim.speed = 0.05f;
+	jumpAnim.loop = true;
+	
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &idleAnim;
@@ -112,17 +121,19 @@ bool Player::Update(float dt)
 		//vel = b2Vec2(speed*dt, -GRAVITY_Y);
 		currentAnimation = &walkAnim;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jump) {
-		jump = true;
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && !isjumpping) {
+		isjumpping = true;
+		currentAnimation = &jumpAnim;
 		currentVelocity.y = -0.5 * dt;
 		pbody->body->SetLinearVelocity(currentVelocity);
+		
 	}
 
 	//Set the velocity of the pbody of the player
 
-	if (jump == false)
+	if (isjumpping == false)
 	{
-		currentVelocity.y = +0.4 * dt;
+		currentVelocity.y = -GRAVITY_Y;
 	}
 
 	//Set the velocity of the pbody of the player
@@ -164,7 +175,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->audio->PlayFx(pickCoinFxId);
 		break;
 	case ColliderType::PLATFORM:
-		jump = false;
+		isjumpping = false;
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::UNKNOWN:
