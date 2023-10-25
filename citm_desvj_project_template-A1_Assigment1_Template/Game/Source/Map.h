@@ -115,6 +115,8 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
+	bool Loadcollision(std::string nombreCapa);
+
     // Called before quitting
     bool CleanUp();
 
