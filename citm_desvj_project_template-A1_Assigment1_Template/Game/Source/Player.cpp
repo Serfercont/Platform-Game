@@ -70,7 +70,7 @@ bool Player::Start() {
 	jumpAnim.PushBack({ 324,197,75,66 });
 	jumpAnim.PushBack({ 400,197,75,66 });
 	jumpAnim.PushBack({ 480,197,75,66 });
-	jumpAnim.speed = 0.05f;
+	jumpAnim.speed = 0.1f;
 	jumpAnim.loop = true;
 	
 	//initilize textures
@@ -94,7 +94,7 @@ bool Player::Update(float dt)
 	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
 	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 
-	currentAnimation = &idleAnim;
+	//currentAnimation = &idleAnim;
 	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
 	{
@@ -108,25 +108,38 @@ bool Player::Update(float dt)
 		currentAnimation = &deadAnim;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isjumpping) {
 		right = false;
+		isWalking = true;
 		//vel = b2Vec2(-speed*dt, -GRAVITY_Y);
 		currentVelocity.x = -speed * dt;
 		currentAnimation = &walkAnim;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !isjumpping) {
 		right = true;
+		isWalking = true;
 		currentVelocity.x = +speed * dt;
 		//vel = b2Vec2(speed*dt, -GRAVITY_Y);
 		currentAnimation = &walkAnim;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && !isjumpping) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping) {
 		isjumpping = true;
 		currentAnimation = &jumpAnim;
 		currentVelocity.y = -0.5 * dt;
 		pbody->body->SetLinearVelocity(currentVelocity);
-		
+	}
+	if (app->input->GetKey(SDL_SCANCODE_A) && isjumpping)
+	{
+		right = false; 
+		currentVelocity.x = -speed * dt;
+		currentAnimation = &jumpAnim;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_D) && isjumpping)
+	{
+		right = true;
+		currentVelocity.x = +speed * dt;
+		currentAnimation = &jumpAnim;
 	}
 
 	//Set the velocity of the pbody of the player
@@ -176,6 +189,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::PLATFORM:
 		isjumpping = false;
+		currentAnimation = &idleAnim;
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::UNKNOWN:

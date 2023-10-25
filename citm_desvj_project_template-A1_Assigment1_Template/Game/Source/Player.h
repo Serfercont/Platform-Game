@@ -32,6 +32,7 @@ public:
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 	bool isjumpping = false;
+	bool isWalking = false;
 	int pickCoinFxId;
 	bool right;
 

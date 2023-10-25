@@ -36,6 +36,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
+		
 	}
 
 	if (config.child("map")) {
