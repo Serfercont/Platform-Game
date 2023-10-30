@@ -35,8 +35,12 @@ public:
 	bool isWalking = false;
 	int pickCoinFxId;
 	bool right;
+	int vidas=2;
+	bool isAlive=true;
 
 	iPoint flipPos;
+
+	//std::map<std::string, Animation> animations;
 
 	Animation* currentAnimation = nullptr;
 	Animation idleAnim;
