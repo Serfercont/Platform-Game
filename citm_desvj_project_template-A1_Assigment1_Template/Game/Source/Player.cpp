@@ -24,6 +24,7 @@ bool Player::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
+	vidas = parameters.attribute("vidas").as_int();
 
 	return true;
 }
@@ -108,7 +109,7 @@ bool Player::Update(float dt)
 
 	//currentAnimation = &idleAnim;
 	
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive && !isjumpping)
 	{
 		currentVelocity.x = 0;
 		currentAnimation = &idleAnim;
@@ -169,7 +170,6 @@ bool Player::Update(float dt)
 		isAlive = false;
 		currentAnimation = &deadAnim;
 		
-		app->CleanUp();
 	}
 	
 

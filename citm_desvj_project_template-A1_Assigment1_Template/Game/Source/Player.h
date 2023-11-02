@@ -35,7 +35,8 @@ public:
 	bool isWalking = false;
 	int pickCoinFxId;
 	bool right;
-	int vidas=2;
+	bool left;
+	int vidas;
 	bool isAlive=true;
 
 	iPoint flipPos;
