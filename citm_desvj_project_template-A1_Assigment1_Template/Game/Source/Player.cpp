@@ -140,7 +140,7 @@ bool Player::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive) {
 		isjumpping = true;
-		vidas=vidas - 1;
+		//vidas=vidas - 1;
 		currentAnimation = &jumpAnim;
 		currentVelocity.y = -0.5 * dt;
 		pbody->body->SetLinearVelocity(currentVelocity);
