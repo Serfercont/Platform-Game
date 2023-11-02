@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include <map>
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -23,11 +24,20 @@ bool Player::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
+	vidas = parameters.attribute("vidas").as_int();
 
 	return true;
 }
 
 bool Player::Start() {
+
+	/*std::map<std::string, Animation> animations;
+
+	animations["idle"] = idleAnim;
+	animations["walk"] = walkAnim;
+	animations["jump"] = jumpAnim;
+	animations["dead"] = deadAnim;
+	animations["attack1"] = atack1Anim;*/
 
 	idleAnim.PushBack({ 98, 468, 47, 65 });
 	idleAnim.PushBack({ 165, 468, 47, 65 });
@@ -62,13 +72,26 @@ bool Player::Start() {
 	deadAnim.PushBack({ 402,743,65,66 });
 	deadAnim.PushBack({ 478,743,65,66 });
 	deadAnim.speed = 0.1f;
-	deadAnim.loop = true;
+	deadAnim.loop = false;
 
+	jumpAnim.PushBack({ 97,197,56,66 });
+	jumpAnim.PushBack({ 175,197,56,66 });
+	jumpAnim.PushBack({ 247,197,56,66 });
+	jumpAnim.PushBack({ 324,197,75,66 });
+	jumpAnim.PushBack({ 400,197,75,66 });
+	jumpAnim.PushBack({ 480,197,75,66 });
+	jumpAnim.speed = 0.1f;
+	jumpAnim.loop = true;
+	
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &idleAnim;
 
-	pbody = app->physics->CreateRectangle(position.x, position.y, 44,64, bodyType::DYNAMIC);
+	/*pbody = app->physics->CreateRectangle(position.x, position.y, 44,64, bodyType::DYNAMIC);
+	pbody->listener = this;
+	pbody->ctype = ColliderType::PLAYER;*/
+
+	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 30, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
@@ -80,50 +103,75 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
-
 	flipPos.x = position.x - 10;
 	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
 	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 
-	currentAnimation = &idleAnim;
+	//currentAnimation = &idleAnim;
 	
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive && !isjumpping)
 	{
 		currentVelocity.x = 0;
+		currentAnimation = &idleAnim;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_W && isAlive) == KEY_REPEAT) {
 		currentAnimation = &atack1Anim;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		currentAnimation = &deadAnim;
+		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isjumpping && isAlive) {
 		right = false;
+		isWalking = true;
 		//vel = b2Vec2(-speed*dt, -GRAVITY_Y);
 		currentVelocity.x = -speed * dt;
 		currentAnimation = &walkAnim;
+		//currentAnimation = &animations["walk"];
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !isjumpping && isAlive) {
 		right = true;
+		isWalking = true;
 		currentVelocity.x = +speed * dt;
 		//vel = b2Vec2(speed*dt, -GRAVITY_Y);
 		currentAnimation = &walkAnim;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jump) {
-		jump = true;
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive) {
+		isjumpping = true;
+		//vidas=vidas - 1;
+		currentAnimation = &jumpAnim;
 		currentVelocity.y = -0.5 * dt;
 		pbody->body->SetLinearVelocity(currentVelocity);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_A ) && isjumpping && isAlive)
+	{
+		right = false; 
+		currentVelocity.x = -speed * dt;
+		currentAnimation = &jumpAnim;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_D) && isjumpping && isAlive)
+	{
+		right = true;
+		currentVelocity.x = +speed * dt;
+		currentAnimation = &jumpAnim;
 	}
 
 	//Set the velocity of the pbody of the player
 
-	if (jump == false)
+	if (isjumpping == false)
 	{
-		currentVelocity.y = +0.4 * dt;
+		currentVelocity.y = -GRAVITY_Y;
 	}
+
+	if (vidas==0)
+	{
+		isAlive = false;
+		currentAnimation = &deadAnim;
+		
+	}
+	
 
 	//Set the velocity of the pbody of the player
 	pbody->body->SetLinearVelocity(currentVelocity);
@@ -164,7 +212,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->audio->PlayFx(pickCoinFxId);
 		break;
 	case ColliderType::PLATFORM:
-		jump = false;
+		isjumpping = false;
+		currentAnimation = &idleAnim;
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::UNKNOWN:

@@ -31,11 +31,17 @@ public:
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
-	bool jump = false;
+	bool isjumpping = false;
+	bool isWalking = false;
 	int pickCoinFxId;
 	bool right;
+	bool left;
+	int vidas;
+	bool isAlive=true;
 
 	iPoint flipPos;
+
+	//std::map<std::string, Animation> animations;
 
 	Animation* currentAnimation = nullptr;
 	Animation idleAnim;

@@ -36,6 +36,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
+		
 	}
 
 	if (config.child("map")) {
@@ -84,7 +85,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	float camSpeed = 1; 
+	float camSpeed = 0.2; 
 
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		app->render->camera.y -= (int)ceil(camSpeed * dt);
@@ -92,11 +93,16 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y += (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if(app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		app->render->camera.x += (int)ceil(camSpeed * dt);
+
+	if(app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		app->render->camera.x -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += (int)ceil(camSpeed * dt);
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+
+	}
 
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
