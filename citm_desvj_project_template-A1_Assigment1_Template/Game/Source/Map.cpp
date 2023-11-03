@@ -105,9 +105,13 @@ bool Map::Loadcollision(std::string nombreCapa) {
                         PhysBody* c1 = app->physics->CreateRectangle(pos.x+16, pos.y+16, 32, 30, STATIC);
                         c1->ctype = ColliderType::PLATFORM;
                     }
-                    if (tileset->firstgid + 36 == gid) {
+                    if (tileset->firstgid + 2 == gid) {
                         PhysBody* c1 = app->physics->CreateRectangle(pos.x+16, pos.y+16, 32, 32, STATIC);
-                        c1->ctype = ColliderType::PLATFORM;
+                        c1->ctype = ColliderType::COLUMN;
+                    }
+                    if (tileset->firstgid + 1 == gid) {
+                        PhysBody* c1 = app->physics->CreateRectangle(pos.x + 16, pos.y + 16, 32, 32, STATIC);
+                        c1->ctype = ColliderType::SPIKES;
                     }
                 }
             }
