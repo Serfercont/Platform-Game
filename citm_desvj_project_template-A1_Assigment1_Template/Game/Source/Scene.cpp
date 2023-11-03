@@ -92,7 +92,7 @@ bool Scene::Update(float dt)
 
 	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y += (int)ceil(camSpeed * dt);*/
-
+	
 	/*if(app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 
