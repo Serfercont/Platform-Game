@@ -39,6 +39,7 @@ public:
 	int vidas;
 	bool isAlive=true;
 	bool checkColumn;
+	bool godMode=false;
 
 	iPoint flipPos;
 

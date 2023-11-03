@@ -83,6 +83,7 @@ public:
 	EntityManager* entityManager;
 	Map* map;
 	Physics* physics;
+	bool vsync;
 
 private:
 
@@ -114,6 +115,7 @@ private:
 	uint32 secondsSinceStartup = 0;
 
 	uint32 maxFrameDuration = 16;
+	
 
 };
 

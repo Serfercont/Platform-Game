@@ -32,6 +32,12 @@ bool Render::Awake(pugi::xml_node& config)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 		LOG("Using vsync");
+		app->vsync = true;
+	}
+	else
+	{
+		LOG("Not using vsync");
+		app->vsync = false;
 	}
 
 	renderer = SDL_CreateRenderer(app->win->window, -1, flags);
@@ -69,28 +75,7 @@ bool Render::PreUpdate()
 }
 
 bool Render::Update(float dt)
-{/*
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		if (camera.x >= -4980)
-		{
-			if (app->player->position.x >= 180 && !app->player->isColliding)
-			{
-				camera.x -= cameraSpeed;
-			}
-		}
-	}
-
-	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		if (camera.x <= -1)
-		{
-			if (app->Player->position.x <= 1840 && !app->player->isColliding)
-			{
-				camera.x += cameraSpeed;
-			}
-		}
-	}*/
+{
 
 	return true;
 }
