@@ -38,6 +38,7 @@ public:
 	bool left;
 	int vidas;
 	bool isAlive=true;
+	bool checkColumn;
 
 	iPoint flipPos;
 

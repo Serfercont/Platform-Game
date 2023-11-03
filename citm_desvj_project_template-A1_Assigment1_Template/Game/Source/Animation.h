@@ -7,6 +7,7 @@
 class Animation
 {
 public:
+	pugi::xml_document file;
 	bool loop = true;
 	float speed = 1.0f;
 	SDL_Rect frames[MAX_FRAMES];
@@ -47,6 +48,22 @@ public:
 	{
 		return frames[(int)currentFrame];
 	}
+	void LoadAnimations(const char* name)
+	{
+		pugi::xml_parse_result result = file.load_file("config.xml");
+		
+		if (result != NULL)
+		{
+			pugi::xml_node animation_name = file.child("config").child("animations").child(name);
+			loop = animation_name.attribute("loop").as_bool();
+			speed = animation_name.attribute("speed").as_float();
+			for (pugi::xml_node animation = animation_name.child("frame"); animation; animation = animation.next_sibling("frame"))
+			{
+				PushBack({ animation.attribute("x").as_int(), animation.attribute("y").as_int(), animation.attribute("width").as_int(), animation.attribute("height").as_int() });
+			}
+		}
+	}
+
 };
 
 #endif
