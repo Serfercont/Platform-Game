@@ -31,58 +31,60 @@ bool Player::Awake() {
 
 bool Player::Start() {
 
-	/*std::map<std::string, Animation> animations;
+	idleAnim.LoadAnimations("idle");
 
-	animations["idle"] = idleAnim;
-	animations["walk"] = walkAnim;
-	animations["jump"] = jumpAnim;
-	animations["dead"] = deadAnim;
-	animations["attack1"] = atack1Anim;*/
-
-	idleAnim.PushBack({ 98, 468, 47, 65 });
-	idleAnim.PushBack({ 165, 468, 47, 65 });
-	idleAnim.PushBack({ 232, 468, 47, 65 });
-	idleAnim.PushBack({ 299, 468, 47, 65 });
-	idleAnim.speed = 0.1f;
-	idleAnim.loop = true;
-
-	walkAnim.PushBack({94,44,52,66});
-	walkAnim.PushBack({160,44,52,66});
-	walkAnim.PushBack({231,44,52,66});
-	walkAnim.PushBack({305,44,52,66});
-	walkAnim.PushBack({377,44,52,66});
-	walkAnim.PushBack({429,44,52,66});
-	walkAnim.PushBack({499,44,52,66});
-	walkAnim.PushBack({567,44,52,66});
-	walkAnim.speed = 0.1f;
-	walkAnim.loop = true;
-
-	atack1Anim.PushBack({ 77,823,87,76 });
-	atack1Anim.PushBack({ 154,823,87,76 });
-	atack1Anim.PushBack({ 238,823,87,76 });
-	atack1Anim.PushBack({ 328,823,87,76 });
-	atack1Anim.PushBack({400,823,87,76});
-	atack1Anim.speed = 0.1f;
-	atack1Anim.loop = true;
-
-	deadAnim.PushBack({ 91,743,65,66 });
-	deadAnim.PushBack({ 164,743,65,66 });
-	deadAnim.PushBack({ 246,743,65,66 });
-	deadAnim.PushBack({ 325,743,65,66 });
-	deadAnim.PushBack({ 402,743,65,66 });
-	deadAnim.PushBack({ 478,743,65,66 });
-	deadAnim.speed = 0.1f;
-	deadAnim.loop = false;
-
-	jumpAnim.PushBack({ 97,197,56,66 });
-	jumpAnim.PushBack({ 175,197,56,66 });
-	jumpAnim.PushBack({ 247,197,56,66 });
-	jumpAnim.PushBack({ 324,197,75,66 });
-	jumpAnim.PushBack({ 400,197,75,66 });
-	jumpAnim.PushBack({ 480,197,75,66 });
-	jumpAnim.speed = 0.1f;
-	jumpAnim.loop = true;
+	walkAnim.LoadAnimations("walk");
 	
+	atack1Anim.LoadAnimations("attack1");
+	deadAnim.LoadAnimations("dead");
+	jumpAnim.LoadAnimations("jump");
+
+
+
+	//idleAnim.PushBack({ 98, 468, 47, 65 });
+	//idleAnim.PushBack({ 165, 468, 47, 65 });
+	//idleAnim.PushBack({ 232, 468, 47, 65 });
+	//idleAnim.PushBack({ 299, 468, 47, 65 });
+	//idleAnim.speed = 0.1f;
+	//idleAnim.loop = true;
+
+	//walkAnim.PushBack({94,44,52,66});
+	//walkAnim.PushBack({160,44,52,66});
+	//walkAnim.PushBack({231,44,52,66});
+	//walkAnim.PushBack({305,44,52,66});
+	//walkAnim.PushBack({377,44,52,66});
+	//walkAnim.PushBack({429,44,52,66});
+	//walkAnim.PushBack({499,44,52,66});
+	//walkAnim.PushBack({567,44,52,66});
+	//walkAnim.speed = 0.1f;
+	//walkAnim.loop = true;
+
+	//atack1Anim.PushBack({ 77,823,87,76 });
+	//atack1Anim.PushBack({ 154,823,87,76 });
+	//atack1Anim.PushBack({ 238,823,87,76 });
+	//atack1Anim.PushBack({ 328,823,87,76 });
+	//atack1Anim.PushBack({400,823,87,76});
+	//atack1Anim.speed = 0.1f;
+	//atack1Anim.loop = true;
+
+	//deadAnim.PushBack({ 91,743,65,66 });
+	//deadAnim.PushBack({ 164,743,65,66 });
+	//deadAnim.PushBack({ 246,743,65,66 });
+	//deadAnim.PushBack({ 325,743,65,66 });
+	//deadAnim.PushBack({ 402,743,65,66 });
+	//deadAnim.PushBack({ 478,743,65,66 });
+	//deadAnim.speed = 0.1f;
+	//deadAnim.loop = false;
+
+	//jumpAnim.PushBack({ 97,197,56,66 });
+	//jumpAnim.PushBack({ 175,197,56,66 });
+	//jumpAnim.PushBack({ 247,197,56,66 });
+	//jumpAnim.PushBack({ 324,197,75,66 });
+	//jumpAnim.PushBack({ 400,197,75,66 });
+	//jumpAnim.PushBack({ 480,197,75,66 });
+	//jumpAnim.speed = 0.1f;
+	//jumpAnim.loop = true;
+	//
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &idleAnim;
@@ -128,6 +130,11 @@ bool Player::Update(float dt)
 		//vel = b2Vec2(-speed*dt, -GRAVITY_Y);
 		currentVelocity.x = -speed * dt;
 		currentAnimation = &walkAnim;
+		if (!position.x--)
+		{
+			isWalking = false;
+			currentAnimation = &idleAnim;
+		}
 		//currentAnimation = &animations["walk"];
 	}
 
@@ -136,11 +143,11 @@ bool Player::Update(float dt)
 		isWalking = true;
 		currentVelocity.x = +speed * dt;
 		//vel = b2Vec2(speed*dt, -GRAVITY_Y);
-		currentAnimation = &walkAnim;
+		currentAnimation = &walkAnim; 
+		
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive && !checkColumn) {
 		isjumpping = true;
-		//vidas=vidas - 1;
 		currentAnimation = &jumpAnim;
 		currentVelocity.y = -0.5 * dt;
 		pbody->body->SetLinearVelocity(currentVelocity);
@@ -222,11 +229,19 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::PLATFORM:
 		isjumpping = false;
+		checkColumn = false;
 		currentAnimation = &idleAnim;
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
+		break;
+	case ColliderType::SPIKES:
+		//vidas=vidas - 1;
+		currentAnimation = &deadAnim;
+		break;
+	case ColliderType::COLUMN:
+		checkColumn = true;
 		break;
 	}
 }
