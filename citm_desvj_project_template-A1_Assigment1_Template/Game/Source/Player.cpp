@@ -91,7 +91,7 @@ bool Player::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;*/
 
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 30, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x + 16, position.y-10, 25, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
@@ -109,7 +109,7 @@ bool Player::Update(float dt)
 
 	//currentAnimation = &idleAnim;
 	
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive && !isjumpping)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
 	{
 		currentVelocity.x = 0;
 		currentAnimation = &idleAnim;
@@ -122,7 +122,7 @@ bool Player::Update(float dt)
 		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isjumpping && isAlive) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive ) {
 		right = false;
 		isWalking = true;
 		//vel = b2Vec2(-speed*dt, -GRAVITY_Y);
@@ -131,7 +131,7 @@ bool Player::Update(float dt)
 		//currentAnimation = &animations["walk"];
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !isjumpping && isAlive) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive) {
 		right = true;
 		isWalking = true;
 		currentVelocity.x = +speed * dt;
@@ -145,18 +145,27 @@ bool Player::Update(float dt)
 		currentVelocity.y = -0.5 * dt;
 		pbody->body->SetLinearVelocity(currentVelocity);
 	}
-	if (app->input->GetKey(SDL_SCANCODE_A ) && isjumpping && isAlive)
+	if (isjumpping)
 	{
-		right = false; 
-		currentVelocity.x = -speed * dt;
-		currentAnimation = &jumpAnim;
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
+		{
+			currentVelocity.x = 0;
+			currentAnimation = &jumpAnim;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive)
+		{
+			right = false;
+			currentVelocity.x = -speed * dt;
+			currentAnimation = &jumpAnim;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive)
+		{
+			right = true;
+			currentVelocity.x = +speed * dt;
+			currentAnimation = &jumpAnim;
+		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) && isjumpping && isAlive)
-	{
-		right = true;
-		currentVelocity.x = +speed * dt;
-		currentAnimation = &jumpAnim;
-	}
+	
 
 	//Set the velocity of the pbody of the player
 
