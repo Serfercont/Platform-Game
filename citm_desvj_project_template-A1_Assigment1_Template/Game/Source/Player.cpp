@@ -207,7 +207,11 @@ bool Player::Update(float dt)
 		
 		app->render->DrawTexture(texture, flipPos.x, position.y, &rect,1.0f,0, INT_MAX,INT_MAX,SDL_FLIP_HORIZONTAL);
 	}
-	
+	//Movimiento camara 
+	app->render->camera.x = -position.x+400;
+	currentAnimation->Update();
+
+	app->render->camera.y = -position.y+300;
 	currentAnimation->Update();
 
 	return true;
