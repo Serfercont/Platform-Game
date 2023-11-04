@@ -108,7 +108,19 @@ bool Player::Update(float dt)
 	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 
 	//currentAnimation = &idleAnim;
-	
+	if (godMode)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT) {
+			godMode = false;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			currentVelocity.y = currentVelocity.y - 0.5;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			currentVelocity.y = currentVelocity.y + 0.5;
+		}
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT && godMode==false) {
 		godMode = true;
 	}
@@ -118,10 +130,10 @@ bool Player::Update(float dt)
 		currentAnimation = &idleAnim;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode==false) {
 		currentAnimation = &atack1Anim;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == false) {
 		
 	}
 
@@ -145,7 +157,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive && !checkColumn) {
 		isjumpping = true;
 		currentAnimation = &jumpAnim;
-		currentVelocity.y = -0.5 * dt;
+		currentVelocity.y = -speed * dt;
 		pbody->body->SetLinearVelocity(currentVelocity);
 	}
 	if (isjumpping)
@@ -168,18 +180,7 @@ bool Player::Update(float dt)
 			currentAnimation = &jumpAnim;
 		}
 
-		if (godMode)
-		{
-			if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT) {
-				godMode = false;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-				currentVelocity.y = -speed * dt;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				currentVelocity.y = +speed * dt;
-			}
-		}
+		
 	}
 	
 
