@@ -40,6 +40,11 @@ private:
 	uint texW, texH;
 	uint windowW, windowH;
 	Player* player;
+	SDL_Texture* fondo0;
+	SDL_Texture* fondo1;
+	SDL_Texture* fondo2;
+	SDL_Texture* fondo3;
+	SDL_Texture* fondo4;
 
 };
 
