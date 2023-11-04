@@ -44,6 +44,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		app->map->name = config.child("map").attribute("name").as_string();
 		app->map->path = config.child("map").attribute("path").as_string();
 	}
+	//if (config.child("background0")) {
+	//	//Get the map name from the config file and assigns the value in the module
+	//	app->map->name = config.child("fondo0.png").attribute("name").as_string();
+	//	app->map->path = config.child("background0").attribute("path").as_string();
+	//}
 
 	return ret;
 }
@@ -55,7 +60,7 @@ bool Scene::Start()
 	//img = app->tex->Load("Assets/Textures/test.png");
 	
 	//Music is commented so that you can add your own music
-	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+	app->audio->PlayMusic("Assets/Audio/Music/Dark Dragon.mp3");
 
 	//Get the size of the window
 	fondo0 = app->tex->Load("Assets/Maps/fondo0.png");
