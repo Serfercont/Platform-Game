@@ -59,6 +59,10 @@ bool Scene::Start()
 
 	//Get the size of the window
 	fondo0 = app->tex->Load("Assets/Maps/fondo0.png");
+	fondo1 = app->tex->Load("Assets/Maps/Fondo1.png");
+	fondo2 = app->tex->Load("Assets/Maps/Fondo2.png");
+	fondo3 = app->tex->Load("Assets/Maps/Fondo3.png");
+	fondo4 = app->tex->Load("Assets/Maps/Fondo4.png");
 	app->win->GetWindowSize(windowW, windowH);
 
 	//Get the size of the texture
@@ -113,7 +117,16 @@ bool Scene::Update(float dt)
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
 	SDL_Rect Rectfondo0{0,0,1536*4,216*4};
-	app->render->DrawTexture(fondo0, 100, 0,&Rectfondo0,0.2f);
+	SDL_Rect Rectfondo1{ 0,0,1536 * 4,216 * 4 };
+	SDL_Rect Rectfondo2{ 0,0,1536 * 3,216 * 3 };
+	SDL_Rect Rectfondo3{ 0,0,1536 * 3,216 * 3 };
+	SDL_Rect Rectfondo4{ 0,0,1536 * 32,216 * 32 };
+	app->render->DrawTexture(fondo0, -100, 0,&Rectfondo0,0.2f);
+	app->render->DrawTexture(fondo1, -150, -100, &Rectfondo1, 0.4f);
+	app->render->DrawTexture(fondo2, -150, 110, &Rectfondo2, 0.6f);
+	app->render->DrawTexture(fondo3, -150, 110, &Rectfondo3, 0.7f);
+	app->render->DrawTexture(fondo4, -150,0, &Rectfondo4, 0.4f);
+
 	return true;
 }
 
