@@ -98,8 +98,6 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 
 	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
-
-	
 	return true;
 }
 
@@ -111,13 +109,16 @@ bool Player::Update(float dt)
 
 	//currentAnimation = &idleAnim;
 	
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT && godMode==false) {
+		godMode = true;
+	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
 	{
 		currentVelocity.x = 0;
 		currentAnimation = &idleAnim;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_W && isAlive) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		currentAnimation = &atack1Anim;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
@@ -130,11 +131,6 @@ bool Player::Update(float dt)
 		//vel = b2Vec2(-speed*dt, -GRAVITY_Y);
 		currentVelocity.x = -speed * dt;
 		currentAnimation = &walkAnim;
-		if (!position.x--)
-		{
-			isWalking = false;
-			currentAnimation = &idleAnim;
-		}
 		//currentAnimation = &animations["walk"];
 	}
 
@@ -171,12 +167,25 @@ bool Player::Update(float dt)
 			currentVelocity.x = +speed * dt;
 			currentAnimation = &jumpAnim;
 		}
+
+		if (godMode)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT) {
+				godMode = false;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+				currentVelocity.y = -speed * dt;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+				currentVelocity.y = +speed * dt;
+			}
+		}
 	}
 	
 
 	//Set the velocity of the pbody of the player
 
-	if (isjumpping == false)
+	if (isjumpping == false && !godMode)
 	{
 		currentVelocity.y = -GRAVITY_Y;
 	}
@@ -211,8 +220,8 @@ bool Player::Update(float dt)
 	app->render->camera.x = -position.x+400;
 	currentAnimation->Update();
 
-	app->render->camera.y = -position.y+300;
-	currentAnimation->Update();
+	/*app->render->camera.y = -position.y+300;
+	currentAnimation->Update();*/
 
 	return true;
 }
@@ -241,7 +250,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision UNKNOWN");
 		break;
 	case ColliderType::SPIKES:
-		//vidas=vidas - 1;
+		isjumpping = false;
 		currentAnimation = &deadAnim;
 		break;
 	case ColliderType::COLUMN:
