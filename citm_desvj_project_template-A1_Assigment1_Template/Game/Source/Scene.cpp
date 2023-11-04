@@ -58,11 +58,12 @@ bool Scene::Start()
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
 	//Get the size of the window
+	fondo0 = app->tex->Load("Assets/Maps/fondo0.png");
 	app->win->GetWindowSize(windowW, windowH);
 
 	//Get the size of the texture
 	app->tex->GetSize(img, texW, texH);
-
+	
 	textPosX = (float)windowW / 2 - (float)texW / 2;
 	textPosY = (float)windowH / 2 - (float)texH / 2;
 
@@ -111,7 +112,8 @@ bool Scene::Update(float dt)
 
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
-
+	SDL_Rect Rectfondo0{0,0,1536*4,216*4};
+	app->render->DrawTexture(fondo0, 100, 0,&Rectfondo0,0.2f);
 	return true;
 }
 
