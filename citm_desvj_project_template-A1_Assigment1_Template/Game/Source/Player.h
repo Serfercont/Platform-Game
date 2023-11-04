@@ -36,12 +36,13 @@ public:
 	int pickCoinFxId;
 	bool right;
 	bool left;
-	int vidas;
 	bool isAlive=true;
 	bool checkColumn;
 	bool godMode=false;
 	int InitPosX;
 	int InitPosY;
+	bool spike=false;
+
 
 	iPoint flipPos;
 

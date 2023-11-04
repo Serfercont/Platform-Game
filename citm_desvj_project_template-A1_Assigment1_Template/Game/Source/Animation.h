@@ -9,13 +9,14 @@ class Animation
 public:
 	pugi::xml_document file;
 	bool loop = true;
+	int loopCount = 0;
 	float speed = 1.0f;
 	SDL_Rect frames[MAX_FRAMES];
 
 private:
 	float currentFrame = 0.0f;
 	int totalFrames = 0;
-	int loopCount = 0;
+	
 
 public:
 

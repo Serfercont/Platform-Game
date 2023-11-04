@@ -9,6 +9,8 @@
 #include "Point.h"
 #include "Physics.h"
 #include <map>
+#include <chrono>
+#include <thread>
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -24,13 +26,13 @@ bool Player::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
-	vidas = parameters.attribute("vidas").as_int();
+	//vidas = parameters.attribute("vidas").as_int();
 
 	return true;
 }
 
 bool Player::Start() {
-
+	std::chrono::time_point<std::chrono::high_resolution_clock> reviveTime; // Variable para almacenar el tiempo de revivir
 	idleAnim.LoadAnimations("idle");
 	walkAnim.LoadAnimations("walk");
 	atack1Anim.LoadAnimations("attack1");
@@ -68,13 +70,32 @@ bool Player::Update(float dt)
 	
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		godMode = !godMode;
+		
+		
 	}
+
+	if (godMode)
+	{
+		pbody->body->GetFixtureList()->SetSensor(true);
+		pbody->body->SetGravityScale(0);
+	}
+	else
+	{
+		pbody->body->GetFixtureList()->SetSensor(false);
+		pbody->body->SetGravityScale(1);
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true) {
 		currentVelocity.y = currentVelocity.y - 0.5;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == true) {
 		currentVelocity.y = currentVelocity.y + 0.5;
 
+	}
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && isAlive && godMode)
+	{
+		currentVelocity.y = 0;
+		currentAnimation = &idleAnim;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
@@ -113,6 +134,29 @@ bool Player::Update(float dt)
 		currentVelocity.y = -speed * 16;
 		pbody->body->SetLinearVelocity(currentVelocity);
 	}
+	//que hace si está tocando con el pincho
+	if (spike == true)
+	{
+		currentVelocity.x = 0;
+		isAlive = false;
+		if (currentAnimation!=&deadAnim)
+		{
+			currentAnimation = &deadAnim;
+			currentAnimation->loopCount = 0;
+			currentAnimation->Reset();
+		}
+		if (currentAnimation->HasFinished())
+		{
+			
+			spike = false;
+			isAlive = true;
+			position.x = 700;
+			position.y = 1350;
+			pbody->SetPosition(position.x, position.y);
+			currentAnimation = &idleAnim;
+		}
+	}
+
 	if (isjumpping)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
@@ -142,13 +186,6 @@ bool Player::Update(float dt)
 	if (isjumpping == false && !godMode)
 	{
 		currentVelocity.y = -GRAVITY_Y;
-	}
-
-	if (vidas==0)
-	{
-		isAlive = false;
-		currentAnimation = &deadAnim;
-		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		position.x = 700;
@@ -210,18 +247,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision UNKNOWN");
 		break;
 	case ColliderType::SPIKES:
-		if (godMode == true)
+		if (!godMode)
 		{
-
-		}else
-		vidas=vidas - 1;
-		isjumpping = false;
-		currentAnimation = &deadAnim;
-
-		position.x = 700;
-		position.y = 1350;
-		pbody->SetPosition(position.x, position.y);
-
+			spike = true;
+		}
+		
 		break;
 	case ColliderType::COLUMN:
 		checkColumn = true;
