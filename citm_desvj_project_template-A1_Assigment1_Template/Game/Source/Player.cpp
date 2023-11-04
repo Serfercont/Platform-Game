@@ -154,6 +154,7 @@ bool Player::Update(float dt)
 			position.y = 1350;
 			pbody->SetPosition(position.x, position.y);
 			currentAnimation = &idleAnim;
+			app->render->camera.x = 0;
 		}
 	}
 
@@ -191,6 +192,7 @@ bool Player::Update(float dt)
 		position.x = 700;
 		position.y = 1350;
 		pbody->SetPosition(position.x, position.y);
+		app->render->camera.x = 0;
 		
 	}
 
@@ -213,8 +215,15 @@ bool Player::Update(float dt)
 		app->render->DrawTexture(texture, flipPos.x, position.y, &rect,1.0f,0, INT_MAX,INT_MAX,SDL_FLIP_HORIZONTAL);
 	}
 	//Movimiento camara 
-	app->render->camera.x = -position.x+400;
-	currentAnimation->Update();
+
+
+	if (app->render->camera.x - position.x + 400 <= -52) {
+		app->render->camera.x = -position.x + 400;
+	
+	}
+		currentAnimation->Update();
+	
+		printf("\r %i", app->render->camera.x - position.x + 400);
 
 	/*app->render->camera.y = -position.y+300;
 	currentAnimation->Update();*/
