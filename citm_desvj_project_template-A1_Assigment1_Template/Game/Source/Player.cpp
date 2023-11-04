@@ -32,12 +32,13 @@ bool Player::Awake() {
 bool Player::Start() {
 
 	idleAnim.LoadAnimations("idle");
-
 	walkAnim.LoadAnimations("walk");
-	
 	atack1Anim.LoadAnimations("attack1");
 	deadAnim.LoadAnimations("dead");
 	jumpAnim.LoadAnimations("jump");
+
+	InitPosX = position.x;
+	InitPosY = position.y;
 
 
 
@@ -108,6 +109,8 @@ bool Player::Update(float dt)
 	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 
 	//currentAnimation = &idleAnim;
+
+	
 	if (godMode)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT) {
@@ -206,6 +209,10 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 22;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 32;
 
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		position.x = InitPosX;
+		position.y = InitPosY;
+	}
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 
 	if (right)

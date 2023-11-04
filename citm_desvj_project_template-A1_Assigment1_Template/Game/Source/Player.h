@@ -40,6 +40,8 @@ public:
 	bool isAlive=true;
 	bool checkColumn;
 	bool godMode=false;
+	int InitPosX;
+	int InitPosY;
 
 	iPoint flipPos;
 
