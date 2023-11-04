@@ -62,6 +62,7 @@ bool Player::Update(float dt)
 {
 	flipPos.x = position.x - 10;
 	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
+	currentVelocity.y += 0.5;
 	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 
 	//currentAnimation = &idleAnim;
@@ -131,7 +132,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive && !checkColumn) {
 		isjumpping = true;
 		currentAnimation = &jumpAnim;
-		currentVelocity.y = -speed * 16;
+		currentVelocity.y = -17;
 		pbody->body->SetLinearVelocity(currentVelocity);
 	}
 	//que hace si está tocando con el pincho
@@ -217,7 +218,7 @@ bool Player::Update(float dt)
 	//Movimiento camara 
 
 
-	if (app->render->camera.x - position.x + 400 <= -52) {
+	if (app->render->camera.x - position.x + 400 <= -52 && app->render->camera.x - position.x + 400 >= -7532) {
 		app->render->camera.x = -position.x + 400;
 	
 	}
