@@ -111,22 +111,18 @@ bool Player::Update(float dt)
 	//currentAnimation = &idleAnim;
 
 	
-	if (godMode)
-	{
-		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT) {
-			godMode = false;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			currentVelocity.y = currentVelocity.y - 0.5;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			currentVelocity.y = currentVelocity.y + 0.5;
-		}
+	
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		godMode = !godMode;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true) {
+		currentVelocity.y = currentVelocity.y - 0.5;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == true) {
+		currentVelocity.y = currentVelocity.y + 0.5;
+
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT && godMode==false) {
-		godMode = true;
-	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
 	{
 		currentVelocity.x = 0;
@@ -200,7 +196,12 @@ bool Player::Update(float dt)
 		currentAnimation = &deadAnim;
 		
 	}
-	
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		position.x = 700;
+		position.y = 1350;
+		pbody->SetPosition(position.x, position.y);
+		
+	}
 
 	//Set the velocity of the pbody of the player
 	pbody->body->SetLinearVelocity(currentVelocity);
@@ -209,10 +210,6 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 22;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 32;
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-		position.x = InitPosX;
-		position.y = InitPosY;
-	}
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 
 	if (right)
@@ -236,6 +233,7 @@ bool Player::Update(float dt)
 
 bool Player::CleanUp()
 {
+	//app->tex->UnLoad(texture);
 
 	return true;
 }
@@ -258,8 +256,18 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision UNKNOWN");
 		break;
 	case ColliderType::SPIKES:
+		if (godMode == true)
+		{
+
+		}else
+		vidas=vidas - 1;
 		isjumpping = false;
 		currentAnimation = &deadAnim;
+
+		position.x = 700;
+		position.y = 1350;
+		pbody->SetPosition(position.x, position.y);
+
 		break;
 	case ColliderType::COLUMN:
 		checkColumn = true;
