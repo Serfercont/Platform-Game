@@ -23,6 +23,11 @@
 
   <scene>
     <map path="Assets/Maps/" name="MapTemplate.tmx"/>
+	<background path="Assets/Maps/" name="fondo0.png"/>
+	<background path="Assets/Maps/" name="Fondo1.png"/>
+	<background path="Assets/Maps/" name="Fondo2.png"/>
+	<background path="Assets/Maps/" name="Fondo3.png"/>
+	<background path="Assets/Maps/" name="Fondo4.png"/>
     <player x="400" y="650" vidas="2" texturepath="Assets/Textures/knight.png"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
