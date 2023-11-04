@@ -13,10 +13,10 @@
   <image source="Background_casas.png" width="768" height="416"/>
  </tileset>
  <tileset firstgid="757" name="Colisions" tilewidth="32" tileheight="32" tilecount="5" columns="5">
-  <image source="../../../../../../../../Downloads/Colisions.png" width="160" height="32"/>
+  <image source="Colisions.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="762" name="pinchos" tilewidth="32" tileheight="32" tilecount="5" columns="5">
-  <image source="../../../../../../../../Downloads/pinchos.png" width="160" height="32"/>
+  <image source="pinchos.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="767" name="CheckPoint" tilewidth="32" tileheight="32" tilecount="21" columns="3">
   <image source="Salt.png" width="112" height="224"/>

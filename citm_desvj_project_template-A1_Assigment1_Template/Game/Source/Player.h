@@ -36,7 +36,7 @@ public:
 	int pickCoinFxId;
 	bool right;
 	bool left;
-	int vidas=2;
+	int vidas;
 	bool isAlive=true;
 	bool checkColumn;
 	bool godMode=false;

@@ -84,6 +84,7 @@ public:
 	Map* map;
 	Physics* physics;
 	bool vsync;
+	bool unlimitFrames = false;
 
 private:
 

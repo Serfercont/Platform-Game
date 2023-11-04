@@ -40,52 +40,6 @@ bool Player::Start() {
 	InitPosX = position.x;
 	InitPosY = position.y;
 
-
-
-	//idleAnim.PushBack({ 98, 468, 47, 65 });
-	//idleAnim.PushBack({ 165, 468, 47, 65 });
-	//idleAnim.PushBack({ 232, 468, 47, 65 });
-	//idleAnim.PushBack({ 299, 468, 47, 65 });
-	//idleAnim.speed = 0.1f;
-	//idleAnim.loop = true;
-
-	//walkAnim.PushBack({94,44,52,66});
-	//walkAnim.PushBack({160,44,52,66});
-	//walkAnim.PushBack({231,44,52,66});
-	//walkAnim.PushBack({305,44,52,66});
-	//walkAnim.PushBack({377,44,52,66});
-	//walkAnim.PushBack({429,44,52,66});
-	//walkAnim.PushBack({499,44,52,66});
-	//walkAnim.PushBack({567,44,52,66});
-	//walkAnim.speed = 0.1f;
-	//walkAnim.loop = true;
-
-	//atack1Anim.PushBack({ 77,823,87,76 });
-	//atack1Anim.PushBack({ 154,823,87,76 });
-	//atack1Anim.PushBack({ 238,823,87,76 });
-	//atack1Anim.PushBack({ 328,823,87,76 });
-	//atack1Anim.PushBack({400,823,87,76});
-	//atack1Anim.speed = 0.1f;
-	//atack1Anim.loop = true;
-
-	//deadAnim.PushBack({ 91,743,65,66 });
-	//deadAnim.PushBack({ 164,743,65,66 });
-	//deadAnim.PushBack({ 246,743,65,66 });
-	//deadAnim.PushBack({ 325,743,65,66 });
-	//deadAnim.PushBack({ 402,743,65,66 });
-	//deadAnim.PushBack({ 478,743,65,66 });
-	//deadAnim.speed = 0.1f;
-	//deadAnim.loop = false;
-
-	//jumpAnim.PushBack({ 97,197,56,66 });
-	//jumpAnim.PushBack({ 175,197,56,66 });
-	//jumpAnim.PushBack({ 247,197,56,66 });
-	//jumpAnim.PushBack({ 324,197,75,66 });
-	//jumpAnim.PushBack({ 400,197,75,66 });
-	//jumpAnim.PushBack({ 480,197,75,66 });
-	//jumpAnim.speed = 0.1f;
-	//jumpAnim.loop = true;
-	//
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &idleAnim;
@@ -140,7 +94,7 @@ bool Player::Update(float dt)
 		right = false;
 		isWalking = true;
 		//vel = b2Vec2(-speed*dt, -GRAVITY_Y);
-		currentVelocity.x = -speed * dt;
+		currentVelocity.x = -speed * 16;
 		currentAnimation = &walkAnim;
 		//currentAnimation = &animations["walk"];
 	}
@@ -148,7 +102,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive) {
 		right = true;
 		isWalking = true;
-		currentVelocity.x = +speed * dt;
+		currentVelocity.x = +speed * 16;
 		//vel = b2Vec2(speed*dt, -GRAVITY_Y);
 		currentAnimation = &walkAnim; 
 		
@@ -156,7 +110,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive && !checkColumn) {
 		isjumpping = true;
 		currentAnimation = &jumpAnim;
-		currentVelocity.y = -speed * dt;
+		currentVelocity.y = -speed * 16;
 		pbody->body->SetLinearVelocity(currentVelocity);
 	}
 	if (isjumpping)
@@ -169,13 +123,13 @@ bool Player::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive)
 		{
 			right = false;
-			currentVelocity.x = -speed * dt;
+			currentVelocity.x = -speed * 16;
 			currentAnimation = &jumpAnim;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive)
 		{
 			right = true;
-			currentVelocity.x = +speed * dt;
+			currentVelocity.x = +speed * 16;
 			currentAnimation = &jumpAnim;
 		}
 
@@ -208,7 +162,7 @@ bool Player::Update(float dt)
 
 	//Update player position in pixels
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 22;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 32;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 42;
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 

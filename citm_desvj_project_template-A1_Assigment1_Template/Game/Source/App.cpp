@@ -173,6 +173,19 @@ void App::PrepareUpdate()
 // ---------------------------------------------
 void App::FinishUpdate()
 {
+
+	if (input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		unlimitFrames = !unlimitFrames;
+	}
+	if (unlimitFrames)
+	{
+		maxFrameDuration = 32; //now is variable
+	}
+	else
+	{
+		maxFrameDuration = 16;
+	}
 	// This is a good place to call Load / Save functions
 	double currentDt = frameTime.ReadMs();
 	if (maxFrameDuration > 0 && currentDt < maxFrameDuration) {
@@ -182,7 +195,7 @@ void App::FinishUpdate()
 		SDL_Delay(delay);
 		//LOG("We waited for %I32u ms and got back in %f ms",delay,delayTimer.ReadMs());
 	}
-
+	
 	// Amount of frames since startup
 	frameCount++;
 
@@ -202,7 +215,6 @@ void App::FinishUpdate()
 		framesPerSecond = lastSecFrameCount; 
 		lastSecFrameCount = 0;
 	}
-
 
 	// Shows the time measurements in the window title
 	static char title[256];

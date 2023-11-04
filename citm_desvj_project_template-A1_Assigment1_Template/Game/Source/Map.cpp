@@ -102,7 +102,7 @@ bool Map::Loadcollision(std::string nombreCapa) {
                         pos.y,
                         &r);*/
                     if (tileset->firstgid + 0 == gid) {
-                        PhysBody* c1 = app->physics->CreateRectangle(pos.x+16, pos.y+16, 32, 30, STATIC);
+                        PhysBody* c1 = app->physics->CreateRectangle(pos.x+16, pos.y+16, 32, 15, STATIC);
                         c1->ctype = ColliderType::PLATFORM;
                     }
                     if (tileset->firstgid + 2 == gid) {
@@ -110,7 +110,7 @@ bool Map::Loadcollision(std::string nombreCapa) {
                         c1->ctype = ColliderType::COLUMN;
                     }
                     if (tileset->firstgid + 1 == gid) {
-                        PhysBody* c1 = app->physics->CreateRectangle(pos.x + 16, pos.y + 16, 32, 32, STATIC);
+                        PhysBody* c1 = app->physics->CreateRectangleSensor(pos.x + 16, pos.y + 16, 32, 32, STATIC);
                         c1->ctype = ColliderType::SPIKES;
                     }
                 }
