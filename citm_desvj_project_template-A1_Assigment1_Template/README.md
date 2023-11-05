@@ -2,7 +2,7 @@
 
 ## Description
 
-Pikutara,(en euskera "al infierno"), es un juego de estilo medieval donde un caballero tiene que cerrara un portal que conecta con el infierno. Nuestra idea es que el primer nivel sea en el bosque para llegar al infierno y el segundo en este.
+"Pikutara", (in Basque, "to hell"), is a medieval-style platform game where a knight has to close a portal to hell through which enemies have entered. Our idea is for the first level to be set in the forest to reach hell, and the second level to take place in hell itself, where the character must close the portal.
 
 ## Key Features
 
@@ -12,11 +12,13 @@ Pikutara,(en euskera "al infierno"), es un juego de estilo medieval donde un cab
  
 ## Controls
 
--W: Move up 
+-W: Move up (with godMode ON) 
 -A: Move Left
+-S: Move down (with godMode ON)
 -D: Move Right
 -SPACE: Jump
 -F1: Restart
+-F3: Start from beginning of current level
 -F9: Display collisions
 -F10: Godmode
 -F11: 30/60 fps mode
@@ -24,7 +26,7 @@ Pikutara,(en euskera "al infierno"), es un juego de estilo medieval donde un cab
 ## Developers
 
 -Pau Blanco Valle- Coder, level designer & sprites,tester, fixer
--Sergio González Contreras - Coder, animation & sprites, fixer
+-Sergio Fernandez Contreras - Coder, animation & sprites, fixer
 
 ## License
 
