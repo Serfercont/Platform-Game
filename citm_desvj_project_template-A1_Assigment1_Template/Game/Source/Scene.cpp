@@ -22,6 +22,7 @@ Scene::~Scene()
 // Called before render is available
 bool Scene::Awake(pugi::xml_node& config)
 {
+	configNode = config;
 	LOG("Loading Scene");
 	bool ret = true;
 
@@ -60,14 +61,14 @@ bool Scene::Start()
 	//img = app->tex->Load("Assets/Textures/test.png");
 	
 	//Music is commented so that you can add your own music
-	app->audio->PlayMusic("Assets/Audio/Music/Dark Dragon.mp3");
+	app->audio->PlayMusic(configNode.child("mainmusic").attribute("path").as_string());
 
 	//Get the size of the window
-	fondo0 = app->tex->Load("Assets/Maps/fondo0.png");
-	fondo1 = app->tex->Load("Assets/Maps/Fondo1.png");
-	fondo2 = app->tex->Load("Assets/Maps/Fondo2.png");
-	fondo3 = app->tex->Load("Assets/Maps/Fondo3.png");
-	fondo4 = app->tex->Load("Assets/Maps/Fondo4.png");
+	fondo0 = app->tex->Load(configNode.child("background").attribute("path").as_string());
+	fondo1 = app->tex->Load(configNode.child("background1").attribute("path").as_string());
+	fondo2 = app->tex->Load(configNode.child("background2").attribute("path").as_string());
+	fondo3 = app->tex->Load(configNode.child("background3").attribute("path").as_string());
+	fondo4 = app->tex->Load(configNode.child("background4").attribute("path").as_string());
 	app->win->GetWindowSize(windowW, windowH);
 
 	//Get the size of the texture

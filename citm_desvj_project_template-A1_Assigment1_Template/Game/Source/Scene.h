@@ -45,7 +45,7 @@ private:
 	SDL_Texture* fondo2;
 	SDL_Texture* fondo3;
 	SDL_Texture* fondo4;
-
+	pugi::xml_node configNode;
 };
 
 #endif // __SCENE_H__
