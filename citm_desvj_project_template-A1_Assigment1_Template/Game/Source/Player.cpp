@@ -62,17 +62,13 @@ bool Player::Update(float dt)
 {
 	flipPos.x = position.x - 10;
 	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
-	currentVelocity.y += 0.5;
+	
 	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 
 	//currentAnimation = &idleAnim;
-
-	
 	
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		godMode = !godMode;
-		
-		
+		godMode = !godMode;		
 	}
 
 	if (godMode)
@@ -84,6 +80,7 @@ bool Player::Update(float dt)
 	{
 		pbody->body->GetFixtureList()->SetSensor(false);
 		pbody->body->SetGravityScale(1);
+		currentVelocity.y += 0.5;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true) {
