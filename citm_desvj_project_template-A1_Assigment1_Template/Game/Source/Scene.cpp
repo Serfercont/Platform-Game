@@ -151,6 +151,11 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+	app->tex->UnLoad(fondo0);
+	app->tex->UnLoad(fondo1);
+	app->tex->UnLoad(fondo2);
+	app->tex->UnLoad(fondo3);
+	app->tex->UnLoad(fondo4);
 
 	return true;
 }

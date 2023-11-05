@@ -26,13 +26,12 @@ bool Player::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
-	//vidas = parameters.attribute("vidas").as_int();
 
 	return true;
 }
 
 bool Player::Start() {
-	std::chrono::time_point<std::chrono::high_resolution_clock> reviveTime; // Variable para almacenar el tiempo de revivir
+
 	idleAnim.LoadAnimations("idle");
 	walkAnim.LoadAnimations("walk");
 	atack1Anim.LoadAnimations("attack1");
@@ -231,8 +230,7 @@ bool Player::Update(float dt)
 
 bool Player::CleanUp()
 {
-	//app->tex->UnLoad(texture);
-
+	app->tex->UnLoad(texture);
 	return true;
 }
 
