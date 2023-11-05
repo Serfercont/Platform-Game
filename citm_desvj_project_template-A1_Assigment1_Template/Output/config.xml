@@ -23,11 +23,12 @@
 
   <scene>
     <map path="Assets/Maps/" name="MapTemplate.tmx"/>
-	<background path="Assets/Maps/" name="fondo0.png"/>
-	<background path="Assets/Maps/" name="Fondo1.png"/>
-	<background path="Assets/Maps/" name="Fondo2.png"/>
-	<background path="Assets/Maps/" name="Fondo3.png"/>
-	<background path="Assets/Maps/" name="Fondo4.png"/>
+	<background path="Assets/Maps/fondo0.png"/>
+	<background1 path="Assets/Maps/Fondo1.png"/>
+	<background2 path="Assets/Maps/Fondo2.png"/>
+	<background3 path="Assets/Maps/Fondo3.png"/>
+	<background4 path="Assets/Maps/Fondo4.png"/>
+  <mainmusic path="Assets/Audio/Music/dark_dragon.mp3"/>
     <player x="85" y="650" texturepath="Assets/Textures/knight.png"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
