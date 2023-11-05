@@ -214,7 +214,7 @@ bool Player::Update(float dt)
 	//Movimiento camara 
 
 
-	if (app->render->camera.x - position.x + 400 <= -52 && app->render->camera.x - position.x + 400 >= -7532) {
+	if (app->render->camera.x - position.x + 400 <= -24 && app->render->camera.x - position.x + 400 >= -7532) {
 		app->render->camera.x = -position.x + 400;
 	
 	}
