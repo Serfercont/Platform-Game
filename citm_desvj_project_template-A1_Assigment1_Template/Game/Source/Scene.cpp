@@ -45,11 +45,7 @@ bool Scene::Awake(pugi::xml_node& config)
 		app->map->name = config.child("map").attribute("name").as_string();
 		app->map->path = config.child("map").attribute("path").as_string();
 	}
-	//if (config.child("background0")) {
-	//	//Get the map name from the config file and assigns the value in the module
-	//	app->map->name = config.child("fondo0.png").attribute("name").as_string();
-	//	app->map->path = config.child("background0").attribute("path").as_string();
-	//}
+
 
 	return ret;
 }
@@ -58,7 +54,6 @@ bool Scene::Awake(pugi::xml_node& config)
 bool Scene::Start()
 {
 	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
-	//img = app->tex->Load("Assets/Textures/test.png");
 	
 	//Music is commented so that you can add your own music
 	app->audio->PlayMusic(configNode.child("mainmusic").attribute("path").as_string());
@@ -98,17 +93,6 @@ bool Scene::Update(float dt)
 {
 	float camSpeed = 0.35; 
 
-	/*if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= (int)ceil(camSpeed * dt);
-
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += (int)ceil(camSpeed * dt);*/
-	
-	/*if(app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		app->render->camera.x += (int)ceil(camSpeed * dt);
-
-	if(app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		app->render->camera.x -= (int)ceil(camSpeed * dt);*/
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 
@@ -121,7 +105,6 @@ bool Scene::Update(float dt)
 	}
 
 	// Renders the image in the center of the screen 
-	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
 	SDL_Rect Rectfondo0{0,0,1536*4,216*4};
 	SDL_Rect Rectfondo1{ 0,0,1536 * 4,216 * 4 };
 	SDL_Rect Rectfondo2{ 0,0,1536 * 3,216 * 3 };

@@ -45,15 +45,13 @@ bool Player::Start() {
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &idleAnim;
 
-	/*pbody = app->physics->CreateRectangle(position.x, position.y, 44,64, bodyType::DYNAMIC);
-	pbody->listener = this;
-	pbody->ctype = ColliderType::PLAYER;*/
+
 
 	pbody = app->physics->CreateCircle(position.x + 16, position.y-10, 25, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
-	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+
 	return true;
 }
 
@@ -62,7 +60,7 @@ bool Player::Update(float dt)
 	flipPos.x = position.x - 10;
 	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
 	
-	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
+
 
 	//currentAnimation = &idleAnim;
 	
@@ -111,17 +109,17 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive ) {
 		right = false;
 		isWalking = true;
-		//vel = b2Vec2(-speed*dt, -GRAVITY_Y);
+	
 		currentVelocity.x = -speed * 16;
 		currentAnimation = &walkAnim;
-		//currentAnimation = &animations["walk"];
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive) {
 		right = true;
 		isWalking = true;
 		currentVelocity.x = +speed * 16;
-		//vel = b2Vec2(speed*dt, -GRAVITY_Y);
+	
 		currentAnimation = &walkAnim; 
 		
 	}
@@ -222,8 +220,8 @@ bool Player::Update(float dt)
 	
 		printf("\r %i", app->render->camera.x - position.x + 400);
 
-	/*app->render->camera.y = -position.y+300;
-	currentAnimation->Update();*/
+
+	currentAnimation->Update();
 
 	return true;
 }
