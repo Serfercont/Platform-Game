@@ -6,9 +6,13 @@
 #include "PugiXml/src/pugixml.hpp"
 
 class App;
+class PhysBody;
 
 class Module
 {
+private:
+	bool enabled;
+
 public:
 
 	Module() : active(false)
