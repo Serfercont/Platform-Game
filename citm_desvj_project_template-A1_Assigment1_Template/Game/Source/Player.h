@@ -28,7 +28,6 @@ public:
 
 public:
 	float speed = 0.4f;
-	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 	bool isjumpping = false;
