@@ -17,13 +17,13 @@ public:
 
 	bool Awake();
 
-	/*bool Start();
+	bool Start();
 
 	bool Update(float dt);
 
 	bool CleanUp();
 
-	void OnCollision(PhysBody* physA, PhysBody* physB);*/
+	void OnCollision(PhysBody* physA, PhysBody* physB);
 };
 
 #endif // __ENEMYWALK_H__

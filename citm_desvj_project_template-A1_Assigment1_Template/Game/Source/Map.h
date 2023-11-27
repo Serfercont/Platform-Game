@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include "Pathfinding.h"
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -134,16 +135,23 @@ private:
 	bool LoadAllLayers(pugi::xml_node mapNode);
 	TileSet* GetTilesetFromTileId(int gid) const;
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
+	//void CreateNavigationMap(int& width, int& height, uchar** buffer) const;
+
+	int GetTileWidth();
+	int GetTileHeight();
+
 
 public: 
 
 	MapData mapData;
 	SString name;
 	SString path;
+	//PathFinding* pathfinding;
 
 private:
-
+	MapLayer* navigationLayer;
 	bool mapLoaded;
+	int blockedGid = 49;
 };
 
 #endif // __MAP_H__

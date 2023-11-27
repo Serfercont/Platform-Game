@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Map.h"
 #include <map>
 #include <chrono>
 #include <thread>
@@ -59,6 +60,14 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
+	/*iPoint mouseTile = app->map->WorldToMap(position.x - app->render->camera.x,
+		position.y - app->render->camera.y);
+
+	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
+	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
+
+	iPoint origin = iPoint(2, 2);*/
+
 	flipPos.x = position.x - 10;
 	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
 	
@@ -84,25 +93,30 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true) {
 		currentVelocity.y = currentVelocity.y - 0.5;
+		//app->map->pathfinding->CreatePath(origin, mouseTile);
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == true) {
 		currentVelocity.y = currentVelocity.y + 0.5;
+		//app->map->pathfinding->CreatePath(origin, mouseTile);
 
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && isAlive && godMode)
 	{
 		currentVelocity.y = 0;
 		currentAnimation = &idleAnim;
+		//app->map->pathfinding->CreatePath(origin, mouseTile);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
 	{
 		currentVelocity.x = 0;
 		currentAnimation = &idleAnim;
+		//app->map->pathfinding->CreatePath(origin, mouseTile);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode==false) {
 		currentAnimation = &atack1Anim;
+		//app->map->pathfinding->CreatePath(origin, mouseTile);
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == false) {
 		
@@ -114,6 +128,7 @@ bool Player::Update(float dt)
 		//vel = b2Vec2(-speed*dt, -GRAVITY_Y);
 		currentVelocity.x = -speed * 16;
 		currentAnimation = &walkAnim;
+		//app->map->pathfinding->CreatePath(origin, mouseTile);
 		//currentAnimation = &animations["walk"];
 	}
 
@@ -122,6 +137,7 @@ bool Player::Update(float dt)
 		isWalking = true;
 		currentVelocity.x = +speed * 16;
 		//vel = b2Vec2(speed*dt, -GRAVITY_Y);
+		//app->map->pathfinding->CreatePath(origin, mouseTile);
 		currentAnimation = &walkAnim; 
 		
 	}
@@ -130,6 +146,7 @@ bool Player::Update(float dt)
 		currentAnimation = &jumpAnim;
 		currentVelocity.y = -17;
 		pbody->body->SetLinearVelocity(currentVelocity);
+		//app->map->pathfinding->CreatePath(origin, mouseTile);
 	}
 	//que hace si está tocando con el pincho
 	if (spike == true)

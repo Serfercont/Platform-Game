@@ -28,3 +28,26 @@ bool EnemyWalk::Awake() {
 	texturePath = parameters.attribute("texturepath").as_string();
 	return true;
 }
+
+bool EnemyWalk::Start() {
+
+	
+	return true;
+}
+
+bool EnemyWalk::Update(float dt)
+{
+	
+
+	return true;
+}
+
+bool EnemyWalk::CleanUp()
+{
+	return true;
+}
+
+void EnemyWalk::OnCollision(PhysBody* physA, PhysBody* physB) {
+
+	
+	}

@@ -58,6 +58,7 @@ public:
 	Animation defendAnim;
 	Animation hurtAnim;
 	Animation runAnim;
+	SDL_Texture* mouseTileTex = nullptr;
 };
 
 #endif // __PLAYER_H__
