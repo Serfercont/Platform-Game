@@ -45,8 +45,6 @@ bool Player::Start() {
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &idleAnim;
 
-
-
 	pbody = app->physics->CreateCircle(position.x + 16, position.y-10, 25, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;

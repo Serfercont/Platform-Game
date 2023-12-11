@@ -6,6 +6,8 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Player.h"
+#include "Physics.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -45,8 +47,6 @@ bool Scene::Awake(pugi::xml_node& config)
 		app->map->name = config.child("map").attribute("name").as_string();
 		app->map->path = config.child("map").attribute("path").as_string();
 	}
-
-
 	return ret;
 }
 
@@ -136,6 +136,7 @@ bool Scene::LoadState(pugi::xml_node node)
 {
 	player->position.x = node.child("player").attribute("x").as_int();
 	player->position.y = node.child("player").attribute("y").as_int();
+	player->pbody->SetPosition(player->position.x, player->position.y);
 
 	player->godMode = node.child("pconditions").attribute("godmode").as_bool();
 	player->isAlive = node.child("pconditions").attribute("isAlive").as_bool();
