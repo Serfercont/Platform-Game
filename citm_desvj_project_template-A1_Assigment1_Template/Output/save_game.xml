@@ -1,12 +1,23 @@
 <?xml version="1.0"?>
-<!-- L02: TODO 4: Create a simulation xml file to read -->
 <game_state>
-	<input />
 	<window />
+	<input />
 	<textures />
 	<audio />
-	<scene />
+	<:anonymous />
+	<scene>
+		<player x="685" y="549" />
+		<pconditions>
+			<godmode value="false"/>
+			<godmode isAlive="true"/>
+			<godmode isjumpping="false"/>
+			<godmode isWalking="false"/>
+			<godmode right="false"/>
+		</pconditions>
+	</scene>
+	<:anonymous />
+	<entitymanager />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-285" y="-20" />
 	</renderer>
 </game_state>

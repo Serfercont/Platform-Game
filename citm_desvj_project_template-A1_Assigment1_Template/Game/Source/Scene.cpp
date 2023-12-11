@@ -103,6 +103,8 @@ bool Scene::Update(float dt)
 	{
 
 	}
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
 	// Renders the image in the center of the screen 
 	SDL_Rect Rectfondo0{0,0,1536*4,216*4};
@@ -128,6 +130,41 @@ bool Scene::PostUpdate()
 		ret = false;
 
 	return ret;
+}
+
+bool Scene::LoadState(pugi::xml_node node)
+{
+	player->position.x = node.child("player").attribute("x").as_int();
+	player->position.y = node.child("player").attribute("y").as_int();
+
+	player->godMode = node.child("pconditions").attribute("godmode").as_bool();
+	player->isAlive = node.child("pconditions").attribute("isAlive").as_bool();
+	player->isjumpping = node.child("pconditions").attribute("isjumpping").as_bool();
+	player->isWalking = node.child("pconditions").attribute("isWalking").as_bool();
+	player->right = node.child("pconditions").attribute("right").as_bool();
+	
+
+	
+	//player->pbody->setTransform(pixels_to_meters, player->position.x... para la y igual)
+	//También hay que poner todas las condiciones para detectar en qué situación está en la partida.
+	//Lo mismo con los enemigos y si tiene powerups también
+	return true;
+}
+
+bool Scene::SaveState(pugi::xml_node node)
+{
+	pugi::xml_node posNode = node.append_child("player");
+	posNode.append_attribute("x").set_value(player->position.x);
+	posNode.append_attribute("y").set_value(player->position.y);
+
+	pugi::xml_node pconditionsNode = node.append_child("pconditions");
+	pconditionsNode.append_attribute("godmode").set_value(player->godMode);
+	pconditionsNode.append_attribute("isAlive").set_value(player->isAlive);
+	pconditionsNode.append_attribute("isjumpping").set_value(player->isjumpping);
+	pconditionsNode.append_attribute("isWalking").set_value(player->isWalking);
+	pconditionsNode.append_attribute("right").set_value(player->right);
+
+	return true;
 }
 
 // Called before quitting

@@ -232,6 +232,7 @@ bool Player::CleanUp()
 	return true;
 }
 
+
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	switch (physB->ctype)

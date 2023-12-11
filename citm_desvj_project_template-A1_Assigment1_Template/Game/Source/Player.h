@@ -43,7 +43,6 @@ public:
 	int InitPosY;
 	bool spike=false;
 
-
 	iPoint flipPos;
 
 	//std::map<std::string, Animation> animations;
