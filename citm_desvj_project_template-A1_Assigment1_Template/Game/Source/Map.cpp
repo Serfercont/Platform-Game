@@ -69,10 +69,7 @@ bool Map::Update(float dt)
                     SDL_Rect r = tileset->GetTileRect(gid);
                     iPoint pos = MapToWorld(x, y);
 
-                    app->render->DrawTexture(tileset->texture,
-                        pos.x,
-                        pos.y,
-                        &r);
+                    app->render->DrawTexture(tileset->texture,pos.x,pos.y,&r);
                 }
             }
         }
@@ -238,8 +235,25 @@ bool Map::Load(SString mapFileName)
     {
         ret = LoadAllLayers(mapFileXML.child("map"));
     }
-   
- 
+    else
+    {
+        // Find the navigation layer
+        ListItem<MapLayer*>* mapLayerItem;
+        mapLayerItem = mapData.maplayers.start;
+        navigationLayer = mapLayerItem->data;
+
+        //Search the layer in the map that contains information for navigation
+        while (mapLayerItem != NULL) {
+            if (mapLayerItem->data->properties.GetProperty("Navigation") != NULL && mapLayerItem->data->properties.GetProperty("Navigation")->value) {
+                navigationLayer = mapLayerItem->data;
+                break;
+            }
+            mapLayerItem = mapLayerItem->next;
+        }
+
+        //Resets the map
+        if (mapFileXML) mapFileXML.reset();
+    }
     
     // NOTE: Later you have to create a function here to load and create the colliders from the map
 
@@ -289,6 +303,7 @@ bool Map::Load(SString mapFileName)
     Loadcollision("Collision");
 
     return ret;
+
 }
 
 bool Map::LoadMap(pugi::xml_node mapFile)

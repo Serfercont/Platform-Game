@@ -72,6 +72,9 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\EnemyWalk.h" />
     <ClInclude Include="Source\Pathfinding.h" />
+    <ClInclude Include="PQueue.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
