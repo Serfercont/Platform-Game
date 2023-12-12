@@ -352,6 +352,7 @@ void PhysBody::SetPosition(int& x, int& y)
 	body->SetTransform(b2Vec2(xPosInMeters, yPosInMeters), body->GetAngle());
 }
 
+
 float PhysBody::GetRotation() const
 {
 	return RADTODEG * body->GetAngle();

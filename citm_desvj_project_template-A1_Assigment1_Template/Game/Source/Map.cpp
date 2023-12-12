@@ -95,16 +95,14 @@ bool Map::Loadcollision(std::string nombreCapa) {
             {
                 for (int y = 0; y < mapLayerItem->data->height; y++)
                 {
+                   
                     int gid = mapLayerItem->data->Get(x, y);
                     TileSet* tileset = GetTilesetFromTileId(gid);
 
                     SDL_Rect r = tileset->GetTileRect(gid);
                     iPoint pos = MapToWorld(x, y);
 
-                   /* app->render->DrawTexture(tileset->texture,
-                        pos.x,
-                        pos.y,
-                        &r);*/
+                  
                     if (tileset->firstgid + 0 == gid) {
                         PhysBody* c1 = app->physics->CreateRectangle(pos.x+16, pos.y+16, 32, 15, STATIC);
                         c1->ctype = ColliderType::PLATFORM;
@@ -255,16 +253,7 @@ bool Map::Load(SString mapFileName)
         if (mapFileXML) mapFileXML.reset();
     }
     
-    // NOTE: Later you have to create a function here to load and create the colliders from the map
-
-   /* PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543 + 32, 256, 64, STATIC);
-    c1->ctype = ColliderType::PLATFORM;
-
-    PhysBody* c2 = app->physics->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);
-    c2->ctype = ColliderType::PLATFORM;
-
-    PhysBody* c3 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
-    c3->ctype = ColliderType::PLATFORM;*/
+    
     
     if(ret == true)
     {
