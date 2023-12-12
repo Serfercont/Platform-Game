@@ -144,7 +144,7 @@ bool Scene::LoadState(pugi::xml_node node)
 	player->isWalking = node.child("pconditions").attribute("isWalking").as_bool();
 	player->right = node.child("pconditions").attribute("right").as_bool();
 	
-
+	player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y) },0);
 	
 	//player->pbody->setTransform(pixels_to_meters, player->position.x... para la y igual)
 	//También hay que poner todas las condiciones para detectar en qué situación está en la partida.

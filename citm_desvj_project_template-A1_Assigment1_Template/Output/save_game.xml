@@ -6,7 +6,7 @@
 	<audio />
 	<:anonymous />
 	<scene>
-		<player x="336" y="613" />
+		<player x="112" y="709" />
 		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="true" />
 	</scene>
 	<:anonymous />
