@@ -24,6 +24,15 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
+
+public:
+	float speed = 0.4f;
+	SDL_Texture* texture = NULL;
+	PhysBody* pbody;
+
+
+	Animation* currentAnimation = nullptr;
+	Animation idleAnim;
 };
 
 #endif // __ENEMYWALK_H__

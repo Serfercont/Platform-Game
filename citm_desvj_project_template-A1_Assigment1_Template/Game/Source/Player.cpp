@@ -229,11 +229,6 @@ bool Player::Update(float dt)
 	
 	}
 		currentAnimation->Update();
-	
-		printf("\r %i", app->render->camera.x - position.x + 400);
-
-
-	currentAnimation->Update();
 
 	return true;
 }

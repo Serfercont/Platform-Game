@@ -31,14 +31,26 @@ bool EnemyWalk::Awake() {
 
 bool EnemyWalk::Start() {
 
+
+	idleAnim.LoadAnimations("enemyIdle");
+	texture = app->tex->Load(texturePath);
+
+	pbody = app->physics->CreateCircle(position.x + 16, position.y - 10, 25, bodyType::DYNAMIC);
+	pbody->listener = this;
+	pbody->ctype = ColliderType::ENEMYWALK;
 	
 	return true;
 }
 
 bool EnemyWalk::Update(float dt)
 {
-	
 
+	/*const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+	}*/
 	return true;
 }
 

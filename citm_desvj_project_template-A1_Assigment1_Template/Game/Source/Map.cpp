@@ -35,7 +35,7 @@ bool Map::Start() {
     //Calls the functon to load the map, make sure that the filename is assigned
     SString mapPath = path;
     mapPath += name;
-    bool ret = Load(mapPath);
+    Load(mapPath);
 
     pathfinding = new PathFinding();
 
@@ -44,11 +44,12 @@ bool Map::Start() {
     pathfinding->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
     RELEASE_ARRAY(navigationMap);
 
-    return ret;
+    return true;
 }
 
 bool Map::Update(float dt)
 {
+    bool ret = true;
     if(mapLoaded == false)
         return false;
 
@@ -77,7 +78,7 @@ bool Map::Update(float dt)
 
     }
 
-    return true;
+    return ret;
 }
 
 
@@ -213,28 +214,48 @@ bool Map::Load(SString mapFileName)
     pugi::xml_document mapFileXML;
     pugi::xml_parse_result result = mapFileXML.load_file(mapFileName.GetString());
 
-    if(result == NULL)
+    if (result == NULL)
     {
         LOG("Could not load map xml file %s. pugi error: %s", mapFileName.GetString(), result.description());
         ret = false;
     }
-
-    if(ret == true)
-    {
-        ret = LoadMap(mapFileXML);
-    }
-
-    if (ret == true)
-    {
-        ret = LoadTileSet(mapFileXML);
-    }
-
-    if (ret == true)
-    {
-        ret = LoadAllLayers(mapFileXML.child("map"));
-    }
     else
     {
+        ret = LoadMap(mapFileXML);
+        ret = LoadTileSet(mapFileXML);
+        ret = LoadAllLayers(mapFileXML.child("map"));
+    
+
+        if (ret == true)
+        {
+         
+            LOG("Successfully parsed map XML file :%s", mapFileName.GetString());
+            LOG("width : %d height : %d", mapData.width, mapData.height);
+            LOG("tile_width : %d tile_height : %d", mapData.tileWidth, mapData.tileHeight);
+
+            LOG("Tilesets----");
+
+            ListItem<TileSet*>* tileset;
+            tileset = mapData.tilesets.start;
+
+            while (tileset != NULL) {
+                LOG("name : %s firstgid : %d", tileset->data->name.GetString(), tileset->data->firstgid);
+                LOG("tile width : %d tile height : %d", tileset->data->tileWidth, tileset->data->tileHeight);
+                LOG("spacing : %d margin : %d", tileset->data->spacing, tileset->data->margin);
+                tileset = tileset->next;
+            }
+
+            LOG("Layers----");
+
+            ListItem<MapLayer*>* mapLayer;
+            mapLayer = mapData.maplayers.start;
+
+            while (mapLayer != NULL) {
+                LOG("id : %d name : %s", mapLayer->data->id, mapLayer->data->name.GetString());
+                LOG("Layer width : %d Layer height : %d", mapLayer->data->width, mapLayer->data->height);
+                mapLayer = mapLayer->next;
+            }
+        }
         // Find the navigation layer
         ListItem<MapLayer*>* mapLayerItem;
         mapLayerItem = mapData.maplayers.start;
@@ -250,48 +271,13 @@ bool Map::Load(SString mapFileName)
         }
 
         //Resets the map
+
         if (mapFileXML) mapFileXML.reset();
     }
-    
-    
-    
-    if(ret == true)
-    {
-        LOG("Successfully parsed map XML file :%s", mapFileName.GetString());
-        LOG("width : %d height : %d",mapData.width,mapData.height);
-        LOG("tile_width : %d tile_height : %d",mapData.tileWidth, mapData.tileHeight);
-        
-        LOG("Tilesets----");
 
-        ListItem<TileSet*>* tileset;
-        tileset = mapData.tilesets.start;
-
-        while (tileset != NULL) {
-            LOG("name : %s firstgid : %d",tileset->data->name.GetString(), tileset->data->firstgid);
-            LOG("tile width : %d tile height : %d", tileset->data->tileWidth, tileset->data->tileHeight);
-            LOG("spacing : %d margin : %d", tileset->data->spacing, tileset->data->margin);
-            tileset = tileset->next;
-        }
-
-        LOG("Layers----");
-
-        ListItem<MapLayer*>* mapLayer;
-        mapLayer = mapData.maplayers.start;
-
-        while (mapLayer != NULL) {
-            LOG("id : %d name : %s", mapLayer->data->id, mapLayer->data->name.GetString());
-            LOG("Layer width : %d Layer height : %d", mapLayer->data->width, mapLayer->data->height);
-            mapLayer = mapLayer->next;
-        }
-    }
-
-    if(mapFileXML) mapFileXML.reset();
-
-    mapLoaded = ret;
-
-    Loadcollision("Collision");
-
-    return ret;
+        mapLoaded = ret;
+        Loadcollision("Collision");
+        return ret;
 
 }
 
@@ -370,7 +356,6 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
         layer->data[i] = tile.attribute("gid").as_int();
         i++;
     }
-
     return ret;
 }
 
@@ -453,7 +438,7 @@ void Map::CreateNavigationMap(int& width, int& height, uchar** buffer) const
             //If the gid is a blockedGid is an area that I cannot navigate, so is set in the navigation map as 0, all the other areas can be navigated
             //!!!! make sure that you assign blockedGid according to your map
             if (gid == blockedGid) navigationMap[i] = 0;
-            else navigationMap[i] = 1;
+            else navigationMap[i] = 760;
         }
     }
 
