@@ -35,7 +35,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-
+	Player* player;
 	bool LoadState(pugi::xml_node node);
 	bool SaveState(pugi::xml_node node);
 
@@ -44,7 +44,6 @@ private:
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;
-	Player* player;
 	EnemyWalk* enemyWalk;
 	SDL_Texture* fondo0;
 	SDL_Texture* fondo1;

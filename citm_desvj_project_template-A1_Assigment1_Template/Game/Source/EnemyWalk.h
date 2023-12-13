@@ -29,7 +29,10 @@ public:
 	float speed = 0.4f;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
+	SDL_Texture* mouseTileTex = nullptr;
 
+	iPoint origin;
+	iPoint destiny;
 
 	Animation* currentAnimation = nullptr;
 	Animation idleAnim;

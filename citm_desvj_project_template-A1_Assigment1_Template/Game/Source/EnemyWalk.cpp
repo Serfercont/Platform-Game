@@ -8,6 +8,8 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "DynArray.h"
+#include "Map.h"
 #include <map>
 #include <chrono>
 #include <thread>
@@ -44,13 +46,27 @@ bool EnemyWalk::Start() {
 
 bool EnemyWalk::Update(float dt)
 {
+	currentAnimation = &idleAnim;
+	origin = app->map->WorldToMap(position.x, position.y);
+	destiny = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
 
-	/*const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
+	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
+	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
+	currentVelocity.y += 0.5;
+
+	int dist = sqrt(pow(destiny.x - origin.x, 2) + pow(destiny.y - origin.y, 2));
+
+	if (dist<4)
 	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
-	}*/
+		currentVelocity.y = 0;
+		pbody->body->SetLinearVelocity(currentVelocity);
+	}
+	else if (dist>=4 && dist<=5)
+	{
+		app->map->pathfinding->CreatePath(origin, destiny);
+		const DynArray<iPoint>* Lastpath = app->map->pathfinding->GetLastPath();
+	}
+	
 	return true;
 }
 
