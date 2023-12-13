@@ -56,18 +56,8 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
-	/*iPoint mouseTile = app->map->WorldToMap(position.x - app->render->camera.x,
-		position.y - app->render->camera.y);
-
-	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
-	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
-
-	iPoint origin = iPoint(2, 2);*/
-
 	flipPos.x = position.x - 10;
 	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
-	
-
 
 	//currentAnimation = &idleAnim;
 	

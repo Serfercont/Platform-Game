@@ -141,7 +141,17 @@ iPoint Map::WorldToMap(int x, int y)
 {
     iPoint ret(0, 0);
 
-    //
+    if (mapData.orientation == MapOrientation::ORTOGRAPHIC) {
+        ret.x = x / mapData.tileWidth;
+        ret.y = y / mapData.tileHeight;
+    }
+
+    if (mapData.orientation == MapOrientation::ISOMETRIC) {
+        float half_width = mapData.tileWidth / 2;
+        float half_height = mapData.tileHeight / 2;
+        ret.x = int((x / half_width + y / half_height) / 2);
+        ret.y = int((y / half_height - (x / half_width)) / 2);
+    }
 
     return ret;
 }

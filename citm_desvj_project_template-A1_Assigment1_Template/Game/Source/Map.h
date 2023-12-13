@@ -8,7 +8,11 @@
 
 #include "PugiXml\src\pugixml.hpp"
 
-
+enum MapOrientation
+{
+	ORTOGRAPHIC = 0,
+	ISOMETRIC
+};
 struct TileSet
 {
 	SString	name;
@@ -95,6 +99,8 @@ struct MapData
 	List<TileSet*> tilesets;
 	MapTypes type;
 	List<MapLayer*> maplayers;
+	MapOrientation orientation;
+
 };
 
 class Map : public Module
