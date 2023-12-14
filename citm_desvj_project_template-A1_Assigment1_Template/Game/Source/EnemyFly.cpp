@@ -15,7 +15,7 @@
 #include <chrono>
 #include <thread>
 
-EnemyFly::EnemyFly() : Entity(EntityType::ENEMYWALK)
+EnemyFly::EnemyFly() : Entity(EntityType::ENEMYFLY)
 {
 	name.Create("EnemyFly");
 }
