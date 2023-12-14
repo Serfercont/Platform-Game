@@ -95,6 +95,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\EnemyFly.cpp" />
     <ClCompile Include="Source\EnemyWalk.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\Item.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="PQueue.h" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\EnemyFly.h" />
     <ClInclude Include="Source\EnemyWalk.h" />
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />

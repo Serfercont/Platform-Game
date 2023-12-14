@@ -1,5 +1,5 @@
-#ifndef __ENEMYWALK_H__
-#define __ENEMYWALK_H__
+#ifndef __ENEMYFLY_H__
+#define __ENEMYFLY_H__
 
 #include "Entity.h"
 #include "Point.h"
@@ -9,12 +9,12 @@
 
 struct SDL_Texture;
 
-class EnemyWalk : public Entity
+class EnemyFly : public Entity
 {
 public:
-	EnemyWalk();
+	EnemyFly();
 
-	virtual ~EnemyWalk();
+	virtual ~EnemyFly();
 
 	bool Awake();
 

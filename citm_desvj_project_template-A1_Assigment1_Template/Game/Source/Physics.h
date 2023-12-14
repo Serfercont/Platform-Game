@@ -30,7 +30,8 @@ enum class ColliderType {
 	SPIKES,
 	COLUMN,
 	UNKNOWN,
-	ENEMYWALK
+	ENEMYWALK,
+	ENEMYFLY
 	// ..
 };
 

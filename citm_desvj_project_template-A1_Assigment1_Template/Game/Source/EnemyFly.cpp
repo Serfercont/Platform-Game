@@ -1,4 +1,4 @@
-#include "EnemyWalk.h"
+#include "EnemyFly.h"
 #include "App.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -15,16 +15,16 @@
 #include <chrono>
 #include <thread>
 
-EnemyWalk::EnemyWalk() : Entity(EntityType::ENEMYWALK)
+EnemyFly::EnemyFly() : Entity(EntityType::ENEMYWALK)
 {
-	name.Create("EnemyWalk");
+	name.Create("EnemyFly");
 }
 
-EnemyWalk::~EnemyWalk()
+EnemyFly::~EnemyFly()
 {
 }
 
-bool EnemyWalk::Awake() {
+bool EnemyFly::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
@@ -32,7 +32,7 @@ bool EnemyWalk::Awake() {
 	return true;
 }
 
-bool EnemyWalk::Start() {
+bool EnemyFly::Start() {
 
 
 	idleAnim.LoadAnimations("enemyIdle");
@@ -42,15 +42,15 @@ bool EnemyWalk::Start() {
 	tileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
 	pbody = app->physics->CreateCircle(position.x + 16, position.y - 10, 25, bodyType::DYNAMIC);
-	pbody->ctype = ColliderType::ENEMYWALK;
+	pbody->ctype = ColliderType::ENEMYFLY;
 	pbody->listener = this;
 
 	initialTransform = pbody->body->GetTransform();
-	
+
 	return true;
 }
 
-bool EnemyWalk::Update(float dt)
+bool EnemyFly::Update(float dt)
 {
 	flipPos.x = position.x - 10;
 	origin = app->map->WorldToMap(position.x, position.y);
@@ -60,14 +60,14 @@ bool EnemyWalk::Update(float dt)
 
 	LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);
 	int dist = sqrt(pow(destiny.x - origin.x, 2) + pow(destiny.y - origin.y, 2));
-	
-	if (dist<12)
+
+	if (dist < 12)
 	{
-		
+
 		currentAnimation = &idleAnim;
 
 		app->map->pathfinding->CreatePath(origin, destiny);
-		if (dist<2)
+		if (dist < 2)
 		{
 			if (!attack)
 			{
@@ -75,7 +75,7 @@ bool EnemyWalk::Update(float dt)
 				velocity = { 0,0 };
 			}
 		}
-		else if (dist>=2)
+		else if (dist >= 2)
 		{
 			float distanciaX = destiny.x - origin.x;
 			float distanciaY = destiny.y - origin.y;
@@ -118,12 +118,12 @@ bool EnemyWalk::Update(float dt)
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	if (right)
 	{
-		app->render->DrawTexture(texture, position.x-50, position.y-47, &rect);
+		app->render->DrawTexture(texture, position.x - 50, position.y - 47, &rect);
 	}
 	else
 	{
 
-		app->render->DrawTexture(texture, flipPos.x-50, position.y-47, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
+		app->render->DrawTexture(texture, flipPos.x - 50, position.y - 47, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
 	}
 	currentAnimation->Update();
 
@@ -139,12 +139,12 @@ bool EnemyWalk::Update(float dt)
 	return true;
 }
 
-bool EnemyWalk::CleanUp()
+bool EnemyFly::CleanUp()
 {
 	return true;
 }
 
-void EnemyWalk::OnCollision(PhysBody* physA, PhysBody* physB) {
+void EnemyFly::OnCollision(PhysBody* physA, PhysBody* physB) {
 
-	
-	}
+
+}
