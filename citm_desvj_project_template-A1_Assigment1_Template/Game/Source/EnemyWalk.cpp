@@ -36,6 +36,9 @@ bool EnemyWalk::Start() {
 
 
 	idleAnim.LoadAnimations("enemyIdle");
+	walkAnim.LoadAnimations("enemyWalk");
+	runAnim.LoadAnimations("enemyRun");
+	attackAnim.LoadAnimations("enemyAttack");
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &idleAnim;
 

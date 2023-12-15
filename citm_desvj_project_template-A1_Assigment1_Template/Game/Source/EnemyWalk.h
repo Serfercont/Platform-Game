@@ -45,6 +45,9 @@ public:
 
 	Animation* currentAnimation = nullptr;
 	Animation idleAnim;
+	Animation walkAnim;
+	Animation runAnim;
+	Animation attackAnim;
 
 	bool attack;
 	bool isAlive;
