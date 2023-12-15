@@ -67,49 +67,47 @@ bool EnemyWalk::Update(float dt)
 	if (dist<12)
 	{
 		
-		currentAnimation = &idleAnim;
-
+		//currentAnimation = &idleAnim;
 		app->map->pathfinding->CreatePath(origin, destiny);
-		if (dist<2)
+		lastPath = *app->map->pathfinding->GetLastPath();
+		if (dist<=2 && !attack)
 		{
-			if (!attack)
-			{
-				attack = true;
-				velocity = { 0,0 };
-			}
+			attack = true;
+			currentAnimation = &attackAnim;
 		}
-		else if (dist>=2)
-		{
-			float distanciaX = destiny.x - origin.x;
-			float distanciaY = destiny.y - origin.y;
+	}
+	if (attack && isAlive)
+	{
 
-			iPoint playerTilePos = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
-			if (app->map->pathfinding->IsWalkable(playerTilePos) != 0)
-			{
-				if (distanciaX < 0)
-				{
-					velocity.x = -2;
-					right = false;
-				}
-				if (distanciaX > 0)
-				{
-					velocity.x = 2;
-					right = true;
-				}
-			}
-			else velocity = { 0,0 };
-		}
-		else
-		{
-			currentAnimation = &idleAnim;
-			velocity = { 0, 0 };
-			app->map->pathfinding->ClearLastPath();
-		}
 	}
 
 	if (!isAlive)
 	{
+		pbody->body->SetActive(false);
+		app->entityManager->DestroyEntity(this);
+		app->physics->world->DestroyBody(pbody->body);
+	}
 
+	if (lastPath.Count() > 0)
+	{
+		iPoint* nextPathTile;
+		nextPathTile = lastPath.At(lastPath.Count() - 1);
+
+		if (nextPathTile->x < origin.x)
+		{
+			right = false;
+			currentAnimation = &runAnim;
+			velocity.x = -3;
+		}
+		else
+		{
+			right = true;
+			currentAnimation = &runAnim;
+			velocity.x = +3;
+		}
+		if (nextPathTile->x == origin.x) {
+			lastPath.Pop(*nextPathTile);
+		}
 	}
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);

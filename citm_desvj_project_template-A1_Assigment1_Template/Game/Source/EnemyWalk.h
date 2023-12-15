@@ -6,6 +6,7 @@
 #include "Physics.h"
 #include "SDL/include/SDL.h"
 #include "Animation.h"
+#include "DynArray.h"
 
 struct SDL_Texture;
 
@@ -50,7 +51,9 @@ public:
 	Animation attackAnim;
 
 	bool attack;
-	bool isAlive;
+	bool isAlive=true;
+
+	DynArray<iPoint> lastPath;
 };
 
 #endif // __ENEMYWALK_H__
