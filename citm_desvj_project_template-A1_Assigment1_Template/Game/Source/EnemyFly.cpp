@@ -30,16 +30,13 @@ bool EnemyFly::Awake() {
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 
-	origin.x = parameters.attribute("x").as_int();
-	origin.y = parameters.attribute("y").as_int();
-	destiny = origin;
 	return true;
 }
 
 bool EnemyFly::Start() {
 
 
-	idleAnim.LoadAnimations("enemyIdle");
+	idleAnim.LoadAnimations("flyIdle");
 	/*walkAnim.LoadAnimations("enemyWalk");
 	runAnim.LoadAnimations("enemyRun");
 	attackAnim.LoadAnimations("enemyAttack");*/
@@ -48,7 +45,7 @@ bool EnemyFly::Start() {
 
 	tileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
-	pbody = app->physics->CreateCircle(position.x + 16, position.y - 10, 25, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x + 16, position.y - 10, 16, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ENEMYFLY;
 	pbody->listener = this;
 	initialTransform = pbody->body->GetTransform();
@@ -119,12 +116,6 @@ bool EnemyFly::Update(float dt)
 		}
 	}
 
-	origin.x += velocity.x;
-	origin.y += velocity.y;
-
-	position.x = app->map->MapToWorld(origin.x, origin.y).x;
-	position.y = app->map->MapToWorld(origin.x, origin.y).y;
-
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
 
@@ -134,11 +125,11 @@ bool EnemyFly::Update(float dt)
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	if (right)
 	{
-		app->render->DrawTexture(texture, position.x - 50, position.y - 47, &rect);
+		app->render->DrawTexture(texture, position.x - 20, position.y - 40, &rect);
 	}
 	else
 	{
-		app->render->DrawTexture(texture, flipPos.x - 50, position.y - 47, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
+		app->render->DrawTexture(texture, flipPos.x - 20, position.y - 40, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
 	}
 	currentAnimation->Update();
 
