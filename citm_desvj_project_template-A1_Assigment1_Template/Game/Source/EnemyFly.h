@@ -48,7 +48,7 @@ public:
 	Animation idleAnim;
 
 	bool attack;
-	bool isAlive;
+	bool isAlive=true;
 };
 
 #endif // __ENEMYWALK_H__

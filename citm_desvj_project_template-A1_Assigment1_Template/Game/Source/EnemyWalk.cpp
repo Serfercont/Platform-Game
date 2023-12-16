@@ -58,7 +58,7 @@ bool EnemyWalk::Update(float dt)
 	flipPos.x = position.x - 10;
 	origin = app->map->WorldToMap(position.x, position.y);
 	destiny = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
-
+	
 	velocity.y = 5;
 
 	//LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);

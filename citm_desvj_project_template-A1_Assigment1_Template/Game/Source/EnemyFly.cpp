@@ -29,6 +29,10 @@ bool EnemyFly::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
+
+	origin.x = parameters.attribute("x").as_int();
+	origin.y = parameters.attribute("y").as_int();
+	destiny = origin;
 	return true;
 }
 
@@ -57,12 +61,11 @@ bool EnemyFly::Update(float dt)
 	flipPos.x = position.x - 10;
 	origin = app->map->WorldToMap(position.x, position.y);
 	destiny = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
-
-	velocity.y = 5;
+	
 
 	LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);
 	int dist = sqrt(pow(destiny.x - origin.x, 2) + pow(destiny.y - origin.y, 2));
-
+	LOG("dist: %d", dist);
 	if (dist < 10)
 	{
 		//currentAnimation = &idleAnim;
@@ -95,18 +98,32 @@ bool EnemyFly::Update(float dt)
 		{
 			right = false;
 			//currentAnimation = &runAnim;
-			velocity.x = -3;
+			velocity.x = -2;
 		}
 		else
 		{
 			right = true;
 			//currentAnimation = &runAnim;
-			velocity.x = +3;
+			velocity.x = +2;
 		}
 		if (nextPathTile->x == origin.x) {
 			lastPath.Pop(*nextPathTile);
 		}
+		if (nextPathTile->y < origin.y)
+		{
+			velocity.y = -2;
+		}
+		else
+		{
+			velocity.y = +2;
+		}
 	}
+
+	origin.x += velocity.x;
+	origin.y += velocity.y;
+
+	position.x = app->map->MapToWorld(origin.x, origin.y).x;
+	position.y = app->map->MapToWorld(origin.x, origin.y).y;
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
@@ -121,7 +138,6 @@ bool EnemyFly::Update(float dt)
 	}
 	else
 	{
-
 		app->render->DrawTexture(texture, flipPos.x - 50, position.y - 47, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
 	}
 	currentAnimation->Update();
