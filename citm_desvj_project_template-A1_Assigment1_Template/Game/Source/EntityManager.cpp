@@ -91,6 +91,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::ENEMYWALK:
 		entity = new EnemyWalk();
 		break;
+	case EntityType::ENEMYFLY:
+		entity = new EnemyFly();
+		break;
 	default:
 		break;
 	}

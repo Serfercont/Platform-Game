@@ -28,11 +28,11 @@
 	<background2 path="Assets/Maps/Fondo2.png"/>
 	<background3 path="Assets/Maps/Fondo3.png"/>
 	<background4 path="Assets/Maps/Fondo4.png"/>
-  <mainmusic path="Assets/Audio/Music/dark_dragon.mp3"/>
+    <mainmusic path="Assets/Audio/Music/dark_dragon.mp3"/>
     <player x="85" y="650" texturepath="Assets/Textures/knight.png"/>
 	<enemyWalk x="500" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
-	<enemyWalk x="1000" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
-	<enemyFly x="300" y="100" texturepath="Assets/Enemy/Eye.png"/>
+	<enemyWalk x="800" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
+	<enemyFly x="300" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
@@ -81,53 +81,48 @@
 		</jump>
 		<enemyIdle loop="true" speed="0.1f">
 			<frame x="30" y="30" width="120" height="100"/>
-      <frame x="151" y="30" width="120" height="100"/>
-      <frame x="272" y="30" width="120" height="100"/>
-      <frame x="393" y="30" width="120" height="100"/>
-      <frame x="514" y="30" width="120" height="100"/>
-      <frame x="635" y="30" width="120" height="100"/>
-      <frame x="756" y="30" width="120" height="100"/>
-      <frame x="877" y="30" width="120" height="100"/>
+            <frame x="151" y="30" width="120" height="100"/>
+            <frame x="272" y="30" width="120" height="100"/>
+             <frame x="393" y="30" width="120" height="100"/>
+            <frame x="514" y="30" width="120" height="100"/>
+            <frame x="635" y="30" width="120" height="100"/>
+            <frame x="756" y="30" width="120" height="100"/>
+            <frame x="877" y="30" width="120" height="100"/>
       
 		</enemyIdle>
-    <enemyWalk loop="true" speed="0.2f">
-      <frame x="30" y="131" width="120" height="100"/>
-      <frame x="151" y="131" width="120" height="100"/>
-      <frame x="272" y="131" width="120" height="100"/>
-      <frame x="393" y="131" width="120" height="100"/>
-      <frame x="514" y="131" width="120" height="100"/>
-      <frame x="635" y="131" width="120" height="100"/>
-      <frame x="756" y="131" width="120" height="100"/>
-      <frame x="877" y="131" width="120" height="100"/>
-      <frame x="998" y="131" width="120" height="100"/>
-      <frame x="1119" y="131" width="120" height="100"/>
-      <frame x="1240" y="131" width="120" height="100"/>
+        <enemyWalk loop="true" speed="0.2f">
+            <frame x="30" y="131" width="120" height="100"/>
+            <frame x="151" y="131" width="120" height="100"/>
+            <frame x="272" y="131" width="120" height="100"/>
+            <frame x="393" y="131" width="120" height="100"/>
+            <frame x="514" y="131" width="120" height="100"/>
+            <frame x="635" y="131" width="120" height="100"/>
+            <frame x="756" y="131" width="120" height="100"/>
+            <frame x="877" y="131" width="120" height="100"/>
+            <frame x="998" y="131" width="120" height="100"/>
+            <frame x="1119" y="131" width="120" height="100"/>
+            <frame x="1240" y="131" width="120" height="100"/>
 
-    </enemyWalk>
-    <enemyRun loop="true" speed="0.4f">
-      <frame x="30" y="232" width="120" height="100"/>
-      <frame x="151" y="232" width="120" height="100"/>
-      <frame x="272" y="232" width="120" height="100"/>
-      <frame x="393" y="232" width="120" height="100"/>
-      <frame x="514" y="232" width="120" height="100"/>
-      <frame x="635" y="232" width="120" height="100"/>
-      <frame x="756" y="232" width="120" height="100"/>
-      <frame x="877" y="232" width="120" height="100"/>
+        </enemyWalk>
+        <enemyRun loop="true" speed="0.4f">
+            <frame x="30" y="232" width="120" height="100"/>
+            <frame x="151" y="232" width="120" height="100"/>
+            <frame x="272" y="232" width="120" height="100"/>
+            <frame x="393" y="232" width="120" height="100"/>
+            <frame x="514" y="232" width="120" height="100"/>
+            <frame x="635" y="232" width="120" height="100"/>
+            <frame x="756" y="232" width="120" height="100"/>
+            <frame x="877" y="232" width="120" height="100"/>
 
-    </enemyRun>
-    <enemyAttack loop="true" speed="0.2f">
-      <frame x="30" y="333" width="122" height="100"/>
-      <frame x="153" y="333" width="122" height="100"/>
-      <frame x="276" y="333" width="122" height="100"/>
-      <frame x="399" y="333" width="122" height="100"/>
-      <frame x="522" y="333" width="122" height="100"/>
-      <frame x="645" y="333" width="122" height="100"/>
-      <frame x="768" y="333" width="122" height="100"/>
-      
-
-    </enemyAttack>
-    
-    
-    
-	</animations>
+        </enemyRun>
+        <enemyAttack loop="true" speed="0.2f">
+            <frame x="30" y="333" width="122" height="100"/>
+            <frame x="153" y="333" width="122" height="100"/>
+            <frame x="276" y="333" width="122" height="100"/>
+            <frame x="399" y="333" width="122" height="100"/>
+            <frame x="522" y="333" width="122" height="100"/>
+            <frame x="645" y="333" width="122" height="100"/>
+            <frame x="768" y="333" width="122" height="100"/>
+           </enemyAttack>
+    </animations>
 </config>

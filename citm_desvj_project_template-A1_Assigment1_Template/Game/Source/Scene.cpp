@@ -41,6 +41,10 @@ bool Scene::Awake(pugi::xml_node& config)
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
 	}
+	if (config.child("enemyFly")) {
+		enemyFly = (EnemyFly*)app->entityManager->CreateEntity(EntityType::ENEMYFLY);
+		enemyFly->parameters = config.child("enemyFly");
+	}
 	/*if (config.child("enemyWalk")) {
 		enemyWalk = (EnemyWalk*)app->entityManager->CreateEntity(EntityType::ENEMYWALK);
 		enemyWalk->parameters = config.child("enemyWalk");

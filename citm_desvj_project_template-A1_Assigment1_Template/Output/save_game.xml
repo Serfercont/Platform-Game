@@ -6,12 +6,12 @@
 	<audio />
 	<:anonymous />
 	<scene>
-		<player x="2983" y="709" />
-		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="true" />
+		<player x="78" y="709" />
+		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="false" />
 	</scene>
 	<:anonymous />
 	<entitymanager />
 	<renderer>
-		<camera x="-2583" y="-20" />
+		<camera x="0" y="-20" />
 	</renderer>
 </game_state>

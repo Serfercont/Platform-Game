@@ -6,6 +6,7 @@
 #include "Physics.h"
 #include "SDL/include/SDL.h"
 #include "Animation.h"
+#include "DynArray.h"
 
 struct SDL_Texture;
 
@@ -40,7 +41,7 @@ public:
 	//pathfinding
 	iPoint origin;
 	iPoint destiny;
-	//DynArray<iPoint> lastPath;
+	DynArray<iPoint> lastPath;
 	b2Vec2 velocity;
 
 	Animation* currentAnimation = nullptr;
