@@ -32,7 +32,7 @@
     <player x="85" y="650" texturepath="Assets/Textures/knight.png"/>
 	<enemyWalk x="500" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
 	<enemyWalk x="800" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
-	<enemyFly x="300" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
+	<enemyFly x="300" y="450" texturepath="Assets/Enemy/FlyingEye.png"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
@@ -124,5 +124,49 @@
             <frame x="645" y="333" width="122" height="100"/>
             <frame x="768" y="333" width="122" height="100"/>
            </enemyAttack>
+    <enemyDead loop="true" speed="0.2f">
+      <frame x="514" y="434" width="120" height="100"/>
+      <frame x="635" y="434" width="120" height="100"/>
+      
+
+    </enemyDead>
+    
+    <flyIdle loop="true" speed="0.2f">
+      <frame x="30" y="30" width="56" height="56"/>
+      <frame x="87" y="30" width="56" height="56"/>
+      <frame x="144" y="30" width="56" height="56"/>
+      <frame x="201" y="30" width="56" height="56"/>
+      <frame x="258" y="30" width="56" height="56"/>
+      <frame x="315" y="30" width="56" height="56"/>
+      <frame x="372" y="30" width="56" height="56"/>
+      <frame x="430" y="30" width="56" height="56"/>
+    </flyIdle>
+    <flyDeath1 loop="true" speed="0.2f">
+      <frame x="30" y="87" width="56" height="56"/>
+      <frame x="87" y="87" width="56" height="56"/>
+      
+    </flyDeath1>
+    <flyDeath2 loop="false" speed="0.2f">
+      <frame x="144" y="87" width="56" height="56"/>
+      <frame x="201" y="87" width="56" height="56"/>
+
+    </flyDeath2>
+    <flyAttack loop="true" speed="0.2f">
+      <frame x="30" y="144" width="56" height="56"/>
+      <frame x="87" y="144" width="56" height="56"/>
+      <frame x="144" y="144" width="56" height="56"/>
+      <frame x="201" y="144" width="56" height="56"/>
+      <frame x="258" y="144" width="56" height="56"/>
+      <frame x="315" y="144" width="56" height="56"/>
+      <frame x="372" y="144" width="56" height="56"/>
+      <frame x="430" y="144" width="56" height="56"/>
+    </flyAttack>
+    <flyHit loop="true" speed="0.2f">
+      <frame x="30" y="201" width="56" height="56"/>
+      <frame x="87" y="201" width="56" height="56"/>
+      <frame x="144" y="201" width="56" height="56"/>
+      <frame x="201" y="201" width="56" height="56"/>
+      
+    </flyHit>
     </animations>
 </config>
