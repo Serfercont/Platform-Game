@@ -61,7 +61,7 @@ bool EnemyWalk::Update(float dt)
 
 	velocity.y = 5;
 
-	LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);
+	//LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);
 	int dist = sqrt(pow(destiny.x - origin.x, 2) + pow(destiny.y - origin.y, 2));
 	
 	if (dist<12)
