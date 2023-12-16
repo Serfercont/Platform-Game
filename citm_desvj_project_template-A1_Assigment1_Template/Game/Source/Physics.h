@@ -31,7 +31,8 @@ enum class ColliderType {
 	COLUMN,
 	UNKNOWN,
 	ENEMYWALK,
-	ENEMYFLY
+	ENEMYFLY,
+	DAMAGE
 	// ..
 };
 
@@ -82,6 +83,7 @@ public:
 	void BeginContact(b2Contact* contact);
 	bool debug;
 	b2World* world;
+	SDL_Rect rect;
 
 private:
 

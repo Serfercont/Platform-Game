@@ -39,6 +39,7 @@ bool EnemyWalk::Start() {
 	walkAnim.LoadAnimations("enemyWalk");
 	runAnim.LoadAnimations("enemyRun");
 	attackAnim.LoadAnimations("enemyAttack");
+	deadAnim.LoadAnimations("enemyDead");
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &idleAnim;
 
@@ -97,13 +98,13 @@ bool EnemyWalk::Update(float dt)
 		{
 			right = false;
 			currentAnimation = &runAnim;
-			velocity.x = -3;
+			velocity.x = -2;
 		}
 		else
 		{
 			right = true;
 			currentAnimation = &runAnim;
-			velocity.x = +3;
+			velocity.x = +2;
 		}
 		if (nextPathTile->x == origin.x) {
 			lastPath.Pop(*nextPathTile);
@@ -147,5 +148,12 @@ bool EnemyWalk::CleanUp()
 
 void EnemyWalk::OnCollision(PhysBody* physA, PhysBody* physB) {
 
-	
+	switch (physB->ctype) {
+
+	case ColliderType::DAMAGE:
+		isAlive = false;
+		currentAnimation = &deadAnim;
+		break;
+
 	}
+}

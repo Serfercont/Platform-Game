@@ -49,6 +49,7 @@ public:
 	Animation walkAnim;
 	Animation runAnim;
 	Animation attackAnim;
+	Animation deadAnim;
 
 	bool attack;
 	bool isAlive=true;

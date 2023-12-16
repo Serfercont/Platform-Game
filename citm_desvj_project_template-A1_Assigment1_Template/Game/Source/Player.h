@@ -30,6 +30,7 @@ public:
 	float speed = 0.4f;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
+	PhysBody* damage;
 	bool isjumpping = false;
 	bool isWalking = false;
 	int pickCoinFxId;
@@ -41,6 +42,8 @@ public:
 	int InitPosX;
 	int InitPosY;
 	bool spike=false;
+	bool powerUp= false;
+	bool isAttacking = false;
 
 	iPoint flipPos;
 

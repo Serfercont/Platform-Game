@@ -49,7 +49,7 @@ bool Player::Start() {
 	pbody = app->physics->CreateCircle(position.x + 16, position.y-10, 25, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
-
+	
 
 	return true;
 }
@@ -79,30 +79,50 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true) {
 		currentVelocity.y = currentVelocity.y - 0.5;
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == true) {
 		currentVelocity.y = currentVelocity.y + 0.5;
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
-
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && isAlive && godMode)
 	{
 		currentVelocity.y = 0;
 		currentAnimation = &idleAnim;
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
 	{
 		currentVelocity.x = 0;
 		currentAnimation = &idleAnim;
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
+		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode==false) {
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && godMode==false && !powerUp && !isAttacking) {
 		currentAnimation = &atack1Anim;
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
+		isAttacking = true;
+		if (right)
+		{
+			int damaXR = position.x + 50;
+			int damaYR= position.y+10;
+			damage = app->physics->CreateRectangle(damaXR, damaYR, 20, 20, bodyType::STATIC);
+			damage->listener = this;
+			damage->ctype = ColliderType::DAMAGE;
+		}
+		else
+		{
+			int damaXL = position.x - 15;
+			int damaYL = position.y +10;
+			damage = app->physics->CreateRectangle(damaXL, damaYL, 20, 20, bodyType::STATIC);
+			damage->listener = this;
+			damage->ctype = ColliderType::DAMAGE;
+		}
+	}
+
+	if (currentAnimation== &atack1Anim && currentAnimation->HasFinished() && isAttacking)
+	{
+		damage->body->SetActive(false);
+		app->physics->world->DestroyBody(damage->body);
+		damage = nullptr;
+		isAttacking = false;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == false) {
 		
@@ -129,7 +149,7 @@ bool Player::Update(float dt)
 		currentAnimation = &jumpAnim;
 		currentVelocity.y = -17;
 		pbody->body->SetLinearVelocity(currentVelocity);
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
+		
 	}
 	//que hace si est� tocando con el pincho
 	if (spike == true)
