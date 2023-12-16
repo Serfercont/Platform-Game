@@ -30,6 +30,7 @@
 	<background4 path="Assets/Maps/Fondo4.png"/>
     <mainmusic path="Assets/Audio/Music/dark_dragon.mp3"/>
     <player x="85" y="650" texturepath="Assets/Textures/knight.png"/>
+    <ability x="0" y="0" texturepath="Assets/Textures/Ability.png"/>
 	<enemyWalk x="500" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
 	<enemyWalk x="800" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
 	<enemyFly x="300" y="450" texturepath="Assets/Enemy/FlyingEye.png"/>
@@ -63,6 +64,13 @@
 			<frame x="328" y="823" width="87" height="76"/>
 			<frame x="400" y="823" width="87" height="76"/>
 		</attack1>
+    <ability loop="true" speed="0.1f">
+      <frame x="0" y="0" width="64" height="64"/>
+      <frame x="64" y="0" width="64" height="64"/>
+      <frame x="129" y="0" width="64" height="64"/>
+      <frame x="194" y="0" width="64" height="64"/>
+      <frame x="259" y="0" width="64" height="64"/>
+    </ability>
 		<dead loop="false" speed="0.1f">
 			<frame x="91" y="743" width="65" height="66"/>
 			<frame x="164" y="743" width="65" height="66"/>
