@@ -44,6 +44,7 @@ public:
 	bool spike=false;
 	bool powerUp= false;
 	bool isAttacking = false;
+	bool attackCreated;
 
 	iPoint flipPos;
 

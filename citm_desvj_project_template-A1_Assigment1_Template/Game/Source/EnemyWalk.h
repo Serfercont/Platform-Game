@@ -52,6 +52,7 @@ public:
 	Animation deadAnim;
 
 	bool attack;
+	bool die=false;
 	bool isAlive=true;
 
 	DynArray<iPoint> lastPath;

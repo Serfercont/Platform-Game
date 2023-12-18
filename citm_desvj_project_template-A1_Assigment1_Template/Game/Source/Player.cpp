@@ -83,52 +83,66 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == true) {
 		currentVelocity.y = currentVelocity.y + 0.5;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && isAlive && godMode)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && isAlive && godMode && !isAttacking)
 	{
 		currentVelocity.y = 0;
 		currentAnimation = &idleAnim;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive && !isAttacking)
 	{
 		currentVelocity.x = 0;
 		currentAnimation = &idleAnim;
+
 		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && godMode==false && !powerUp && !isAttacking) {
-		currentAnimation = &atack1Anim;
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && godMode == false && !powerUp && !isAttacking) {
 		isAttacking = true;
+		currentAnimation = &atack1Anim;
+		currentAnimation->loopCount = 0;
+		currentAnimation->Reset();
 		if (right)
 		{
-			int damaXR = position.x + 50;
-			int damaYR= position.y+10;
-			damage = app->physics->CreateRectangle(damaXR, damaYR, 20, 20, bodyType::STATIC);
+
+			damage = app->physics->CreateRectangleSensor(position.x + 70, position.y + 10, 20, 20, bodyType::KINEMATIC);
 			damage->listener = this;
 			damage->ctype = ColliderType::DAMAGE;
 		}
-		else
+		else if (!right)
 		{
-			int damaXL = position.x - 15;
-			int damaYL = position.y +10;
-			damage = app->physics->CreateRectangle(damaXL, damaYL, 20, 20, bodyType::STATIC);
+
+			damage = app->physics->CreateRectangleSensor(position.x - 15, position.y + 10, 20, 20, bodyType::KINEMATIC);
 			damage->listener = this;
 			damage->ctype = ColliderType::DAMAGE;
+		}
+		if (isAttacking)
+		{
+			currentAnimation->Reset();
+			currentAnimation = &atack1Anim;
+			currentAnimation->loopCount = 0;	
 		}
 	}
 
-	if (currentAnimation== &atack1Anim && currentAnimation->HasFinished() && isAttacking)
+	if (currentAnimation==&atack1Anim && currentAnimation->HasFinished())
 	{
-		damage->body->SetActive(false);
-		app->physics->world->DestroyBody(damage->body);
-		damage = nullptr;
+		if (damage)
+		{
+			isAttacking = false;
+			damage->body->SetActive(false);
+			damage->body->GetWorld()->DestroyBody(damage->body);
+			damage = NULL;
+		}
 		isAttacking = false;
+		currentAnimation->loopCount = 0;
+		currentAnimation->Reset();
 	}
+	
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == false) {
 		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive ) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive && !isAttacking) {
 		right = false;
 		isWalking = true;
 	
@@ -136,7 +150,7 @@ bool Player::Update(float dt)
 		currentAnimation = &walkAnim;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive && !isAttacking) {
 		right = true;
 		isWalking = true;
 		currentVelocity.x = +speed * 16;
@@ -144,7 +158,7 @@ bool Player::Update(float dt)
 		currentAnimation = &walkAnim; 
 		
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive && !checkColumn) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive && !checkColumn && !isAttacking) {
 		isjumpping = true;
 		currentAnimation = &jumpAnim;
 		currentVelocity.y = -17;
@@ -156,6 +170,7 @@ bool Player::Update(float dt)
 	{
 		currentVelocity.x = 0;
 		isAlive = false;
+		isAttacking = false;
 		if (currentAnimation!=&deadAnim)
 		{
 			currentAnimation = &deadAnim;
@@ -261,7 +276,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLATFORM:
 		isjumpping = false;
 		checkColumn = false;
-		currentAnimation = &idleAnim;
+		
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::UNKNOWN:
