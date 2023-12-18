@@ -4,10 +4,12 @@
 	<input />
 	<textures />
 	<audio />
-	<:anonymous />
+	<physics />
 	<scene>
-		<player x="143" y="709" />
-		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="false" />
+		<player x="169" y="709" />
+		<enemy1 x="487" y="655" />
+		<enemy2 x="816" y="591" />
+		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="true" />
 	</scene>
 	<:anonymous />
 	<entitymanager />

@@ -117,6 +117,20 @@ void EntityManager::AddEntity(Entity* entity)
 {
 	if ( entity != nullptr) entities.Add(entity);
 }
+void EntityManager::GetWolves(List<Entity*>& wolvesList) const
+{
+	wolvesList.Clear();
+
+	ListItem<Entity*>* entity;
+
+	for (entity = entities.start; entity != NULL; entity = entity->next)
+	{
+		if (entity->data->type == EntityType::ENEMYWALK)
+		{
+			wolvesList.Add(entity->data);
+		}
+	}
+}
 
 bool EntityManager::Update(float dt)
 {

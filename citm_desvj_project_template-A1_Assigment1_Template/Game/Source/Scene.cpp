@@ -53,8 +53,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	{
 		EnemyWalk* item = (EnemyWalk*)app->entityManager->CreateEntity(EntityType::ENEMYWALK);
 		item->parameters = itemNode;
-	}
 
+	}
+	WolfList;
+
+	app->entityManager->GetWolves(WolfList);
 	if (config.child("map")) {
 		//Get the map name from the config file and assigns the value in the module
 		app->map->name = config.child("map").attribute("name").as_string();
@@ -169,6 +172,15 @@ bool Scene::LoadState(pugi::xml_node node)
 	//player->pbody->setTransform(pixels_to_meters, player->position.x... para la y igual)
 	//Tambi�n hay que poner todas las condiciones para detectar en qu� situaci�n est� en la partida.
 	//Lo mismo con los enemigos y si tiene powerups tambi�n
+
+	for (int Wolfcount = 0; Wolfcount < WolfList.Count(); Wolfcount++) {
+
+		Entity* Wolf = WolfList.At(Wolfcount)->data;
+
+		std::string count = std::to_string(Wolfcount + 1);
+		Wolf->position.x = node.child(("enemy" + count).c_str()).attribute("x").as_int();
+		Wolf->position.y = node.child(("enemy" + count).c_str()).attribute("y").as_int();
+	}
 	return true;
 }
 
@@ -177,6 +189,17 @@ bool Scene::SaveState(pugi::xml_node node)
 	pugi::xml_node posNode = node.append_child("player");
 	posNode.append_attribute("x").set_value(player->position.x);
 	posNode.append_attribute("y").set_value(player->position.y);
+
+	for (int wolfCount = 0; wolfCount < WolfList.Count(); wolfCount++) {
+		std::string Wolfy = std::to_string(wolfCount + 1);
+		pugi::xml_node enemyNode = node.append_child(("enemy" + Wolfy).c_str());
+		Entity* Wolf = WolfList.At(wolfCount)->data;
+
+		
+		enemyNode.append_attribute("x").set_value(Wolf->position.x);
+		enemyNode.append_attribute("y").set_value(Wolf->position.y);
+	}
+
 
 	pugi::xml_node pconditionsNode = node.append_child("pconditions");
 	pconditionsNode.append_attribute("godmode").set_value(player->godMode);
