@@ -46,8 +46,14 @@ public:
 
 	Animation* currentAnimation = nullptr;
 	Animation idleAnim;
+	Animation hitAnim;
+	Animation attackAnim;
+	Animation deadAnim1;
+	Animation deadAnim2;
 
 	bool attack;
+	bool fall=false;
+	bool die = false;
 	bool isAlive=true;
 };
 

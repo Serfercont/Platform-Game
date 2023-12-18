@@ -26,6 +26,8 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	void Attack();
+
 public:
 	float speed = 0.4f;
 	SDL_Texture* texture = NULL;

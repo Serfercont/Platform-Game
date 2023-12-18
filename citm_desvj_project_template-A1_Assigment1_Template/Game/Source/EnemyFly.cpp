@@ -37,9 +37,10 @@ bool EnemyFly::Start() {
 
 
 	idleAnim.LoadAnimations("flyIdle");
-	/*walkAnim.LoadAnimations("enemyWalk");
-	runAnim.LoadAnimations("enemyRun");
-	attackAnim.LoadAnimations("enemyAttack");*/
+	hitAnim.LoadAnimations("flyHit");
+	attackAnim.LoadAnimations("flyAttack");
+	deadAnim1.LoadAnimations("flyDeath1");
+	deadAnim2.LoadAnimations("flyDeath2");
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &idleAnim;
 
@@ -60,15 +61,16 @@ bool EnemyFly::Update(float dt)
 	destiny = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
 	
 
-	LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);
+	//LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);
 	int dist = sqrt(pow(destiny.x - origin.x, 2) + pow(destiny.y - origin.y, 2));
-	LOG("dist: %d", dist);
-	if (dist < 10)
+	//LOG("dist: %d", dist);
+
+	if (dist < 10 && isAlive)
 	{
 		//currentAnimation = &idleAnim;
 		app->map->pathfinding->CreatePath(origin, destiny);
 		lastPath = *app->map->pathfinding->GetLastPath();
-		if (dist <= 2 && !attack)
+		if (dist <= 2 && !attack && isAlive)
 		{
 			attack = true;
 			//currentAnimation = &attackAnim;
@@ -79,14 +81,34 @@ bool EnemyFly::Update(float dt)
 
 	}
 
-	if (!isAlive)
+	if (fall == true)
 	{
-		pbody->body->SetActive(false);
-		app->entityManager->DestroyEntity(this);
-		app->physics->world->DestroyBody(pbody->body);
+		velocity.x = 0;
+		velocity.y++;
+		isAlive = false;
+		if (currentAnimation != &deadAnim1)
+		{
+			currentAnimation = &deadAnim1;
+		}
+	}
+	if (die== true)
+	{
+		velocity.x = 0;
+		if (currentAnimation != &deadAnim2)
+		{
+			currentAnimation = &deadAnim2;
+			currentAnimation->loopCount = 0;
+			currentAnimation->Reset();
+		}
+		if (currentAnimation->HasFinished())
+		{
+			pbody->body->SetActive(false);
+			app->entityManager->DestroyEntity(this);
+			app->physics->world->DestroyBody(pbody->body);
+		}
 	}
 
-	if (lastPath.Count() > 0)
+	if (lastPath.Count() > 0 && isAlive)
 	{
 		iPoint* nextPathTile;
 		nextPathTile = lastPath.At(lastPath.Count() - 1);
@@ -151,6 +173,20 @@ bool EnemyFly::CleanUp()
 }
 
 void EnemyFly::OnCollision(PhysBody* physA, PhysBody* physB) {
+	switch (physB->ctype) {
 
+	case ColliderType::DAMAGE:
+		fall = true;
+		//currentAnimation = &deadAnim1;
+		break;
+	case ColliderType::PLATFORM:
+		if (!isAlive)
+		{
+			die = true;
+			fall = false;
+		}
+		break;
+
+	}
 
 }

@@ -65,13 +65,13 @@ bool EnemyWalk::Update(float dt)
 	//LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);
 	int dist = sqrt(pow(destiny.x - origin.x, 2) + pow(destiny.y - origin.y, 2));
 	
-	if (dist<12)
+	if (dist<12 && isAlive)
 	{
 		
 		//currentAnimation = &idleAnim;
 		app->map->pathfinding->CreatePath(origin, destiny);
 		lastPath = *app->map->pathfinding->GetLastPath();
-		if (dist<=2 && !attack)
+		if (dist<=2 && !attack )
 		{
 			attack = true;
 			currentAnimation = &attackAnim;
@@ -82,14 +82,31 @@ bool EnemyWalk::Update(float dt)
 
 	}
 
-	if (!isAlive)
+	if (die==true)
 	{
-		pbody->body->SetActive(false);
-		app->entityManager->DestroyEntity(this);
-		app->physics->world->DestroyBody(pbody->body);
+		velocity.x = 0;
+		isAlive = false;
+		if (currentAnimation!=&deadAnim)
+		{
+			currentAnimation = &deadAnim;
+			currentAnimation->loopCount = 0;
+			currentAnimation->Reset();
+		}
+		if (currentAnimation->HasFinished())
+		{
+			/*if (damage)
+			{
+				damage->body->SetActive(false);
+				damage->body->GetWorld()->DestroyBody(damage->body);
+				damage = NULL;
+			}*/
+			pbody->body->SetActive(false);
+			app->entityManager->DestroyEntity(this);
+			app->physics->world->DestroyBody(pbody->body);
+		}
 	}
 
-	if (lastPath.Count() > 0)
+	if (lastPath.Count() > 0 && isAlive)
 	{
 		iPoint* nextPathTile;
 		nextPathTile = lastPath.At(lastPath.Count() - 1);
@@ -120,12 +137,12 @@ bool EnemyWalk::Update(float dt)
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	if (right)
 	{
-		app->render->DrawTexture(texture, position.x-50, position.y-47, &rect);
+		app->render->DrawTexture(texture, position.x-70, position.y-80, &rect);
 	}
 	else
 	{
 
-		app->render->DrawTexture(texture, flipPos.x-50, position.y-47, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
+		app->render->DrawTexture(texture, flipPos.x-50, position.y-80, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
 	}
 	currentAnimation->Update();
 
@@ -151,7 +168,7 @@ void EnemyWalk::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype) {
 
 	case ColliderType::DAMAGE:
-		isAlive = false;
+		die = true;
 		currentAnimation = &deadAnim;
 		break;
 
