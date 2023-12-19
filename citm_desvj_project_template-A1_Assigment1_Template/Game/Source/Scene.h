@@ -56,6 +56,7 @@ private:
 	SDL_Texture* mouseTileTex = nullptr;
 	pugi::xml_node configNode;
 	List<Entity*> WolfList;
+	List<Entity*> EyeList;
 };
 
 #endif // __SCENE_H__

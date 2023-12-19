@@ -131,6 +131,20 @@ void EntityManager::GetWolves(List<Entity*>& wolvesList) const
 		}
 	}
 }
+void EntityManager::GetEyes(List<Entity*>& eyesList) const
+{
+	eyesList.Clear();
+
+	ListItem<Entity*>* entity;
+
+	for (entity = entities.start; entity != NULL; entity = entity->next)
+	{
+		if (entity->data->type == EntityType::ENEMYFLY)
+		{
+			eyesList.Add(entity->data);
+		}
+	}
+}
 
 bool EntityManager::Update(float dt)
 {

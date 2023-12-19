@@ -41,10 +41,10 @@ bool Scene::Awake(pugi::xml_node& config)
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
 	}
-	if (config.child("enemyFly")) {
+	/*if (config.child("enemyFly")) {
 		enemyFly = (EnemyFly*)app->entityManager->CreateEntity(EntityType::ENEMYFLY);
 		enemyFly->parameters = config.child("enemyFly");
-	}
+	}*/
 	/*if (config.child("enemyWalk")) {
 		enemyWalk = (EnemyWalk*)app->entityManager->CreateEntity(EntityType::ENEMYWALK);
 		enemyWalk->parameters = config.child("enemyWalk");
@@ -57,9 +57,23 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 	WolfList;
 
+	for (pugi::xml_node itemNode = config.child("enemyFly"); itemNode; itemNode = itemNode.next_sibling("enemyFly"))
+	{
+		EnemyFly* item = (EnemyFly*)app->entityManager->CreateEntity(EntityType::ENEMYFLY);
+		item->parameters = itemNode;
+
+	}
+	EyeList;
+
 	app->entityManager->GetWolves(WolfList);
 	if (config.child("map")) {
 		//Get the map name from the config file and assigns the value in the module
+		app->map->name = config.child("map").attribute("name").as_string();
+		app->map->path = config.child("map").attribute("path").as_string();
+	}
+	app->entityManager->GetEyes(EyeList);
+	if (config.child("map")) {
+		
 		app->map->name = config.child("map").attribute("name").as_string();
 		app->map->path = config.child("map").attribute("path").as_string();
 	}
@@ -169,17 +183,23 @@ bool Scene::LoadState(pugi::xml_node node)
 	
 	player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y) },0);
 	
-	//player->pbody->setTransform(pixels_to_meters, player->position.x... para la y igual)
-	//Tambi�n hay que poner todas las condiciones para detectar en qu� situaci�n est� en la partida.
-	//Lo mismo con los enemigos y si tiene powerups tambi�n
 
 	for (int Wolfcount = 0; Wolfcount < WolfList.Count(); Wolfcount++) {
 
 		Entity* Wolf = WolfList.At(Wolfcount)->data;
 
 		std::string count = std::to_string(Wolfcount + 1);
-		Wolf->position.x = node.child(("enemy" + count).c_str()).attribute("x").as_int();
-		Wolf->position.y = node.child(("enemy" + count).c_str()).attribute("y").as_int();
+		Wolf->position.x = node.child(("Wolf" + count).c_str()).attribute("x").as_int();
+		Wolf->position.y = node.child(("Wolf" + count).c_str()).attribute("y").as_int();
+	}
+
+	for (int Eyecount = 0; Eyecount < EyeList.Count(); Eyecount++) {
+
+		Entity* Eye = EyeList.At(Eyecount)->data;
+
+		std::string count = std::to_string(Eyecount + 1);
+		Eye->position.x = node.child(("Eye" + count).c_str()).attribute("x").as_int();
+		Eye->position.y = node.child(("Eye" + count).c_str()).attribute("y").as_int();
 	}
 	return true;
 }
@@ -190,14 +210,25 @@ bool Scene::SaveState(pugi::xml_node node)
 	posNode.append_attribute("x").set_value(player->position.x);
 	posNode.append_attribute("y").set_value(player->position.y);
 
+	//Save data of the Walking Enemy
 	for (int wolfCount = 0; wolfCount < WolfList.Count(); wolfCount++) {
 		std::string Wolfy = std::to_string(wolfCount + 1);
-		pugi::xml_node enemyNode = node.append_child(("enemy" + Wolfy).c_str());
+		pugi::xml_node enemyNode = node.append_child(("Wolf" + Wolfy).c_str());
 		Entity* Wolf = WolfList.At(wolfCount)->data;
 
 		
 		enemyNode.append_attribute("x").set_value(Wolf->position.x);
 		enemyNode.append_attribute("y").set_value(Wolf->position.y);
+	}
+	//Save data of the Flying Enemy
+	for (int eyeCount = 0; eyeCount < EyeList.Count(); eyeCount++) {
+		std::string Eyes = std::to_string(eyeCount + 1);
+		pugi::xml_node enemyNode = node.append_child(("Eye" + Eyes).c_str());
+		Entity* Eye = WolfList.At(eyeCount)->data;
+
+
+		enemyNode.append_attribute("x").set_value(Eye->position.x);
+		enemyNode.append_attribute("y").set_value(Eye->position.y);
 	}
 
 
