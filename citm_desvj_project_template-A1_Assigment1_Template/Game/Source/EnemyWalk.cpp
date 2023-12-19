@@ -129,7 +129,6 @@ bool EnemyWalk::Update(float dt)
 			right = false;
 			if (attack)
 			{
-				LOG("AAAAAAAAAAAAAAAAA");
 				currentAnimation = &attackAnim;
 				velocity.x = -2;
 			}
@@ -144,7 +143,6 @@ bool EnemyWalk::Update(float dt)
 			right = true;
 			if(attack)
 			{
-				LOG("AAAAAAAAAAAAAAAAA");
 				currentAnimation = &attackAnim;
 				velocity.x = +2;
 			}

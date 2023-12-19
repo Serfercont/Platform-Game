@@ -26,16 +26,16 @@
 		<background path="Assets/Maps/fondo0.png"/>
 		<background1 path="Assets/Maps/Fondo1.png"/>
 		<background2 path="Assets/Maps/Fondo2.png"/>
-		<background3 path="Assets/Maps/Fondo3.png"/>	
+		<background3 path="Assets/Maps/Fondo3.png"/>
 		<background4 path="Assets/Maps/Fondo4.png"/>
 		<mainmusic path="Assets/Audio/Music/dark_dragon.mp3"/>
-    <knightDeath path="Assets/Audio/Fx/death.mp3"/>
-    <knightSlash path="Assets/Audio/Fx/Slash.mp3"/>
-    <knightWalk path="Assets/Audio/Fx/KnightWalk.mp3"/>
-    <eyeDeath path="Assets/Audio/Fx/EyeDeath.mp3"/>
-    <wolfDeath path="Assets/Audio/Fx/WolfDeath.mp3"/>
-    <wolfAttack path="Assets/Audio/Fx/WolfAttack.mp3"/>
-    <player x="85" y="650" texturepath="Assets/Textures/knight.png"/>
+		<knightDeath path="Assets/Audio/Fx/death.mp3"/>
+		<knightSlash path="Assets/Audio/Fx/Slash.mp3"/>
+		<knightWalk path="Assets/Audio/Fx/KnightWalk.mp3"/>
+		<eyeDeath path="Assets/Audio/Fx/EyeDeath.mp3"/>
+		<wolfDeath path="Assets/Audio/Fx/WolfDeath.mp3"/>
+		<wolfAttack path="Assets/Audio/Fx/WolfAttack.mp3"/>
+		<player x="85" y="650" texturepath="Assets/Textures/knight.png"/>
 		<ability x="0" y="0" texturepath="Assets/Textures/Ability.png"/>
 		<enemyWalk x="500" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
 		<enemyWalk x="800" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
@@ -129,7 +129,7 @@
 			<frame x="877" y="232" width="120" height="100"/>
 
 		</enemyRun>
-		<enemyAttack loop="false" speed="0.2f">
+		<enemyAttack loop="false" speed="0.15f">
 			<frame x="30" y="333" width="122" height="100"/>
 			<frame x="153" y="333" width="122" height="100"/>
 			<frame x="276" y="333" width="122" height="100"/>
