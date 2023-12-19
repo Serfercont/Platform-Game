@@ -51,6 +51,7 @@ public:
 	Animation deadAnim1;
 	Animation deadAnim2;
 
+	uint eyeDeath;
 	bool attack;
 	bool fall=false;
 	bool die = false;

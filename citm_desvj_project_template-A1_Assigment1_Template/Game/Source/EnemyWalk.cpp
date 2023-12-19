@@ -29,6 +29,8 @@ bool EnemyWalk::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
+	wolfAttack = parameters.attribute("wolfAttack").as_string();
+	wolfDeath = parameters.attribute("wolfDeath").as_string();
 	return true;
 }
 
@@ -41,6 +43,8 @@ bool EnemyWalk::Start() {
 	attackAnim.LoadAnimations("enemyAttack");
 	deadAnim.LoadAnimations("enemyDead");
 	texture = app->tex->Load(texturePath);
+	wolfAttacks = app->audio->LoadFx(wolfAttack);
+	wolfDeaths = app->audio->LoadFx(wolfDeath);
 	currentAnimation = &idleAnim;
 
 	tileTex = app->tex->Load("Assets/Maps/tileSelection.png");
@@ -209,6 +213,7 @@ void EnemyWalk::Attack()
 {
 	isAttacking = true;
 	currentAnimation = &attackAnim;
+	app->audio->PlayFx(wolfAttacks);
 	currentAnimation->loopCount = 0;
 	currentAnimation->Reset();
 	if (right)
