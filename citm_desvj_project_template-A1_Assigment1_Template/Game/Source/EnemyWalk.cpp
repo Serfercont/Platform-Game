@@ -107,7 +107,7 @@ bool EnemyWalk::Update(float dt)
 		}
 	}
 
-	if (attack && currentAnimation==&attackAnim&& currentAnimation->GetCurrentFrameCount()>=4 && !attackBody)
+	if (attack && currentAnimation==&attackAnim && currentAnimation->GetCurrentFrameCount()>=4 && !attackBody)
 	{
 		if (right)
 		{
@@ -124,7 +124,7 @@ bool EnemyWalk::Update(float dt)
 			attackBody = true;
 		}
 	}
-	LOG("current frame %i", currentAnimation->GetCurrentFrameCount());
+	//LOG("current frame %i", currentAnimation->GetCurrentFrameCount());
 	if (attack && currentAnimation== &attackAnim && currentAnimation->GetCurrentFrameCount()>=6.8 &&attackBody)
 	{
 		attack = false;

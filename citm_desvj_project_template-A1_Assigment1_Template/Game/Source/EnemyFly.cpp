@@ -101,7 +101,7 @@ bool EnemyFly::Update(float dt)
 		}
 	}
 	LOG("current frame %i", currentAnimation->GetCurrentFrameCount());
-	if (attack && currentAnimation == &attackAnim && currentAnimation->GetCurrentFrameCount() >= 6.8 && attackBody)
+	if (attack && currentAnimation == &attackAnim && currentAnimation->GetCurrentFrameCount() >= 4 && attackBody)
 	{
 		attack = false;
 		attackBody = false;
