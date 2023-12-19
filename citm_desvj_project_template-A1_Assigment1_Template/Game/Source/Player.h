@@ -30,9 +30,11 @@ public:
 
 public:
 	float speed = 0.4f;
+	int health = 3;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 	PhysBody* damage;
+
 	bool isjumpping = false;
 	bool isWalking = false;
 	int pickCoinFxId;

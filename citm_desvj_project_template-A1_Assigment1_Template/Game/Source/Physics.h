@@ -32,7 +32,8 @@ enum class ColliderType {
 	UNKNOWN,
 	ENEMYWALK,
 	ENEMYFLY,
-	DAMAGE
+	DAMAGE,
+	ENEMYDAMAGE
 	// ..
 };
 

@@ -77,18 +77,6 @@ bool EnemyWalk::Update(float dt)
 	{
 		attack = true;
 	}
-	if (attack && isAlive)
-	{
-		currentAnimation = &attackAnim;
-		if (right)
-		{
-			velocity.x = 5.0f;
-		}
-		if (!right)
-		{
-			velocity.x = -5.0;
-		}
-	}
 	if (currentAnimation == &attackAnim && currentAnimation->HasFinished()) { // Reiniciar el ataque
 		attack = false;
 		attackAnim.Reset();
@@ -107,15 +95,45 @@ bool EnemyWalk::Update(float dt)
 		}
 		if (currentAnimation->HasFinished())
 		{
-			/*if (damage)
+			if (damage)
 			{
 				damage->body->SetActive(false);
 				damage->body->GetWorld()->DestroyBody(damage->body);
 				damage = NULL;
-			}*/
+			}
 			pbody->body->SetActive(false);
 			app->entityManager->DestroyEntity(this);
 			app->physics->world->DestroyBody(pbody->body);
+		}
+	}
+
+	if (attack && currentAnimation==&attackAnim&& currentAnimation->GetCurrentFrameCount()>=4 && !attackBody)
+	{
+		if (right)
+		{
+			damage = app->physics->CreateRectangleSensor(position.x + 45, position.y, 20, 40, bodyType::KINEMATIC);
+			damage->listener = this;
+			damage->ctype = ColliderType::ENEMYDAMAGE;
+			attackBody = true;
+		}
+		else
+		{
+			damage = app->physics->CreateRectangleSensor(position.x - 30, position.y, 20, 40, bodyType::KINEMATIC);
+			damage->listener = this;
+			damage->ctype = ColliderType::ENEMYDAMAGE;
+			attackBody = true;
+		}
+	}
+	LOG("current frame %i", currentAnimation->GetCurrentFrameCount());
+	if (attack && currentAnimation== &attackAnim && currentAnimation->GetCurrentFrameCount()>=6.8 &&attackBody)
+	{
+		attack = false;
+		attackBody = false;
+		if (damage)
+		{
+			damage->body->SetActive(false);
+			damage->body->GetWorld()->DestroyBody(damage->body);
+			damage = NULL;
 		}
 	}
 
@@ -187,7 +205,33 @@ bool EnemyWalk::Update(float dt)
 	}
 	return true;
 }
+void EnemyWalk::Attack()
+{
+	isAttacking = true;
+	currentAnimation = &attackAnim;
+	currentAnimation->loopCount = 0;
+	currentAnimation->Reset();
+	if (right)
+	{
 
+		damage = app->physics->CreateRectangleSensor(position.x + 70, position.y + 30, 20, 40, bodyType::KINEMATIC);
+		damage->listener = this;
+		damage->ctype = ColliderType::ENEMYDAMAGE;
+	}
+	else if (!right)
+	{
+
+		damage = app->physics->CreateRectangleSensor(position.x - 15, position.y + 30, 20, 40, bodyType::KINEMATIC);
+		damage->listener = this;
+		damage->ctype = ColliderType::ENEMYDAMAGE;
+	}
+	if (isAttacking)
+	{
+		currentAnimation->Reset();
+		currentAnimation = &attackAnim;
+		currentAnimation->loopCount = 0;
+	}
+}
 bool EnemyWalk::CleanUp()
 {
 	return true;

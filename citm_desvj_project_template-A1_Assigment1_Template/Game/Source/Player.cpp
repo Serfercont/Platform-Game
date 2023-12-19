@@ -60,7 +60,6 @@ bool Player::Update(float dt)
 	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
 
 	//currentAnimation = &idleAnim;
-	
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		godMode = !godMode;		
 	}
@@ -142,7 +141,7 @@ bool Player::Update(float dt)
 		
 	}
 	//que hace si est� tocando con el pincho
-	if (spike == true)
+	if (spike == true || health==0)
 	{
 		currentVelocity.x = 0;
 		isAlive = false;
@@ -166,6 +165,7 @@ bool Player::Update(float dt)
 			isAlive = true;
 			position.x = 700;
 			position.y = 1350;
+			health = 3;
 			pbody->SetPosition(position.x, position.y);
 			currentAnimation = &idleAnim;
 			app->render->camera.x = 0;
@@ -300,10 +300,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		{
 			spike = true;
 		}
-		
 		break;
 	case ColliderType::COLUMN:
 		checkColumn = true;
+		break;
+	case ColliderType::ENEMYDAMAGE:
+		health = health - 1;
+		//pbody->body->ApplyForceToCenter(b2Vec2(150,100),1);
 		break;
 	}
 }

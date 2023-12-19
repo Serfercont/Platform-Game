@@ -26,11 +26,13 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
+	void Attack();
 
 public:
 	float speed = 0.2f;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
+	PhysBody* damage;
 	SDL_Texture* tileTex;
 	b2Transform initialTransform;
 
@@ -54,6 +56,8 @@ public:
 	bool attack;
 	bool die=false;
 	bool isAlive=true;
+	bool isAttacking=false;
+	bool attackBody=false;
 
 	DynArray<iPoint> lastPath;
 };
