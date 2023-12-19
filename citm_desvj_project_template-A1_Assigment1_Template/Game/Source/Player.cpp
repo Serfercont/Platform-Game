@@ -24,9 +24,15 @@ Player::~Player() {
 
 bool Player::Awake() {
 
+	
+
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
+
+	knightAttack= parameters.attribute("audioAttack").as_string();
+	knightDie= parameters.attribute("audioDeath").as_string();
+	knightWalk= parameters.attribute("audioWalk").as_string();
 
 	return true;
 }
@@ -42,8 +48,15 @@ bool Player::Start() {
 	InitPosX = position.x;
 	InitPosY = position.y;
 
+	//audioAttack = app->audio->LoadFx(configNode.child("wolfAttack").attribute("path").as_string());
+
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+
+	audioAttack = app->audio->LoadFx(knightAttack);
+	audioDie = app->audio->LoadFx(knightDie);
+	audioWalk = app->audio->LoadFx(knightWalk);
+
 	currentAnimation = &idleAnim;
 
 	pbody = app->physics->CreateCircle(position.x + 16, position.y-10, 25, bodyType::DYNAMIC);

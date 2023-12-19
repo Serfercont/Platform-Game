@@ -52,6 +52,10 @@ public:
 
 	iPoint flipPos;
 
+	uint audioWalk;
+	uint audioAttack;
+	uint audioDie;
+
 	//std::map<std::string, Animation> animations;
 
 	Animation* currentAnimation = nullptr;
@@ -66,6 +70,8 @@ public:
 	Animation hurtAnim;
 	Animation runAnim;
 	SDL_Texture* mouseTileTex = nullptr;
+
+	pugi::xml_node configNode;
 };
 
 #endif // __PLAYER_H__
