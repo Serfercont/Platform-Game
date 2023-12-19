@@ -252,14 +252,14 @@ void Player::Attack()
 	if (right)
 	{
 
-		damage = app->physics->CreateRectangleSensor(position.x + 70, position.y + 10, 20, 20, bodyType::KINEMATIC);
+		damage = app->physics->CreateRectangleSensor(position.x + 70, position.y + 30, 20, 40, bodyType::KINEMATIC);
 		damage->listener = this;
 		damage->ctype = ColliderType::DAMAGE;
 	}
 	else if (!right)
 	{
 
-		damage = app->physics->CreateRectangleSensor(position.x - 15, position.y + 10, 20, 20, bodyType::KINEMATIC);
+		damage = app->physics->CreateRectangleSensor(position.x - 15, position.y + 30, 20, 40, bodyType::KINEMATIC);
 		damage->listener = this;
 		damage->ctype = ColliderType::DAMAGE;
 	}

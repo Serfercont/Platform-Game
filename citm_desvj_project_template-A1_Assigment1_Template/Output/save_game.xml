@@ -6,8 +6,8 @@
 	<audio />
 	<:anonymous />
 	<scene>
-		<player x="143" y="709" />
-		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="false" />
+		<player x="315" y="613" />
+		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="true" />
 	</scene>
 	<:anonymous />
 	<entitymanager />

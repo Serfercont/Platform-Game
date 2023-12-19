@@ -64,22 +64,35 @@ bool EnemyWalk::Update(float dt)
 
 	//LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);
 	int dist = sqrt(pow(destiny.x - origin.x, 2) + pow(destiny.y - origin.y, 2));
-	
-	if (dist<12 && isAlive)
+	if (dist>12 && isAlive)
 	{
-		
-		//currentAnimation = &idleAnim;
+		currentAnimation = &idleAnim;
+	}
+	if (dist<12 && dist>3 && isAlive)
+	{
 		app->map->pathfinding->CreatePath(origin, destiny);
 		lastPath = *app->map->pathfinding->GetLastPath();
-		if (dist<=2 && !attack )
-		{
-			attack = true;
-			currentAnimation = &attackAnim;
-		}
+	}
+	if (dist <= 3)
+	{
+		attack = true;
 	}
 	if (attack && isAlive)
 	{
-
+		currentAnimation = &attackAnim;
+		if (right)
+		{
+			velocity.x = 5.0f;
+		}
+		if (!right)
+		{
+			velocity.x = -5.0;
+		}
+	}
+	if (currentAnimation == &attackAnim && currentAnimation->HasFinished()) { // Reiniciar el ataque
+		attack = false;
+		attackAnim.Reset();
+		currentAnimation->loopCount = 0;
 	}
 
 	if (die==true)
@@ -114,14 +127,33 @@ bool EnemyWalk::Update(float dt)
 		if (nextPathTile->x < origin.x)
 		{
 			right = false;
-			currentAnimation = &runAnim;
-			velocity.x = -2;
+			if (attack)
+			{
+				LOG("AAAAAAAAAAAAAAAAA");
+				currentAnimation = &attackAnim;
+				velocity.x = -2;
+			}
+			else
+			{
+				currentAnimation = &runAnim;
+				velocity.x = -2;
+			}
 		}
 		else
 		{
 			right = true;
-			currentAnimation = &runAnim;
-			velocity.x = +2;
+			if(attack)
+			{
+				LOG("AAAAAAAAAAAAAAAAA");
+				currentAnimation = &attackAnim;
+				velocity.x = +2;
+			}
+			else
+			{
+				currentAnimation = &runAnim;
+				velocity.x = +2;
+			}
+			
 		}
 		if (nextPathTile->x == origin.x) {
 			lastPath.Pop(*nextPathTile);
