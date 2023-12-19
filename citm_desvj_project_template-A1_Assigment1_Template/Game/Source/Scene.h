@@ -46,6 +46,7 @@ private:
 	uint texW, texH;
 	uint windowW, windowH;
 	EnemyWalk* enemyWalk;
+	
 	EnemyFly* enemyFly;
 	SDL_Texture* fondo0;
 	SDL_Texture* fondo1;
@@ -54,6 +55,7 @@ private:
 	SDL_Texture* fondo4;
 	SDL_Texture* mouseTileTex = nullptr;
 	pugi::xml_node configNode;
+	List<Entity*> WolfList;
 };
 
 #endif // __SCENE_H__
