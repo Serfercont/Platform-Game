@@ -183,7 +183,7 @@ bool Scene::LoadState(pugi::xml_node node)
 	
 	player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y) },0);
 	
-
+	//Wolf Load 
 	for (int Wolfcount = 0; Wolfcount < WolfList.Count(); Wolfcount++) {
 
 		std::string count = std::to_string(Wolfcount + 1);
@@ -191,13 +191,13 @@ bool Scene::LoadState(pugi::xml_node node)
 		pugi::xml_node WolfPositionnode = node.append_child(("wolf" + count).c_str()).append_child("wolfPosition");
 		wolf->position.x = WolfPositionnode.attribute("isAlive").as_bool();
 	}
+	//Flying Eye Load
 	for (int Eyecount = 0; Eyecount < EyeList.Count(); Eyecount++) {
 
-		Entity* Eye = EyeList.At(Eyecount)->data;
-
 		std::string count = std::to_string(Eyecount + 1);
-		Eye->position.x = node.child(("Eye" + count).c_str()).attribute("x").as_int();
-		Eye->position.y = node.child(("Eye" + count).c_str()).attribute("y").as_int();
+		Entity* eye = EyeList.At(Eyecount)->data;
+		pugi::xml_node eyePositionnode = node.append_child(("eye" + count).c_str()).append_child("eyePosition");
+		eye->position.x = eyePositionnode.attribute("isAlive").as_bool();
 	}
 	return true;
 }
@@ -219,13 +219,12 @@ bool Scene::SaveState(pugi::xml_node node)
 	}
 	//Save data of the Flying Enemy
 	for (int eyeCount = 0; eyeCount < EyeList.Count(); eyeCount++) {
-		std::string Eyes = std::to_string(eyeCount + 1);
-		pugi::xml_node enemyNode = node.append_child(("Eye" + Eyes).c_str());
-		Entity* Eye = WolfList.At(eyeCount)->data;
-
-
-		enemyNode.append_attribute("x").set_value(Eye->position.x);
-		enemyNode.append_attribute("y").set_value(Eye->position.y);
+		std::string count = std::to_string(eyeCount + 1);
+		Entity* eye = EyeList.At(eyeCount)->data;
+		pugi::xml_node enemyEyeNode = node.append_child(("Eye" + count).c_str()).append_child("eyePosition");
+		enemyEyeNode.append_attribute("x").set_value(eye->position.x);
+		enemyEyeNode.append_attribute("y").set_value(eye->position.y);
+		enemyEyeNode.append_attribute("isAlive").set_value(eye->isAlive);
 	}
 
 

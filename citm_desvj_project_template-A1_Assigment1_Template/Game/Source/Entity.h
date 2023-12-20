@@ -89,6 +89,7 @@ public:
 	const char* wolfAttack;
 	const char* wolfDeath;
 	const char* EyeDeath;
+	const char* EyeFlying;
 
 	// Possible properties, it depends on how generic we
 	// want our Entity class, maybe it's not renderable...

@@ -6,19 +6,21 @@
 	<audio />
 	<physics />
 	<scene>
-		<player x="128" y="709" />
+		<player x="174" y="709" />
 		<Wolf1>
-			<wolfPosition x="0" y="751" isAlive="false" />
+			<wolfPosition x="381" y="655" isAlive="true" />
 		</Wolf1>
 		<Wolf2>
-			<wolfPosition x="633" y="751" isAlive="true" />
+			<wolfPosition x="816" y="591" isAlive="true" />
 		</Wolf2>
-		<Eye1 x="0" y="751" />
-		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="false" />
+		<Eye1>
+			<eyePosition x="251" y="728" isAlive="false" />
+		</Eye1>
+		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="true" />
 	</scene>
 	<:anonymous />
 	<entitymanager />
 	<renderer>
-		<camera x="-133" y="-20" />
+		<camera x="0" y="-20" />
 	</renderer>
 </game_state>
