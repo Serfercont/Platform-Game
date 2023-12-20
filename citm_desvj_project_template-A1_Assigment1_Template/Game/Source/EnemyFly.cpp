@@ -73,7 +73,6 @@ bool EnemyFly::Update(float dt)
 	//LOG("dist: %d", dist);
 	if (dist > 12 && isAlive)
 	{
-		app->audio->PlayFx(eyeFlyings);
 		currentAnimation = &idleAnim;
 	}
 	if (dist < 12 && isAlive)
@@ -98,14 +97,14 @@ bool EnemyFly::Update(float dt)
 	{
 		if (right)
 		{
-			damage = app->physics->CreateRectangleSensor(position.x + 25, position.y, 20, 20, bodyType::KINEMATIC);
+			damage = app->physics->CreateRectangleSensor(position.x + 25, position.y, 20, 35, bodyType::KINEMATIC);
 			damage->listener = this;
 			damage->ctype = ColliderType::ENEMYDAMAGE;
 			attackBody = true;
 		}
 		else
 		{
-			damage = app->physics->CreateRectangleSensor(position.x - 30, position.y, 20, 20, bodyType::KINEMATIC);
+			damage = app->physics->CreateRectangleSensor(position.x - 30, position.y, 20, 35, bodyType::KINEMATIC);
 			damage->listener = this;
 			damage->ctype = ColliderType::ENEMYDAMAGE;
 			attackBody = true;
@@ -195,10 +194,12 @@ bool EnemyFly::Update(float dt)
 				velocity.x = 2;
 				if (attack)
 				{
+					app->audio->PlayFx(eyeFlyings);
 					currentAnimation = &attackAnim;
 				}
 				else
 				{
+					app->audio->PlayFx(eyeFlyings);
 					currentAnimation = &idleAnim;
 				}
 

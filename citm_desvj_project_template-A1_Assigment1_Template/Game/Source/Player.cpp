@@ -34,6 +34,7 @@ bool Player::Awake() {
 	knightDie= parameters.attribute("audioDeath").as_string();
 	knightWalk= parameters.attribute("audioWalk").as_string();
 	knightJump = parameters.attribute("audioJump").as_string();
+	knightWin = parameters.attribute("audioWin").as_string();
 
 	return true;
 }
@@ -56,6 +57,7 @@ bool Player::Start() {
 	audioDie = app->audio->LoadFx(knightDie);
 	audioWalk = app->audio->LoadFx(knightWalk);
 	audioJump = app->audio->LoadFx(knightJump);
+	audioWin = app->audio->LoadFx(knightWin);
 
 
 	currentAnimation = &idleAnim;
@@ -76,6 +78,16 @@ bool Player::Update(float dt)
 	//currentAnimation = &idleAnim;
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		godMode = !godMode;		
+	}
+	if (position.x>=4400 && position.x<=4450)
+	{
+		bool audio=true;
+		if (audio)
+		{
+			app->audio->PlayFx(audioWin);
+			audio = false;
+		}
+		
 	}
 
 	if (godMode)

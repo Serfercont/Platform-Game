@@ -23,7 +23,7 @@ Physics::Physics() : Module()
 	// Initialise all the internal class variables, at least to NULL pointer
 	name.Create("physics");
 	world = NULL;
-	debug = true;
+	debug = false;
 }
 
 // Destructor

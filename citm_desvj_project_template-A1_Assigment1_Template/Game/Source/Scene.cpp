@@ -66,17 +66,13 @@ bool Scene::Awake(pugi::xml_node& config)
 	EyeList;
 
 	app->entityManager->GetWolves(WolfList);
+	app->entityManager->GetEyes(EyeList);
 	if (config.child("map")) {
 		//Get the map name from the config file and assigns the value in the module
 		app->map->name = config.child("map").attribute("name").as_string();
 		app->map->path = config.child("map").attribute("path").as_string();
 	}
-	app->entityManager->GetEyes(EyeList);
-	if (config.child("map")) {
-		
-		app->map->name = config.child("map").attribute("name").as_string();
-		app->map->path = config.child("map").attribute("path").as_string();
-	}
+	
 	return ret;
 }
 
@@ -192,20 +188,23 @@ bool Scene::LoadState(pugi::xml_node node)
 		std::string count = std::to_string(Wolfcount + 1);
 
 		// Update the position of the slime entity based on XML attributes.
-		wolf->position.x = node.child(("Wolf" + count).c_str()).attribute("x").as_int();
-		wolf->position.y = node.child(("Wolf" + count).c_str()).attribute("y").as_int();
-		wolf->isAlive = node.child(("Wolf" + count).c_str()).attribute("isAlive").as_bool();
+		wolf->position.x = node.child(("Wolf" + count).c_str()).child("wolfPosition").attribute("x").as_int();
+		wolf->position.y = node.child(("Wolf" + count).c_str()).child("wolfPosition").attribute("y").as_int();
+		wolf->isAlive = node.child(("Wolf" + count).c_str()).child("wolfPosition").attribute("isAlive").as_bool();
 		wolf->tp = true;
 	}
 	//Flying Eye Load
 	for (int Eyecount = 0; Eyecount < EyeList.Count(); Eyecount++) {
 
+		Entity* eye = WolfList.At(Eyecount)->data;
+
+		// Convert the current count to a string for constructing XML attribute names.
 		std::string count = std::to_string(Eyecount + 1);
-		Entity* eye = EyeList.At(Eyecount)->data;
-		pugi::xml_node eyePositionnode = node.append_child(("Eye" + count).c_str()).append_child("eyePosition");
-		eye->position.x = eyePositionnode.attribute("x").as_int();
-		eye->position.y = eyePositionnode.attribute("y").as_int();
-		eye->isAlive = eyePositionnode.attribute("isAlive").as_bool();
+
+		// Update the position of the slime entity based on XML attributes.
+		eye->position.x = node.child(("Eye" + count).c_str()).child("eyePosition").attribute("x").as_int();
+		eye->position.y = node.child(("Eye" + count).c_str()).child("eyePosition").attribute("y").as_int();
+		eye->isAlive = node.child(("Eye" + count).c_str()).child("eyePosition").attribute("isAlive").as_bool();
 		eye->tp = true;
 	}
 	return true;
