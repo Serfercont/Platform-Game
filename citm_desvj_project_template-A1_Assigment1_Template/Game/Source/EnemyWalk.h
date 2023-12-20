@@ -53,6 +53,9 @@ public:
 	Animation attackAnim;
 	Animation deadAnim;
 
+	uint wolfAttacks;
+	uint wolfDeaths;
+
 	bool attack;
 	bool die=false;
 	bool isAlive=true;

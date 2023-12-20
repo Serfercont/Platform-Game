@@ -33,6 +33,7 @@ bool Player::Awake() {
 	knightAttack= parameters.attribute("audioAttack").as_string();
 	knightDie= parameters.attribute("audioDeath").as_string();
 	knightWalk= parameters.attribute("audioWalk").as_string();
+	knightJump = parameters.attribute("audioJump").as_string();
 
 	return true;
 }
@@ -56,6 +57,8 @@ bool Player::Start() {
 	audioAttack = app->audio->LoadFx(knightAttack);
 	audioDie = app->audio->LoadFx(knightDie);
 	audioWalk = app->audio->LoadFx(knightWalk);
+	audioJump = app->audio->LoadFx(knightJump);
+
 
 	currentAnimation = &idleAnim;
 
@@ -131,7 +134,7 @@ bool Player::Update(float dt)
 		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive && !isAttacking) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive && !isAttacking && !isjumpping) {
 		right = false;
 		isWalking = true;
 		currentVelocity.x = -speed * 16;
@@ -139,7 +142,7 @@ bool Player::Update(float dt)
 		app->audio->PlayFx(audioWalk);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive && !isAttacking) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive && !isAttacking && !isjumpping) {
 		right = true;
 		isWalking = true;
 		currentVelocity.x = +speed * 16;
@@ -150,6 +153,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive && !checkColumn && !isAttacking) {
 		isjumpping = true;
 		currentAnimation = &jumpAnim;
+		app->audio->PlayFx(audioJump);
 		currentVelocity.y = -17;
 		pbody->body->SetLinearVelocity(currentVelocity);
 		
@@ -162,6 +166,7 @@ bool Player::Update(float dt)
 		isAttacking = false;
 		if (currentAnimation!=&deadAnim)
 		{
+			app->audio->PlayFx(audioDie);
 			currentAnimation = &deadAnim;
 			currentAnimation->loopCount = 0;
 			currentAnimation->Reset();
@@ -260,6 +265,7 @@ bool Player::Update(float dt)
 void Player::Attack()
 {
 	isAttacking = true;
+	app->audio->PlayFx(audioAttack);
 	currentAnimation = &atack1Anim;
 	currentAnimation->loopCount = 0;
 	currentAnimation->Reset();
