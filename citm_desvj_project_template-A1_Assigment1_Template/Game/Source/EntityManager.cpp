@@ -91,6 +91,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::ENEMYWALK:
 		entity = new EnemyWalk();
 		break;
+	case EntityType::ENEMYFLY:
+		entity = new EnemyFly();
+		break;
 	default:
 		break;
 	}
@@ -113,6 +116,34 @@ void EntityManager::DestroyEntity(Entity* entity)
 void EntityManager::AddEntity(Entity* entity)
 {
 	if ( entity != nullptr) entities.Add(entity);
+}
+void EntityManager::GetWolves(List<Entity*>& wolvesList) const
+{
+	wolvesList.Clear();
+
+	ListItem<Entity*>* entity;
+
+	for (entity = entities.start; entity != NULL; entity = entity->next)
+	{
+		if (entity->data->type == EntityType::ENEMYWALK)
+		{
+			wolvesList.Add(entity->data);
+		}
+	}
+}
+void EntityManager::GetEyes(List<Entity*>& eyesList) const
+{
+	eyesList.Clear();
+
+	ListItem<Entity*>* entity;
+
+	for (entity = entities.start; entity != NULL; entity = entity->next)
+	{
+		if (entity->data->type == EntityType::ENEMYFLY)
+		{
+			eyesList.Add(entity->data);
+		}
+	}
 }
 
 bool EntityManager::Update(float dt)

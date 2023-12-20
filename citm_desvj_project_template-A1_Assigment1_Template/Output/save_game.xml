@@ -1,12 +1,20 @@
 <?xml version="1.0"?>
-<!-- L02: TODO 4: Create a simulation xml file to read -->
 <game_state>
-	<input />
 	<window />
+	<input />
 	<textures />
 	<audio />
-	<scene />
+	<physics />
+	<scene>
+		<player x="533" y="613" />
+		<Wolf1 x="379" y="655" />
+		<Wolf2 x="670" y="591" />
+		<Eye1 x="379" y="655" />
+		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="true" />
+	</scene>
+	<:anonymous />
+	<entitymanager />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-133" y="-20" />
 	</renderer>
 </game_state>

@@ -8,7 +8,11 @@
 
 #include "PugiXml\src\pugixml.hpp"
 
-// Ignore Terrain Types and Tile Types for now, but we want the image!
+enum MapOrientation
+{
+	ORTOGRAPHIC = 0,
+	ISOMETRIC
+};
 struct TileSet
 {
 	SString	name;
@@ -94,8 +98,9 @@ struct MapData
 	int	tileHeight;
 	List<TileSet*> tilesets;
 	MapTypes type;
-
 	List<MapLayer*> maplayers;
+	MapOrientation orientation;
+
 };
 
 class Map : public Module
@@ -135,7 +140,7 @@ private:
 	bool LoadAllLayers(pugi::xml_node mapNode);
 	TileSet* GetTilesetFromTileId(int gid) const;
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
-	//void CreateNavigationMap(int& width, int& height, uchar** buffer) const;
+	void CreateNavigationMap(int& width, int& height, uchar** buffer) const;
 
 	int GetTileWidth();
 	int GetTileHeight();
@@ -146,7 +151,7 @@ public:
 	MapData mapData;
 	SString name;
 	SString path;
-	//PathFinding* pathfinding;
+	PathFinding* pathfinding;
 
 private:
 	MapLayer* navigationLayer;

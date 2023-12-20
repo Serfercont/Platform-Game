@@ -29,7 +29,12 @@ enum class ColliderType {
 	PLATFORM, 
 	SPIKES,
 	COLUMN,
-	UNKNOWN
+	UNKNOWN,
+	ENEMYWALK,
+	ENEMYFLY,
+	DAMAGE,
+	ENEMYDAMAGE,
+	VICTORY
 	// ..
 };
 
@@ -78,12 +83,12 @@ public:
 	
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
+	bool debug;
+	b2World* world;
+	SDL_Rect rect;
 
 private:
 
-	// Debug mode
-	bool debug;
-
 	// Box2D World
-	b2World* world;
+	
 };

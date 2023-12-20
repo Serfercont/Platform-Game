@@ -26,10 +26,15 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	void Attack();
+
 public:
 	float speed = 0.4f;
+	int health = 3;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
+	PhysBody* damage;
+
 	bool isjumpping = false;
 	bool isWalking = false;
 	int pickCoinFxId;
@@ -41,9 +46,16 @@ public:
 	int InitPosX;
 	int InitPosY;
 	bool spike=false;
-
+	bool powerUp= false;
+	bool isAttacking = false;
+	bool attackCreated;
 
 	iPoint flipPos;
+
+	uint audioWalk;
+	uint audioAttack;
+	uint audioDie;
+	uint audioJump;
 
 	//std::map<std::string, Animation> animations;
 
@@ -59,6 +71,8 @@ public:
 	Animation hurtAnim;
 	Animation runAnim;
 	SDL_Texture* mouseTileTex = nullptr;
+
+	pugi::xml_node configNode;
 };
 
 #endif // __PLAYER_H__

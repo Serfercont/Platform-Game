@@ -21,6 +21,7 @@
 Physics::Physics() : Module()
 {
 	// Initialise all the internal class variables, at least to NULL pointer
+	name.Create("physics");
 	world = NULL;
 	debug = true;
 }
@@ -351,6 +352,7 @@ void PhysBody::SetPosition(int& x, int& y)
 	// Establece la posición del cuerpo usando las coordenadas en metros
 	body->SetTransform(b2Vec2(xPosInMeters, yPosInMeters), body->GetAngle());
 }
+
 
 float PhysBody::GetRotation() const
 {

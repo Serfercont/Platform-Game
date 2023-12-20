@@ -1,5 +1,5 @@
-#ifndef __ENEMYWALK_H__
-#define __ENEMYWALK_H__
+#ifndef __ENEMYFLY_H__
+#define __ENEMYFLY_H__
 
 #include "Entity.h"
 #include "Point.h"
@@ -10,12 +10,12 @@
 
 struct SDL_Texture;
 
-class EnemyWalk : public Entity
+class EnemyFly : public Entity
 {
 public:
-	EnemyWalk();
+	EnemyFly();
 
-	virtual ~EnemyWalk();
+	virtual ~EnemyFly();
 
 	bool Awake();
 
@@ -26,13 +26,12 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
-	void Attack();
 
 public:
 	float speed = 0.2f;
+	float enemyPositionX;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
-	PhysBody* damage;
 	SDL_Texture* tileTex;
 	b2Transform initialTransform;
 
@@ -43,26 +42,25 @@ public:
 	//pathfinding
 	iPoint origin;
 	iPoint destiny;
-	//DynArray<iPoint> lastPath;
+	DynArray<iPoint> lastPath;
 	b2Vec2 velocity;
 
 	Animation* currentAnimation = nullptr;
 	Animation idleAnim;
-	Animation walkAnim;
-	Animation runAnim;
+	Animation hitAnim;
 	Animation attackAnim;
-	Animation deadAnim;
+	Animation deadAnim1;
+	Animation deadAnim2;
 
-	uint wolfAttacks;
-	uint wolfDeaths;
+	uint eyeDeath;
 
 	bool attack;
-	bool die=false;
+	bool fall=false;
+	bool die = false;
 	bool isAlive=true;
-	bool isAttacking=false;
-	bool attackBody=false;
-
-	DynArray<iPoint> lastPath;
+	bool attackBody = false;
+private:
+	PhysBody* damage;
 };
 
 #endif // __ENEMYWALK_H__

@@ -6,7 +6,9 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
-#include "Item.h"
+#include "Player.h"
+#include "Physics.h"
+#include "EnemyWalk.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -38,20 +40,43 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
-		
 	}
+	/*if (config.child("enemyFly")) {
+		enemyFly = (EnemyFly*)app->entityManager->CreateEntity(EntityType::ENEMYFLY);
+		enemyFly->parameters = config.child("enemyFly");
+	}*/
+	/*if (config.child("enemyWalk")) {
+		enemyWalk = (EnemyWalk*)app->entityManager->CreateEntity(EntityType::ENEMYWALK);
+		enemyWalk->parameters = config.child("enemyWalk");
+	}*/
+	for (pugi::xml_node itemNode = config.child("enemyWalk"); itemNode; itemNode = itemNode.next_sibling("enemyWalk"))
+	{
+		EnemyWalk* item = (EnemyWalk*)app->entityManager->CreateEntity(EntityType::ENEMYWALK);
+		item->parameters = itemNode;
 
+	}
+	WolfList;
+
+	for (pugi::xml_node itemNode = config.child("enemyFly"); itemNode; itemNode = itemNode.next_sibling("enemyFly"))
+	{
+		EnemyFly* item = (EnemyFly*)app->entityManager->CreateEntity(EntityType::ENEMYFLY);
+		item->parameters = itemNode;
+
+	}
+	EyeList;
+
+	app->entityManager->GetWolves(WolfList);
 	if (config.child("map")) {
 		//Get the map name from the config file and assigns the value in the module
 		app->map->name = config.child("map").attribute("name").as_string();
 		app->map->path = config.child("map").attribute("path").as_string();
 	}
-	//if (config.child("background0")) {
-	//	//Get the map name from the config file and assigns the value in the module
-	//	app->map->name = config.child("fondo0.png").attribute("name").as_string();
-	//	app->map->path = config.child("background0").attribute("path").as_string();
-	//}
-
+	app->entityManager->GetEyes(EyeList);
+	if (config.child("map")) {
+		
+		app->map->name = config.child("map").attribute("name").as_string();
+		app->map->path = config.child("map").attribute("path").as_string();
+	}
 	return ret;
 }
 
@@ -59,7 +84,6 @@ bool Scene::Awake(pugi::xml_node& config)
 bool Scene::Start()
 {
 	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
-	//img = app->tex->Load("Assets/Textures/test.png");
 	
 	//Music is commented so that you can add your own music
 	app->audio->PlayMusic(configNode.child("mainmusic").attribute("path").as_string());
@@ -99,17 +123,6 @@ bool Scene::Update(float dt)
 {
 	float camSpeed = 0.35; 
 
-	/*if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= (int)ceil(camSpeed * dt);
-
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += (int)ceil(camSpeed * dt);*/
-	
-	/*if(app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		app->render->camera.x += (int)ceil(camSpeed * dt);
-
-	if(app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		app->render->camera.x -= (int)ceil(camSpeed * dt);*/
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 
@@ -120,9 +133,10 @@ bool Scene::Update(float dt)
 	{
 
 	}
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
 	// Renders the image in the center of the screen 
-	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
 	SDL_Rect Rectfondo0{0,0,1536*4,216*4};
 	SDL_Rect Rectfondo1{ 0,0,1536 * 4,216 * 4 };
 	SDL_Rect Rectfondo2{ 0,0,1536 * 3,216 * 3 };
@@ -153,6 +167,79 @@ bool Scene::PostUpdate()
 		ret = false;
 
 	return ret;
+}
+
+bool Scene::LoadState(pugi::xml_node node)
+{
+	player->position.x = node.child("player").attribute("x").as_int();
+	player->position.y = node.child("player").attribute("y").as_int();
+	player->pbody->SetPosition(player->position.x, player->position.y);
+
+	player->godMode = node.child("pconditions").attribute("godmode").as_bool();
+	player->isAlive = node.child("pconditions").attribute("isAlive").as_bool();
+	player->isjumpping = node.child("pconditions").attribute("isjumpping").as_bool();
+	player->isWalking = node.child("pconditions").attribute("isWalking").as_bool();
+	player->right = node.child("pconditions").attribute("right").as_bool();
+	
+	player->pbody->body->SetTransform({ PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y) },0);
+	
+
+	for (int Wolfcount = 0; Wolfcount < WolfList.Count(); Wolfcount++) {
+
+		Entity* Wolf = WolfList.At(Wolfcount)->data;
+
+		std::string count = std::to_string(Wolfcount + 1);
+		Wolf->position.x = node.child(("Wolf" + count).c_str()).attribute("x").as_int();
+		Wolf->position.y = node.child(("Wolf" + count).c_str()).attribute("y").as_int();
+	}
+
+	for (int Eyecount = 0; Eyecount < EyeList.Count(); Eyecount++) {
+
+		Entity* Eye = EyeList.At(Eyecount)->data;
+
+		std::string count = std::to_string(Eyecount + 1);
+		Eye->position.x = node.child(("Eye" + count).c_str()).attribute("x").as_int();
+		Eye->position.y = node.child(("Eye" + count).c_str()).attribute("y").as_int();
+	}
+	return true;
+}
+
+bool Scene::SaveState(pugi::xml_node node)
+{
+	pugi::xml_node posNode = node.append_child("player");
+	posNode.append_attribute("x").set_value(player->position.x);
+	posNode.append_attribute("y").set_value(player->position.y);
+
+	//Save data of the Walking Enemy
+	for (int wolfCount = 0; wolfCount < WolfList.Count(); wolfCount++) {
+		std::string Wolfy = std::to_string(wolfCount + 1);
+		pugi::xml_node enemyNode = node.append_child(("Wolf" + Wolfy).c_str());
+		Entity* Wolf = WolfList.At(wolfCount)->data;
+
+		
+		enemyNode.append_attribute("x").set_value(Wolf->position.x);
+		enemyNode.append_attribute("y").set_value(Wolf->position.y);
+	}
+	//Save data of the Flying Enemy
+	for (int eyeCount = 0; eyeCount < EyeList.Count(); eyeCount++) {
+		std::string Eyes = std::to_string(eyeCount + 1);
+		pugi::xml_node enemyNode = node.append_child(("Eye" + Eyes).c_str());
+		Entity* Eye = WolfList.At(eyeCount)->data;
+
+
+		enemyNode.append_attribute("x").set_value(Eye->position.x);
+		enemyNode.append_attribute("y").set_value(Eye->position.y);
+	}
+
+
+	pugi::xml_node pconditionsNode = node.append_child("pconditions");
+	pconditionsNode.append_attribute("godmode").set_value(player->godMode);
+	pconditionsNode.append_attribute("isAlive").set_value(player->isAlive);
+	pconditionsNode.append_attribute("isjumpping").set_value(player->isjumpping);
+	pconditionsNode.append_attribute("isWalking").set_value(player->isWalking);
+	pconditionsNode.append_attribute("right").set_value(player->right);
+
+	return true;
 }
 
 // Called before quitting

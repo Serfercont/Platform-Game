@@ -4,6 +4,8 @@
 #include "Module.h"
 #include "Player.h"
 #include "Item.h"
+#include "EnemyWalk.h"
+#include "EnemyFly.h"
 
 struct SDL_Texture;
 
@@ -34,12 +36,18 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	Player* player;
+	bool LoadState(pugi::xml_node node);
+	bool SaveState(pugi::xml_node node);
+
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;
-	Player* player;
+	EnemyWalk* enemyWalk;
+	
+	EnemyFly* enemyFly;
 	SDL_Texture* fondo0;
 	SDL_Texture* fondo1;
 	SDL_Texture* fondo2;
@@ -47,6 +55,8 @@ private:
 	SDL_Texture* fondo4;
 	SDL_Texture* mouseTileTex = nullptr;
 	pugi::xml_node configNode;
+	List<Entity*> WolfList;
+	List<Entity*> EyeList;
 };
 
 #endif // __SCENE_H__

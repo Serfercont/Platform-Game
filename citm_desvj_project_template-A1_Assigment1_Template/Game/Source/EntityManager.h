@@ -33,6 +33,9 @@ public:
 
 	void AddEntity(Entity* entity);
 
+	void GetWolves(List<Entity*>& WolvesList) const;
+	void GetEyes(List<Entity*>& EyeList) const;
+
 public:
 
 	List<Entity*> entities;

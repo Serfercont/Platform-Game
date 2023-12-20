@@ -13,6 +13,7 @@ enum class EntityType
 	PLAYER,
 	ITEM,
 	ENEMYWALK,
+	ENEMYFLY,
 	UNKNOWN
 };
 
@@ -81,6 +82,13 @@ public:
 	bool active = true;
 	pugi::xml_node parameters; 
 	const char* texturePath;
+	const char* knightAttack;
+	const char* knightWalk;
+	const char* knightDie;
+	const char* knightJump;
+	const char* wolfAttack;
+	const char* wolfDeath;
+	const char* EyeDeath;
 
 	// Possible properties, it depends on how generic we
 	// want our Entity class, maybe it's not renderable...

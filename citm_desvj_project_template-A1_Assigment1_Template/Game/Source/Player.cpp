@@ -24,9 +24,16 @@ Player::~Player() {
 
 bool Player::Awake() {
 
+	
+
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
+
+	knightAttack= parameters.attribute("audioAttack").as_string();
+	knightDie= parameters.attribute("audioDeath").as_string();
+	knightWalk= parameters.attribute("audioWalk").as_string();
+	knightJump = parameters.attribute("audioJump").as_string();
 
 	return true;
 }
@@ -42,39 +49,33 @@ bool Player::Start() {
 	InitPosX = position.x;
 	InitPosY = position.y;
 
+	//audioAttack = app->audio->LoadFx(configNode.child("wolfAttack").attribute("path").as_string());
+
 	//initilize textures
 	texture = app->tex->Load(texturePath);
-	currentAnimation = &idleAnim;
 
-	/*pbody = app->physics->CreateRectangle(position.x, position.y, 44,64, bodyType::DYNAMIC);
-	pbody->listener = this;
-	pbody->ctype = ColliderType::PLAYER;*/
+	audioAttack = app->audio->LoadFx(knightAttack);
+	audioDie = app->audio->LoadFx(knightDie);
+	audioWalk = app->audio->LoadFx(knightWalk);
+	audioJump = app->audio->LoadFx(knightJump);
+
+
+	currentAnimation = &idleAnim;
 
 	pbody = app->physics->CreateCircle(position.x + 16, position.y-10, 25, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
+	
 
-	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 	return true;
 }
 
 bool Player::Update(float dt)
 {
-	/*iPoint mouseTile = app->map->WorldToMap(position.x - app->render->camera.x,
-		position.y - app->render->camera.y);
-
-	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
-	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
-
-	iPoint origin = iPoint(2, 2);*/
-
 	flipPos.x = position.x - 10;
 	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
-	
-	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 
 	//currentAnimation = &idleAnim;
-	
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		godMode = !godMode;		
 	}
@@ -93,79 +94,97 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true) {
 		currentVelocity.y = currentVelocity.y - 0.5;
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == true) {
 		currentVelocity.y = currentVelocity.y + 0.5;
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
-
 	}
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && isAlive && godMode)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && isAlive && godMode && !isAttacking)
 	{
 		currentVelocity.y = 0;
 		currentAnimation = &idleAnim;
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive && !isAttacking)
 	{
 		currentVelocity.x = 0;
 		currentAnimation = &idleAnim;
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
+
+		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode==false) {
-		currentAnimation = &atack1Anim;
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && godMode == false && !powerUp && !isAttacking && isAlive) {
+		Attack();
 	}
+
+	if (currentAnimation==&atack1Anim && currentAnimation->HasFinished())
+	{
+		if (damage)
+		{
+			isAttacking = false;
+			damage->body->SetActive(false);
+			damage->body->GetWorld()->DestroyBody(damage->body);
+			damage = NULL;
+		}
+		isAttacking = false;
+		currentAnimation->loopCount = 0;
+		currentAnimation->Reset();
+	}
+	
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == false) {
 		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive ) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive && !isAttacking && !isjumpping) {
 		right = false;
 		isWalking = true;
-		//vel = b2Vec2(-speed*dt, -GRAVITY_Y);
 		currentVelocity.x = -speed * 16;
 		currentAnimation = &walkAnim;
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
-		//currentAnimation = &animations["walk"];
+		app->audio->PlayFx(audioWalk);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive && !isAttacking && !isjumpping) {
 		right = true;
 		isWalking = true;
 		currentVelocity.x = +speed * 16;
-		//vel = b2Vec2(speed*dt, -GRAVITY_Y);
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
 		currentAnimation = &walkAnim; 
+		app->audio->PlayFx(audioWalk);
 		
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive && !checkColumn) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive && !checkColumn && !isAttacking) {
 		isjumpping = true;
 		currentAnimation = &jumpAnim;
+		app->audio->PlayFx(audioJump);
 		currentVelocity.y = -17;
 		pbody->body->SetLinearVelocity(currentVelocity);
-		//app->map->pathfinding->CreatePath(origin, mouseTile);
+		
 	}
-	//que hace si está tocando con el pincho
-	if (spike == true)
+	//que hace si estï¿½ tocando con el pincho
+	if (spike == true || health==0)
 	{
 		currentVelocity.x = 0;
 		isAlive = false;
+		isAttacking = false;
 		if (currentAnimation!=&deadAnim)
 		{
+			app->audio->PlayFx(audioDie);
 			currentAnimation = &deadAnim;
 			currentAnimation->loopCount = 0;
 			currentAnimation->Reset();
 		}
 		if (currentAnimation->HasFinished())
 		{
-			
+			//respawn
+			if (damage)
+			{
+				damage->body->SetActive(false);
+				damage->body->GetWorld()->DestroyBody(damage->body);
+				damage = NULL;
+			}
 			spike = false;
 			isAlive = true;
 			position.x = 700;
 			position.y = 1350;
+			health = 3;
 			pbody->SetPosition(position.x, position.y);
 			currentAnimation = &idleAnim;
 			app->render->camera.x = 0;
@@ -174,28 +193,31 @@ bool Player::Update(float dt)
 
 	if (isjumpping)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive)
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive &&!isAttacking)
 		{
 			currentVelocity.x = 0;
 			currentAnimation = &jumpAnim;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive)
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive && !isAttacking)
 		{
+			isWalking = true;
 			right = false;
 			currentVelocity.x = -speed * 16;
 			currentAnimation = &jumpAnim;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive)
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive && !isAttacking)
 		{
+			isWalking = true;
 			right = true;
 			currentVelocity.x = +speed * 16;
 			currentAnimation = &jumpAnim;
 		}
-
-		
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && isAlive && !isAttacking && !isWalking)
+		{
+			currentVelocity.x = 0;
+			Attack();
+		}		
 	}
-	
-
 	//Set the velocity of the pbody of the player
 
 	if (isjumpping == false && !godMode)
@@ -236,13 +258,37 @@ bool Player::Update(float dt)
 	
 	}
 		currentAnimation->Update();
-	
-		printf("\r %i", app->render->camera.x - position.x + 400);
-
-	/*app->render->camera.y = -position.y+300;
-	currentAnimation->Update();*/
 
 	return true;
+}
+
+void Player::Attack()
+{
+	isAttacking = true;
+	app->audio->PlayFx(audioAttack);
+	currentAnimation = &atack1Anim;
+	currentAnimation->loopCount = 0;
+	currentAnimation->Reset();
+	if (right)
+	{
+
+		damage = app->physics->CreateRectangleSensor(position.x + 70, position.y + 30, 20, 40, bodyType::KINEMATIC);
+		damage->listener = this;
+		damage->ctype = ColliderType::DAMAGE;
+	}
+	else if (!right)
+	{
+
+		damage = app->physics->CreateRectangleSensor(position.x - 15, position.y + 30, 20, 40, bodyType::KINEMATIC);
+		damage->listener = this;
+		damage->ctype = ColliderType::DAMAGE;
+	}
+	if (isAttacking)
+	{
+		currentAnimation->Reset();
+		currentAnimation = &atack1Anim;
+		currentAnimation->loopCount = 0;
+	}
 }
 
 bool Player::CleanUp()
@@ -250,6 +296,7 @@ bool Player::CleanUp()
 	app->tex->UnLoad(texture);
 	return true;
 }
+
 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
@@ -262,7 +309,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLATFORM:
 		isjumpping = false;
 		checkColumn = false;
-		currentAnimation = &idleAnim;
+		
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::UNKNOWN:
@@ -273,10 +320,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		{
 			spike = true;
 		}
-		
 		break;
 	case ColliderType::COLUMN:
 		checkColumn = true;
+		break;
+	case ColliderType::ENEMYDAMAGE:
+		health = health - 1;
+		//pbody->body->ApplyForceToCenter(b2Vec2(150,100),1);
 		break;
 	}
 }
