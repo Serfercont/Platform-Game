@@ -186,13 +186,11 @@ bool Scene::LoadState(pugi::xml_node node)
 
 	for (int Wolfcount = 0; Wolfcount < WolfList.Count(); Wolfcount++) {
 
-		Entity* Wolf = WolfList.At(Wolfcount)->data;
-
 		std::string count = std::to_string(Wolfcount + 1);
-		Wolf->position.x = node.child(("Wolf" + count).c_str()).attribute("x").as_int();
-		Wolf->position.y = node.child(("Wolf" + count).c_str()).attribute("y").as_int();
+		Entity* wolf = WolfList.At(Wolfcount)->data;
+		pugi::xml_node WolfPositionnode = node.append_child(("wolf" + count).c_str()).append_child("wolfPosition");
+		wolf->position.x = WolfPositionnode.attribute("isAlive").as_bool();
 	}
-
 	for (int Eyecount = 0; Eyecount < EyeList.Count(); Eyecount++) {
 
 		Entity* Eye = EyeList.At(Eyecount)->data;
@@ -212,13 +210,12 @@ bool Scene::SaveState(pugi::xml_node node)
 
 	//Save data of the Walking Enemy
 	for (int wolfCount = 0; wolfCount < WolfList.Count(); wolfCount++) {
-		std::string Wolfy = std::to_string(wolfCount + 1);
-		pugi::xml_node enemyNode = node.append_child(("Wolf" + Wolfy).c_str());
-		Entity* Wolf = WolfList.At(wolfCount)->data;
-
-		
-		enemyNode.append_attribute("x").set_value(Wolf->position.x);
-		enemyNode.append_attribute("y").set_value(Wolf->position.y);
+		std::string count = std::to_string(wolfCount + 1);
+		Entity* wolf = WolfList.At(wolfCount)->data;
+		pugi::xml_node enemyNode = node.append_child(("Wolf" + count).c_str()).append_child("wolfPosition");
+		enemyNode.append_attribute("x").set_value(wolf->position.x);
+		enemyNode.append_attribute("y").set_value(wolf->position.y);
+		enemyNode.append_attribute("isAlive").set_value(wolf->isAlive);
 	}
 	//Save data of the Flying Enemy
 	for (int eyeCount = 0; eyeCount < EyeList.Count(); eyeCount++) {
