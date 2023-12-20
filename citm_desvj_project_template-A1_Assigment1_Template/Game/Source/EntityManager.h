@@ -23,6 +23,8 @@ public:
 	// Called every frame
 	bool Update(float dt);
 
+	void GetWolf(List<Entity*>& skeletonsList) const;
+
 	// Called before quitting
 	bool CleanUp();
 

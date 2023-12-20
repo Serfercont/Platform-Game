@@ -29,7 +29,8 @@ bool EnemyFly::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
-
+	EyeDeath=parameters.attribute("eyeFlying").as_string();
+	EyeFlying = parameters.attribute("eyeDeath").as_string();
 	return true;
 }
 
@@ -44,6 +45,9 @@ bool EnemyFly::Start() {
 
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &idleAnim;
+
+	eyeDeaths = app->audio->LoadFx(EyeDeath);
+	eyeFlyings = app->audio->LoadFx(EyeFlying);
 
 	tileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
@@ -69,6 +73,7 @@ bool EnemyFly::Update(float dt)
 	//LOG("dist: %d", dist);
 	if (dist > 12 && isAlive)
 	{
+		app->audio->PlayFx(eyeFlyings);
 		currentAnimation = &idleAnim;
 	}
 	if (dist < 12 && isAlive)
@@ -125,6 +130,7 @@ bool EnemyFly::Update(float dt)
 		isAlive = false;
 		if (currentAnimation != &deadAnim1)
 		{
+			
 			currentAnimation = &deadAnim1;
 		}
 	}
@@ -135,6 +141,7 @@ bool EnemyFly::Update(float dt)
 		if (currentAnimation != &deadAnim2)
 		{
 			currentAnimation = &deadAnim2;
+			app->audio->PlayFx(eyeDeaths);
 			currentAnimation->loopCount = 0;
 			currentAnimation->Reset();
 		}
@@ -168,9 +175,11 @@ bool EnemyFly::Update(float dt)
 				if (attack)
 				{
 					currentAnimation = &attackAnim;
+					app->audio->PlayFx(eyeFlyings);
 				}
 				else
 				{
+					app->audio->PlayFx(eyeFlyings);
 					currentAnimation = &idleAnim;
 				}
 			}

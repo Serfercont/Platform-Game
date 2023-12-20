@@ -18,7 +18,7 @@
 
 	<audio>
 		<music volume="64"/>
-		<fx volume="128"/>
+		<fx volume="80"/>
 	</audio>
 
 	<scene>
@@ -33,7 +33,7 @@
 		<ability x="0" y="0" texturepath="Assets/Textures/Ability.png"/>
 		<enemyWalk x="500" y="450" texturepath="Assets/Enemy/Werewolf.png" wolfDeath="Assets/Audio/Fx/WolfDeath.wav" wolfAttack="Assets/Audio/Fx/WolfAttack.wav" />
 		<enemyWalk x="800" y="450" texturepath="Assets/Enemy/Werewolf.png" wolfDeath="Assets/Audio/Fx/WolfDeath.wav" wolfAttack="Assets/Audio/Fx/WolfAttack.wav"/>
-		<enemyFly x="300" y="450" texturepath="Assets/Enemy/FlyingEye.png" eyeDeath ="Assets/Audio/Fx/EyeDeath.wav" flyingEye ="Assets/Audio/Fx/Flyingeye.wav"/>
+		<enemyFly x="300" y="450" texturepath="Assets/Enemy/FlyingEye.png" eyeDeath ="Assets/Audio/Fx/EyeDeath.wav" eyeFlying ="Assets/Audio/Fx/FlyingEye.wav"/>
 		<item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
 		<item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
 		<item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>

@@ -51,13 +51,13 @@ public:
 	Animation attackAnim;
 	Animation deadAnim1;
 	Animation deadAnim2;
-
-	uint eyeDeath;
+	
+	uint eyeFlyings;
+	uint eyeDeaths;
 
 	bool attack;
 	bool fall=false;
 	bool die = false;
-	bool isAlive=true;
 	bool attackBody = false;
 private:
 	PhysBody* damage;
