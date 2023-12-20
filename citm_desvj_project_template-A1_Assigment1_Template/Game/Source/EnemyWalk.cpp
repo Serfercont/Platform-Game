@@ -72,7 +72,7 @@ bool EnemyWalk::Update(float dt)
 	{
 		currentAnimation = &idleAnim;
 	}
-	if (dist<12 && dist>3 && isAlive)
+	if (dist<12 && isAlive)
 	{
 		app->map->pathfinding->CreatePath(origin, destiny);
 		lastPath = *app->map->pathfinding->GetLastPath();
@@ -81,7 +81,7 @@ bool EnemyWalk::Update(float dt)
 	{
 		attack = true;
 	}
-	if (currentAnimation == &attackAnim && currentAnimation->HasFinished()) { // Reiniciar el ataque
+	if (currentAnimation == &attackAnim && currentAnimation->HasFinished()) { 
 		attack = false;
 		attackAnim.Reset();
 		currentAnimation->loopCount = 0;
@@ -111,7 +111,7 @@ bool EnemyWalk::Update(float dt)
 		}
 	}
 
-	if (attack && currentAnimation==&attackAnim&& currentAnimation->GetCurrentFrameCount()>=4 && !attackBody)
+	if (attack && currentAnimation==&attackAnim && currentAnimation->GetCurrentFrameCount()>=4 && !attackBody)
 	{
 		if (right)
 		{
@@ -128,7 +128,7 @@ bool EnemyWalk::Update(float dt)
 			attackBody = true;
 		}
 	}
-	LOG("current frame %i", currentAnimation->GetCurrentFrameCount());
+	//LOG("current frame %i", currentAnimation->GetCurrentFrameCount());
 	if (attack && currentAnimation== &attackAnim && currentAnimation->GetCurrentFrameCount()>=6.8 &&attackBody)
 	{
 		attack = false;

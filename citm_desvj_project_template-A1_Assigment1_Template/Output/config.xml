@@ -61,12 +61,12 @@
 			<frame x="499" y="44" width="52" height="66"/>
 			<frame x="567" y="44" width="52" height="66"/>
 		</walk>
-		<attack1 loop="false" speed="0.2f">
-			<frame x="77" y="823" width="87" height="76"/>
-			<frame x="154" y="823" width="87" height="76"/>
-			<frame x="238" y="823" width="87" height="76"/>
-			<frame x="328" y="823" width="87" height="76"/>
-			<frame x="400" y="823" width="87" height="76"/>
+		<attack1 loop="false" speed="0.15f">
+			<frame x="84" y="820" width="64" height="68"/>
+			<frame x="149" y="820" width="64" height="68"/>
+			<frame x="214" y="820" width="64" height="68"/>
+			<frame x="279" y="820" width="64" height="68"/>
+			<frame x="344" y="820" width="64" height="68"/>
 		</attack1>
 		<ability loop="true" speed="0.1f">
 			<frame x="0" y="0" width="64" height="64"/>

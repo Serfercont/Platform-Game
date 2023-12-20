@@ -136,14 +136,15 @@ bool Player::Update(float dt)
 		isWalking = true;
 		currentVelocity.x = -speed * 16;
 		currentAnimation = &walkAnim;
+		app->audio->PlayFx(audioWalk);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive && !isAttacking) {
 		right = true;
 		isWalking = true;
 		currentVelocity.x = +speed * 16;
-	
 		currentAnimation = &walkAnim; 
+		app->audio->PlayFx(audioWalk);
 		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive && !checkColumn && !isAttacking) {
