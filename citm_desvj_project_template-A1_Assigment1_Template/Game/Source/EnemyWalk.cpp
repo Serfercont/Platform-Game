@@ -143,6 +143,11 @@ bool EnemyWalk::Update(float dt)
 			damage = NULL;
 		}
 	}
+	if (tp)
+	{
+		pbody->body->SetTransform({ PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y) }, 0);
+		tp = false;
+	}
 
 	if (lastPath.Count() > 0 && isAlive)
 	{
@@ -184,9 +189,11 @@ bool EnemyWalk::Update(float dt)
 			lastPath.Pop(*nextPathTile);
 		}
 	}
-
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
+	if (!tp)
+	{
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
+	}
 
 	pbody->body->SetLinearVelocity(velocity);
 	//enemyPbody->body->SetTransform({ pbody->body->GetPosition().x, pbody->body->GetPosition().y - PIXEL_TO_METERS(10) }, 0);
@@ -230,3 +237,4 @@ void EnemyWalk::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	}
 }
+

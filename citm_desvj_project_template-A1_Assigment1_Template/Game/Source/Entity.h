@@ -96,6 +96,7 @@ public:
 	iPoint position;       
 	bool renderable = true;
 	bool isAlive = true;
+	bool tp = false;
 };
 
 #endif // __ENTITY_H__

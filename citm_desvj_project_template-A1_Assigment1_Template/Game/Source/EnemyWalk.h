@@ -26,7 +26,6 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
-	void Attack();
 
 public:
 	float speed = 0.2f;

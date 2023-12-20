@@ -186,18 +186,27 @@ bool Scene::LoadState(pugi::xml_node node)
 	//Wolf Load 
 	for (int Wolfcount = 0; Wolfcount < WolfList.Count(); Wolfcount++) {
 
-		std::string count = std::to_string(Wolfcount + 1);
 		Entity* wolf = WolfList.At(Wolfcount)->data;
-		pugi::xml_node WolfPositionnode = node.append_child(("wolf" + count).c_str()).append_child("wolfPosition");
-		wolf->position.x = WolfPositionnode.attribute("isAlive").as_bool();
+
+		// Convert the current count to a string for constructing XML attribute names.
+		std::string count = std::to_string(Wolfcount + 1);
+
+		// Update the position of the slime entity based on XML attributes.
+		wolf->position.x = node.child(("Wolf" + count).c_str()).attribute("x").as_int();
+		wolf->position.y = node.child(("Wolf" + count).c_str()).attribute("y").as_int();
+		wolf->isAlive = node.child(("Wolf" + count).c_str()).attribute("isAlive").as_bool();
+		wolf->tp = true;
 	}
 	//Flying Eye Load
 	for (int Eyecount = 0; Eyecount < EyeList.Count(); Eyecount++) {
 
 		std::string count = std::to_string(Eyecount + 1);
 		Entity* eye = EyeList.At(Eyecount)->data;
-		pugi::xml_node eyePositionnode = node.append_child(("eye" + count).c_str()).append_child("eyePosition");
-		eye->position.x = eyePositionnode.attribute("isAlive").as_bool();
+		pugi::xml_node eyePositionnode = node.append_child(("Eye" + count).c_str()).append_child("eyePosition");
+		eye->position.x = eyePositionnode.attribute("x").as_int();
+		eye->position.y = eyePositionnode.attribute("y").as_int();
+		eye->isAlive = eyePositionnode.attribute("isAlive").as_bool();
+		eye->tp = true;
 	}
 	return true;
 }
