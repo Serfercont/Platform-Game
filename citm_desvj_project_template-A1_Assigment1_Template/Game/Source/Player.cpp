@@ -49,8 +49,6 @@ bool Player::Start() {
 	InitPosX = position.x;
 	InitPosY = position.y;
 
-	//audioAttack = app->audio->LoadFx(configNode.child("wolfAttack").attribute("path").as_string());
-
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
@@ -173,21 +171,24 @@ bool Player::Update(float dt)
 		}
 		if (currentAnimation->HasFinished())
 		{
-			//respawn
-			if (damage)
+			if (!isAlive)
 			{
-				damage->body->SetActive(false);
-				damage->body->GetWorld()->DestroyBody(damage->body);
-				damage = NULL;
+				//respawn
+				if (damage)
+				{
+					damage->body->SetActive(false);
+					damage->body->GetWorld()->DestroyBody(damage->body);
+					damage = NULL;
+				}
+				spike = false;
+				isAlive = true;
+				position.x = 700;
+				position.y = 1350;
+				pbody->SetPosition(position.x, position.y);
+				currentAnimation = &idleAnim;
+				health = 3;
+				app->render->camera.x = 0;
 			}
-			spike = false;
-			isAlive = true;
-			position.x = 700;
-			position.y = 1350;
-			health = 3;
-			pbody->SetPosition(position.x, position.y);
-			currentAnimation = &idleAnim;
-			app->render->camera.x = 0;
 		}
 	}
 
@@ -316,17 +317,24 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision UNKNOWN");
 		break;
 	case ColliderType::SPIKES:
-		if (!godMode)
+		if (!godMode && isAlive)
 		{
 			spike = true;
 		}
 		break;
 	case ColliderType::COLUMN:
-		checkColumn = true;
+		if (isAlive)
+		{
+			checkColumn = true;
+		}
+		
 		break;
 	case ColliderType::ENEMYDAMAGE:
-		health = health - 1;
-		//pbody->body->ApplyForceToCenter(b2Vec2(150,100),1);
+		if (!godMode && isAlive)
+		{
+			health = health - 1;
+		}
+		
 		break;
 	}
 }
