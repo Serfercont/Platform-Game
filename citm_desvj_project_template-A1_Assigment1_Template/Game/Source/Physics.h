@@ -33,7 +33,8 @@ enum class ColliderType {
 	ENEMYWALK,
 	ENEMYFLY,
 	DAMAGE,
-	ENEMYDAMAGE
+	ENEMYDAMAGE,
+	VICTORY
 	// ..
 };
 

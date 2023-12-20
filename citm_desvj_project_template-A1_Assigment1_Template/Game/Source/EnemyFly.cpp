@@ -41,6 +41,7 @@ bool EnemyFly::Start() {
 	attackAnim.LoadAnimations("flyAttack");
 	deadAnim1.LoadAnimations("flyDeath1");
 	deadAnim2.LoadAnimations("flyDeath2");
+
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &idleAnim;
 
@@ -63,24 +64,60 @@ bool EnemyFly::Update(float dt)
 
 	//LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);
 	int dist = sqrt(pow(destiny.x - origin.x, 2) + pow(destiny.y - origin.y, 2));
+	int distX = destiny.x - origin.x;
+	int distY = destiny.y - origin.y;
 	//LOG("dist: %d", dist);
-
-	if (dist < 10 && isAlive)
+	if (dist > 12 && isAlive)
+	{
+		currentAnimation = &idleAnim;
+	}
+	if (dist < 12 && isAlive)
 	{
 		//currentAnimation = &idleAnim;
 		app->map->pathfinding->CreatePath(origin, destiny);
 		lastPath = *app->map->pathfinding->GetLastPath();
-		if (dist <= 2 && !attack && isAlive)
+	}
+	if (dist <= 2)
+	{
+		attack = true;
+
+	}
+	//cuando acaba la anim, acaba de atacar
+	if (currentAnimation == &attackAnim && currentAnimation->HasFinished()) {
+		attack = false;
+		attackAnim.Reset();
+		currentAnimation->loopCount = 0;
+	}
+	//ataque
+	if (attack && currentAnimation == &attackAnim && currentAnimation->GetCurrentFrameCount() >= 2 && !attackBody)
+	{
+		if (right)
 		{
-			attack = true;
-			//currentAnimation = &attackAnim;
+			damage = app->physics->CreateRectangleSensor(position.x + 25, position.y, 20, 20, bodyType::KINEMATIC);
+			damage->listener = this;
+			damage->ctype = ColliderType::ENEMYDAMAGE;
+			attackBody = true;
+		}
+		else
+		{
+			damage = app->physics->CreateRectangleSensor(position.x - 30, position.y, 20, 20, bodyType::KINEMATIC);
+			damage->listener = this;
+			damage->ctype = ColliderType::ENEMYDAMAGE;
+			attackBody = true;
 		}
 	}
-	if (attack && isAlive)
+	if (attack && currentAnimation == &attackAnim && currentAnimation->GetCurrentFrameCount() >= 7 && attackBody)
 	{
-
+		attack = false;
+		attackBody = false;
+		if (damage)
+		{
+			damage->body->SetActive(false);
+			damage->body->GetWorld()->DestroyBody(damage->body);
+			damage = NULL;
+		}
 	}
-
+	//caida muerte
 	if (fall == true)
 	{
 		velocity.x = 0;
@@ -91,6 +128,7 @@ bool EnemyFly::Update(float dt)
 			currentAnimation = &deadAnim1;
 		}
 	}
+	//muerte
 	if (die== true)
 	{
 		velocity.x = 0;
@@ -102,48 +140,71 @@ bool EnemyFly::Update(float dt)
 		}
 		if (currentAnimation->HasFinished())
 		{
+			if (damage)
+			{
+				damage->body->SetActive(false);
+				damage->body->GetWorld()->DestroyBody(damage->body);
+				damage = NULL;
+			}
 			pbody->body->SetActive(false);
 			app->entityManager->DestroyEntity(this);
 			app->physics->world->DestroyBody(pbody->body);
 		}
 	}
+	//pathfinding y attackAnim
+	
 
-	if (lastPath.Count() > 0 && isAlive)
-	{
-		iPoint* nextPathTile;
-		nextPathTile = lastPath.At(lastPath.Count() - 1);
+		if (lastPath.Count() > 1)
+		{
+			iPoint nextTilePath = { lastPath.At(1)->x, lastPath.At(1)->y };
 
-		if (nextPathTile->x < origin.x)
-		{
-			right = false;
-			//currentAnimation = &runAnim;
-			velocity.x = -2;
+			int positionTilesX = position.x / 32;
+			int positionTilesY = position.y / 32;
+
+			if (nextTilePath.x < positionTilesX && nextTilePath.x != positionTilesX)
+			{
+				right = false;
+				velocity.x = -2;
+				if (attack)
+				{
+					currentAnimation = &attackAnim;
+				}
+				else
+				{
+					currentAnimation = &idleAnim;
+				}
+			}
+			else if (nextTilePath.x > positionTilesX && nextTilePath.x != positionTilesX)
+			{
+				right = true;
+				velocity.x = 2;
+				if (attack)
+				{
+					currentAnimation = &attackAnim;
+				}
+				else
+				{
+					currentAnimation = &idleAnim;
+				}
+
+			}
+			else if (nextTilePath.y > positionTilesY && nextTilePath.y !=positionTilesY)
+			{
+				velocity.y = 2;
+				velocity.x = 0;
+			}
+			else if (nextTilePath.y < positionTilesY && nextTilePath.y != positionTilesY)
+			{
+				velocity.y = -2;
+				velocity.x = 0;
+			}
 		}
-		else
-		{
-			right = true;
-			//currentAnimation = &runAnim;
-			velocity.x = +2;
-		}
-		if (nextPathTile->x == origin.x) {
-			lastPath.Pop(*nextPathTile);
-		}
-		if (nextPathTile->y < origin.y)
-		{
-			velocity.y = -2;
-		}
-		else
-		{
-			velocity.y = +2;
-		}
-	}
+
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
 
 	pbody->body->SetLinearVelocity(velocity);
-	//enemyPbody->body->SetTransform({ pbody->body->GetPosition().x, pbody->body->GetPosition().y - PIXEL_TO_METERS(10) }, 0);
-
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	if (right)
 	{
@@ -177,7 +238,6 @@ void EnemyFly::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::DAMAGE:
 		fall = true;
-		//currentAnimation = &deadAnim1;
 		break;
 	case ColliderType::PLATFORM:
 		if (!isAlive)

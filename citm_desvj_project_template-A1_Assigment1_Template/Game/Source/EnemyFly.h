@@ -29,9 +29,9 @@ public:
 
 public:
 	float speed = 0.2f;
+	float enemyPositionX;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
-	PhysBody* damage;
 	SDL_Texture* tileTex;
 	b2Transform initialTransform;
 
@@ -57,6 +57,8 @@ public:
 	bool die = false;
 	bool isAlive=true;
 	bool attackBody = false;
+private:
+	PhysBody* damage;
 };
 
 #endif // __ENEMYWALK_H__
