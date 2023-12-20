@@ -131,15 +131,17 @@ bool Player::Update(float dt)
 		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive && !isAttacking) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isAlive && !isAttacking&&!isjumpping) {
 		right = false;
 		isWalking = true;
 		currentVelocity.x = -speed * 16;
 		currentAnimation = &walkAnim;
 		app->audio->PlayFx(audioWalk);
+		
+		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive && !isAttacking) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isAlive && !isAttacking&&!isjumpping) {
 		right = true;
 		isWalking = true;
 		currentVelocity.x = +speed * 16;
@@ -162,6 +164,7 @@ bool Player::Update(float dt)
 		isAttacking = false;
 		if (currentAnimation!=&deadAnim)
 		{
+			app->audio->PlayFx(audioDie);
 			currentAnimation = &deadAnim;
 			currentAnimation->loopCount = 0;
 			currentAnimation->Reset();
@@ -261,6 +264,7 @@ void Player::Attack()
 {
 	isAttacking = true;
 	currentAnimation = &atack1Anim;
+	app->audio->PlayFx(audioAttack);
 	currentAnimation->loopCount = 0;
 	currentAnimation->Reset();
 	if (right)
