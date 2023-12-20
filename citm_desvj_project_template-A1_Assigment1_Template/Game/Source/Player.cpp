@@ -33,7 +33,7 @@ bool Player::Awake() {
 	knightAttack= parameters.attribute("audioAttack").as_string();
 	knightDie= parameters.attribute("audioDeath").as_string();
 	knightWalk= parameters.attribute("audioWalk").as_string();
-
+	knightJump = parameters.attribute("audioJump").as_string();
 	return true;
 }
 
@@ -56,6 +56,7 @@ bool Player::Start() {
 	audioAttack = app->audio->LoadFx(knightAttack);
 	audioDie = app->audio->LoadFx(knightDie);
 	audioWalk = app->audio->LoadFx(knightWalk);
+	audioJump = app->audio->LoadFx(knightJump);
 
 	currentAnimation = &idleAnim;
 
@@ -150,8 +151,9 @@ bool Player::Update(float dt)
 		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isjumpping && isAlive && !checkColumn && !isAttacking) {
-		isjumpping = true;
+		isjumpping = true;	
 		currentAnimation = &jumpAnim;
+		app->audio->PlayFx(audioJump);
 		currentVelocity.y = -17;
 		pbody->body->SetLinearVelocity(currentVelocity);
 		

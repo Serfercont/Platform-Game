@@ -85,6 +85,7 @@ public:
 	const char* knightAttack;
 	const char* knightWalk;
 	const char* knightDie;
+	const char* knightJump;
 	const char* wolfAttack;
 	const char* wolfDeath;
 	const char* EyeDeath;
