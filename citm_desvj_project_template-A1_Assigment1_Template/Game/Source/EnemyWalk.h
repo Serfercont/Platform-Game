@@ -55,7 +55,7 @@ public:
 
 	bool attack;
 	bool die=false;
-	bool isAlive=true;
+	//bool isAlive=true;
 	bool isAttacking=false;
 	bool attackBody=false;
 	uint wolfAttacks;

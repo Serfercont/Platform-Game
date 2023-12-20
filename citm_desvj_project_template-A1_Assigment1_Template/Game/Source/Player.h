@@ -40,7 +40,7 @@ public:
 	int pickCoinFxId;
 	bool right;
 	bool left;
-	bool isAlive=true;
+	/*bool isAlive=true;*/
 	bool checkColumn;
 	bool godMode=false;
 	int InitPosX;
