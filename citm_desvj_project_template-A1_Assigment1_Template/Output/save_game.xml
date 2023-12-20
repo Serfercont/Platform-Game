@@ -6,36 +6,36 @@
 	<audio />
 	<physics />
 	<scene>
-		<player x="3090" y="709" />
+		<player x="136" y="709" />
 		<Wolf1>
-			<wolfPosition x="712" y="751" isAlive="true" />
+			<wolfPosition x="516" y="655" isAlive="true" />
 		</Wolf1>
 		<Wolf2>
-			<wolfPosition x="3103" y="623" isAlive="true" />
+			<wolfPosition x="3144" y="623" isAlive="true" />
 		</Wolf2>
 		<Wolf3>
-			<wolfPosition x="2054" y="751" isAlive="true" />
+			<wolfPosition x="1616" y="463" isAlive="true" />
 		</Wolf3>
 		<Wolf4>
-			<wolfPosition x="2918" y="751" isAlive="false" />
+			<wolfPosition x="3142" y="751" isAlive="true" />
 		</Wolf4>
 		<Wolf5>
 			<wolfPosition x="4342" y="751" isAlive="true" />
 		</Wolf5>
 		<Eye1>
-			<eyePosition x="751" y="760" isAlive="true" />
+			<eyePosition x="516" y="478" isAlive="true" />
 		</Eye1>
 		<Eye2>
-			<eyePosition x="2255" y="760" isAlive="true" />
+			<eyePosition x="2216" y="495" isAlive="true" />
 		</Eye2>
 		<Eye3>
-			<eyePosition x="2616" y="364" isAlive="true" />
+			<eyePosition x="2616" y="295" isAlive="true" />
 		</Eye3>
 		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="true" />
 	</scene>
 	<:anonymous />
 	<entitymanager />
 	<renderer>
-		<camera x="-2690" y="-20" />
+		<camera x="0" y="-20" />
 	</renderer>
 </game_state>
