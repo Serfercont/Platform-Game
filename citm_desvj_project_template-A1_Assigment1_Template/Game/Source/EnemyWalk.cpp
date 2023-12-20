@@ -68,7 +68,7 @@ bool EnemyWalk::Update(float dt)
 	{
 		currentAnimation = &idleAnim;
 	}
-	if (dist<12 && dist>3 && isAlive)
+	if (dist<12 && isAlive)
 	{
 		app->map->pathfinding->CreatePath(origin, destiny);
 		lastPath = *app->map->pathfinding->GetLastPath();
@@ -77,7 +77,7 @@ bool EnemyWalk::Update(float dt)
 	{
 		attack = true;
 	}
-	if (currentAnimation == &attackAnim && currentAnimation->HasFinished()) { // Reiniciar el ataque
+	if (currentAnimation == &attackAnim && currentAnimation->HasFinished()) { 
 		attack = false;
 		attackAnim.Reset();
 		currentAnimation->loopCount = 0;
