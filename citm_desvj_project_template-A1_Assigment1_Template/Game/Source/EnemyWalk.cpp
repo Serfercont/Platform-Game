@@ -29,8 +29,6 @@ bool EnemyWalk::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
-	wolfAttack = parameters.attribute("wolfAttack").as_string();
-	wolfDeath = parameters.attribute("wolfDeath").as_string();
 	return true;
 }
 
@@ -43,8 +41,6 @@ bool EnemyWalk::Start() {
 	attackAnim.LoadAnimations("enemyAttack");
 	deadAnim.LoadAnimations("enemyDead");
 	texture = app->tex->Load(texturePath);
-	wolfAttacks = app->audio->LoadFx(wolfAttack);
-	wolfDeaths = app->audio->LoadFx(wolfDeath);
 	currentAnimation = &idleAnim;
 
 	tileTex = app->tex->Load("Assets/Maps/tileSelection.png");
@@ -93,7 +89,6 @@ bool EnemyWalk::Update(float dt)
 		isAlive = false;
 		if (currentAnimation!=&deadAnim)
 		{
-			app->audio->PlayFx(wolfDeaths);
 			currentAnimation = &deadAnim;
 			currentAnimation->loopCount = 0;
 			currentAnimation->Reset();
@@ -152,7 +147,6 @@ bool EnemyWalk::Update(float dt)
 			right = false;
 			if (attack)
 			{
-				app->audio->PlayFx(wolfAttacks);
 				currentAnimation = &attackAnim;
 				velocity.x = -2;
 			}
@@ -167,13 +161,11 @@ bool EnemyWalk::Update(float dt)
 			right = true;
 			if(attack)
 			{
-				app->audio->PlayFx(wolfAttacks);
 				currentAnimation = &attackAnim;
 				velocity.x = +2;
 			}
 			else
 			{
-
 				currentAnimation = &runAnim;
 				velocity.x = +2;
 			}
@@ -213,7 +205,33 @@ bool EnemyWalk::Update(float dt)
 	}
 	return true;
 }
+void EnemyWalk::Attack()
+{
+	isAttacking = true;
+	currentAnimation = &attackAnim;
+	currentAnimation->loopCount = 0;
+	currentAnimation->Reset();
+	if (right)
+	{
 
+		damage = app->physics->CreateRectangleSensor(position.x + 70, position.y + 30, 20, 40, bodyType::KINEMATIC);
+		damage->listener = this;
+		damage->ctype = ColliderType::ENEMYDAMAGE;
+	}
+	else if (!right)
+	{
+
+		damage = app->physics->CreateRectangleSensor(position.x - 15, position.y + 30, 20, 40, bodyType::KINEMATIC);
+		damage->listener = this;
+		damage->ctype = ColliderType::ENEMYDAMAGE;
+	}
+	if (isAttacking)
+	{
+		currentAnimation->Reset();
+		currentAnimation = &attackAnim;
+		currentAnimation->loopCount = 0;
+	}
+}
 bool EnemyWalk::CleanUp()
 {
 	return true;
@@ -225,8 +243,7 @@ void EnemyWalk::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::DAMAGE:
 		die = true;
-		//currentAnimation = &deadAnim;
-		//app->audio->PlayFx(wolfDeaths);
+		currentAnimation = &deadAnim;
 		break;
 
 	}

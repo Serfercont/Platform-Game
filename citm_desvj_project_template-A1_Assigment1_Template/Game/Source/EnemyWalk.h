@@ -58,8 +58,6 @@ public:
 	bool isAlive=true;
 	bool isAttacking=false;
 	bool attackBody=false;
-	uint wolfAttacks;
-	uint wolfDeaths;
 
 	DynArray<iPoint> lastPath;
 };

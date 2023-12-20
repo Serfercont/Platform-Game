@@ -55,7 +55,6 @@ public:
 	uint audioWalk;
 	uint audioAttack;
 	uint audioDie;
-	uint audioJump;
 
 	//std::map<std::string, Animation> animations;
 

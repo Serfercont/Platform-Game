@@ -17,7 +17,7 @@
 	</window>
 
 	<audio>
-		<music volume="64"/>
+		<music volume="128"/>
 		<fx volume="128"/>
 	</audio>
 
@@ -29,12 +29,17 @@
 		<background3 path="Assets/Maps/Fondo3.png"/>
 		<background4 path="Assets/Maps/Fondo4.png"/>
 		<mainmusic path="Assets/Audio/Music/dark_dragon.mp3"/>
-		<
-		<player x="85" y="650" texturepath="Assets/Textures/knight.png" audioAttack="Assets/Audio/Fx/Slash.wav" audioDeath="Assets/Audio/Fx/death.wav" audioWalk="Assets/Audio/Fx/KnightWalk.wav" audioJump="Assets/Audio/Fx/Jump.wav" audioWin="Assets/Audio/Fx/Win.wav"/>
+		<knightDeath path="Assets/Audio/Fx/death.mp3"/>
+		<knightSlash path="Assets/Audio/Fx/Slash.mp3"/>
+		<knightWalk path="Assets/Audio/Fx/KnightWalk.mp3"/>
+		<eyeDeath path="Assets/Audio/Fx/EyeDeath.mp3"/>
+		<wolfDeath path="Assets/Audio/Fx/WolfDeath.mp3"/>
+		<wolfAttack path="Assets/Audio/Fx/WolfAttack.mp3"/>
+		<player x="85" y="650" texturepath="Assets/Textures/knight.png" audioAttack="Assets/Audio/Fx/Slash.mp3" audioDeath="Assets/Audio/Fx/death.mp3" audioWalk="Assets/Audio/Fx/KnightWalk.mp3"/>
 		<ability x="0" y="0" texturepath="Assets/Textures/Ability.png"/>
-		<enemyWalk x="500" y="450" texturepath="Assets/Enemy/Werewolf.png" wolfDeath="Assets/Audio/Fx/WolfDeath.wav" wolfAttack="Assets/Audio/Fx/WolfAttack.wav" />
-		<enemyWalk x="800" y="450" texturepath="Assets/Enemy/Werewolf.png" wolfDeath="Assets/Audio/Fx/WolfDeath.wav" wolfAttack="Assets/Audio/Fx/WolfAttack.wav"/>	   
-		<enemyFly x="300" y="450" texturepath="Assets/Enemy/FlyingEye.png" eyeDeath ="Assets/Audio/Fx/EyeDeath.wav" flyingEye ="Assets/Audio/Fx/Flyingeye.wav"/>
+		<enemyWalk x="500" y="450" texturepath="Assets/Enemy/Werewolf.png" />
+		<enemyWalk x="800" y="450" texturepath="Assets/Enemy/Werewolf.png"/>
+		<enemyFly x="300" y="450" texturepath="Assets/Enemy/FlyingEye.png"/>
 		<item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
 		<item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
 		<item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
