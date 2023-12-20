@@ -154,7 +154,7 @@ bool EnemyFly::Update(float dt)
 	//pathfinding y attackAnim
 	
 
-		if (lastPath.Count() > 1)
+		if (lastPath.Count() > 1 && isAlive)
 		{
 			iPoint nextTilePath = { lastPath.At(1)->x, lastPath.At(1)->y };
 
