@@ -143,6 +143,7 @@ bool EnemyFly::Update(float dt)
 	if (die== true)
 	{
 		velocity.x = 0;
+		app->map->pathfinding->ClearLastPath();
 		if (currentAnimation != &deadAnim2)
 		{
 			currentAnimation = &deadAnim2;
@@ -249,8 +250,21 @@ bool EnemyFly::Update(float dt)
 
 bool EnemyFly::CleanUp()
 {
+	app->tex->UnLoad(texture);
+	app->tex->UnLoad(tileTex);
+
+	
+	app->map->pathfinding->ClearLastPath();
+
+	if (pbody)
+	{
+		app->physics->world->DestroyBody(pbody->body);
+		pbody = nullptr;
+	}
+
 	return true;
 }
+
 
 void EnemyFly::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype) {

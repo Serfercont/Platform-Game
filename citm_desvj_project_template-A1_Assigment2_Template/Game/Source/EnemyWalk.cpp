@@ -93,6 +93,7 @@ bool EnemyWalk::Update(float dt)
 	{
 		velocity.x = 0;
 		isAlive = false;
+		app->map->pathfinding->ClearLastPath();
 		if (currentAnimation!=&deadAnim)
 		{
 			app->audio->PlayFx(wolfDeaths);
@@ -223,6 +224,18 @@ bool EnemyWalk::Update(float dt)
 }
 bool EnemyWalk::CleanUp()
 {
+	app->tex->UnLoad(texture);
+	app->tex->UnLoad(tileTex);
+
+
+	app->map->pathfinding->ClearLastPath();
+
+	if (pbody)
+	{
+		app->physics->world->DestroyBody(pbody->body);
+		pbody = nullptr;
+	}
+
 	return true;
 }
 
