@@ -25,6 +25,8 @@ public:
 
 	bool CleanUp();
 
+	void Move(const iPoint& origin, const iPoint& destination);
+
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 public:
@@ -42,7 +44,7 @@ public:
 	//pathfinding
 	iPoint origin;
 	iPoint destiny;
-	//DynArray<iPoint> lastPath;
+	iPoint nextTilePath;
 	b2Vec2 velocity;
 
 	Animation* currentAnimation = nullptr;

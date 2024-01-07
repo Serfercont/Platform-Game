@@ -66,10 +66,10 @@ bool EnemyWalk::Update(float dt)
 	origin = app->map->WorldToMap(position.x, position.y);
 	destiny = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
 	
+	float dist = origin.DistanceTo(destiny);
 	velocity.y = 5;
 
 	//LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);
-	int dist = sqrt(pow(destiny.x - origin.x, 2) + pow(destiny.y - origin.y, 2));
 	if (dist>12 && isAlive)
 	{
 		currentAnimation = &idleAnim;
@@ -78,11 +78,26 @@ bool EnemyWalk::Update(float dt)
 	{
 		app->map->pathfinding->CreatePath(origin, destiny);
 		lastPath = *app->map->pathfinding->GetLastPath();
+		if (dist <= 3 && !attack)
+		{
+			attack = true;
+		}
+		else if (dist>=3 && !attack)
+		{
+			if (lastPath->Count() > 1) {
+				nextTilePath = { lastPath->At(1)->x, lastPath->At(1)->y };
+				Move(origin, nextTilePath);
+			}
+			currentAnimation = &walkAnim;
+		}
+		else if (!attack)
+		{
+			currentAnimation = &idleAnim;
+			velocity = { 0, -GRAVITY_Y };
+			app->map->pathfinding->ClearLastPath();
+		}
 	}
-	if (dist <= 3)
-	{
-		attack = true;
-	}
+	
 	if (currentAnimation == &attackAnim && currentAnimation->HasFinished()) { 
 		attack = false;
 		attackAnim.Reset();
@@ -221,6 +236,22 @@ bool EnemyWalk::Update(float dt)
 		}
 	}
 	return true;
+}
+
+void EnemyWalk::Move(const iPoint& origin, const iPoint& destination) {
+	float xDiff = destination.x - origin.x;
+	float yDiff = destination.y - origin.y;
+
+	if (app->map->pathfinding->IsWalkable(destination) != 0)
+	{
+		velocity.x = (xDiff < 0) ? -2 : (xDiff > 0) ? 2 : 0;
+		velocity.y = (yDiff < 0) ? -2 : (yDiff > 0) ? -GRAVITY_Y : 0;
+
+		right = (xDiff > 0);
+	}
+	else {
+		velocity = { 0, -GRAVITY_Y };
+	}
 }
 bool EnemyWalk::CleanUp()
 {
