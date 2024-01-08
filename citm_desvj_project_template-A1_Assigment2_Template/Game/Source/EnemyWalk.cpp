@@ -56,7 +56,7 @@ bool EnemyWalk::Start() {
 	pbody->listener = this;
 
 	initialTransform = pbody->body->GetTransform();
-	
+
 	return true;
 }
 
@@ -65,51 +65,36 @@ bool EnemyWalk::Update(float dt)
 	flipPos.x = position.x - 10;
 	origin = app->map->WorldToMap(position.x, position.y);
 	destiny = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
-	
-	float dist = origin.DistanceTo(destiny);
+
 	velocity.y = 5;
 
 	//LOG("LAST PATH X: %d enemy x: %d", destiny.x, origin.x);
-	if (dist>12 && isAlive)
+	int dist = sqrt(pow(destiny.x - origin.x, 2) + pow(destiny.y - origin.y, 2));
+	if (dist > 12 && isAlive)
 	{
 		currentAnimation = &idleAnim;
 	}
-	if (dist<12 && isAlive)
+	if (dist < 12 && isAlive)
 	{
 		app->map->pathfinding->CreatePath(origin, destiny);
 		lastPath = *app->map->pathfinding->GetLastPath();
-		if (dist <= 3 && !attack)
-		{
-			attack = true;
-		}
-		else if (dist>=3 && !attack)
-		{
-			if (lastPath->Count() > 1) {
-				nextTilePath = { lastPath->At(1)->x, lastPath->At(1)->y };
-				Move(origin, nextTilePath);
-			}
-			currentAnimation = &walkAnim;
-		}
-		else if (!attack)
-		{
-			currentAnimation = &idleAnim;
-			velocity = { 0, -GRAVITY_Y };
-			app->map->pathfinding->ClearLastPath();
-		}
 	}
-	
-	if (currentAnimation == &attackAnim && currentAnimation->HasFinished()) { 
+	if (dist <= 3)
+	{
+		attack = true;
+	}
+	if (currentAnimation == &attackAnim && currentAnimation->HasFinished()) {
 		attack = false;
 		attackAnim.Reset();
 		currentAnimation->loopCount = 0;
 	}
 
-	if (die==true)
+	if (die == true)
 	{
 		velocity.x = 0;
 		isAlive = false;
 		app->map->pathfinding->ClearLastPath();
-		if (currentAnimation!=&deadAnim)
+		if (currentAnimation != &deadAnim)
 		{
 			app->audio->PlayFx(wolfDeaths);
 			currentAnimation = &deadAnim;
@@ -130,7 +115,7 @@ bool EnemyWalk::Update(float dt)
 		}
 	}
 
-	if (attack && currentAnimation==&attackAnim && currentAnimation->GetCurrentFrameCount()>=4 && !attackBody)
+	if (attack && currentAnimation == &attackAnim && currentAnimation->GetCurrentFrameCount() >= 4 && !attackBody)
 	{
 		if (right)
 		{
@@ -148,7 +133,7 @@ bool EnemyWalk::Update(float dt)
 		}
 	}
 	//LOG("current frame %i", currentAnimation->GetCurrentFrameCount());
-	if (attack && currentAnimation== &attackAnim && currentAnimation->GetCurrentFrameCount()>=6.8 &&attackBody)
+	if (attack && currentAnimation == &attackAnim && currentAnimation->GetCurrentFrameCount() >= 6.8 && attackBody)
 	{
 		attack = false;
 		attackBody = false;
@@ -188,7 +173,7 @@ bool EnemyWalk::Update(float dt)
 		else
 		{
 			right = true;
-			if(attack)
+			if (attack)
 			{
 				app->audio->PlayFx(wolfAttacks);
 				currentAnimation = &attackAnim;
@@ -199,7 +184,7 @@ bool EnemyWalk::Update(float dt)
 				currentAnimation = &runAnim;
 				velocity.x = +2;
 			}
-			
+
 		}
 		if (nextPathTile->x == origin.x) {
 			lastPath.Pop(*nextPathTile);
@@ -217,12 +202,12 @@ bool EnemyWalk::Update(float dt)
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	if (right)
 	{
-		app->render->DrawTexture(texture, position.x-70, position.y-80, &rect);
+		app->render->DrawTexture(texture, position.x - 70, position.y - 80, &rect);
 	}
 	else
 	{
 
-		app->render->DrawTexture(texture, flipPos.x-50, position.y-80, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
+		app->render->DrawTexture(texture, flipPos.x - 50, position.y - 80, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
 	}
 	currentAnimation->Update();
 
@@ -236,22 +221,6 @@ bool EnemyWalk::Update(float dt)
 		}
 	}
 	return true;
-}
-
-void EnemyWalk::Move(const iPoint& origin, const iPoint& destination) {
-	float xDiff = destination.x - origin.x;
-	float yDiff = destination.y - origin.y;
-
-	if (app->map->pathfinding->IsWalkable(destination) != 0)
-	{
-		velocity.x = (xDiff < 0) ? -2 : (xDiff > 0) ? 2 : 0;
-		velocity.y = (yDiff < 0) ? -2 : (yDiff > 0) ? -GRAVITY_Y : 0;
-
-		right = (xDiff > 0);
-	}
-	else {
-		velocity = { 0, -GRAVITY_Y };
-	}
 }
 bool EnemyWalk::CleanUp()
 {
