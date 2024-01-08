@@ -141,10 +141,9 @@ iPoint Map::WorldToMap(int x, int y)
 {
     iPoint ret(0, 0);
 
-    if (mapData.orientation == MapOrientation::ORTOGRAPHIC) {
         ret.x = x / mapData.tileWidth;
         ret.y = y / mapData.tileHeight;
-    }
+    
 
     if (mapData.orientation == MapOrientation::ISOMETRIC) {
         float half_width = mapData.tileWidth / 2;
