@@ -44,6 +44,8 @@
 		<item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
 		<item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>
 		<item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
+		<recover x="600" y="512" texturepath="Assets/Textures/cor.png"/>
+		<recover x="700" y="512" texturepath="Assets/Textures/cor.png"/>
 	</scene>
 	<animations>
 		<idle loop="true" speed="0.1f">

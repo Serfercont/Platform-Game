@@ -350,5 +350,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		
 		break;
+	case ColliderType::RECOVER:
+		health =health+1;
+		LOG("%i", health);
+
+		break;
 	}
 }

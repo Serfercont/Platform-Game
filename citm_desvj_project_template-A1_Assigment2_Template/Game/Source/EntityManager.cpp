@@ -94,6 +94,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::ENEMYFLY:
 		entity = new EnemyFly();
 		break;
+	case EntityType::RECOVER:
+		entity = new Recover();
+		break;
 	default:
 		break;
 	}
@@ -153,7 +156,21 @@ void EntityManager::GetItems(List<Entity*>& itemsList) const
 
 	for (entity = entities.start; entity != NULL; entity = entity->next)
 	{
-		if (entity->data->type == EntityType::ENEMYWALK)
+		if (entity->data->type == EntityType::ITEM)
+		{
+			itemsList.Add(entity->data);
+		}
+	}
+}
+void EntityManager::GetRecovers(List<Entity*>& itemsList) const
+{
+	itemsList.Clear();
+
+	ListItem<Entity*>* entity;
+
+	for (entity = entities.start; entity != NULL; entity = entity->next)
+	{
+		if (entity->data->type == EntityType::RECOVER)
 		{
 			itemsList.Add(entity->data);
 		}
