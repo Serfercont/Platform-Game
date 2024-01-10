@@ -84,6 +84,7 @@ public:
 	bool active = true;
 	pugi::xml_node parameters; 
 	const char* texturePath;
+	const char* powerUpTexture;
 	const char* knightAttack;
 	const char* knightWalk;
 	const char* knightDie;

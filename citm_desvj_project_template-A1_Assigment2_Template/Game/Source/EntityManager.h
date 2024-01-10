@@ -39,6 +39,7 @@ public:
 	void GetEyes(List<Entity*>& EyeList) const;
 	void GetItems(List<Entity*>& ItemsList) const;
 	void GetRecovers(List<Entity*>& ItemsList) const;
+	void GetPowerUps(List<Entity*>& ItemsList) const;
 
 public:
 

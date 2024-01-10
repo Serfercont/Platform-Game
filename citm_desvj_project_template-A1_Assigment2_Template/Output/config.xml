@@ -29,7 +29,7 @@
 		<background3 path="Assets/Maps/Fondo3.png"/>
 		<background4 path="Assets/Maps/Fondo4.png"/>
 		<mainmusic path="Assets/Audio/Music/dark_dragon.mp3"/>
-		<player x="85" y="650" texturepath="Assets/Textures/knight.png" audioAttack="Assets/Audio/Fx/Slash.wav" audioDeath="Assets/Audio/Fx/death.wav" audioWalk="Assets/Audio/Fx/KnightWalk.wav" audioJump="Assets/Audio/Fx/Jump.wav" audioWin="Assets/Audio/Fx/Win.wav"/>
+		<player x="85" y="650" texturepath="Assets/Textures/knight.png" powerUpTexture="Assets/Textures/Goldenknight.png" audioAttack="Assets/Audio/Fx/Slash.wav" audioDeath="Assets/Audio/Fx/death.wav" audioWalk="Assets/Audio/Fx/KnightWalk.wav" audioJump="Assets/Audio/Fx/Jump.wav" audioWin="Assets/Audio/Fx/Win.wav"/>
 		<ability x="0" y="0" texturepath="Assets/Textures/Ability.png"/>
 		<enemyWalk x="500" y="655" texturepath="Assets/Enemy/Werewolf.png" wolfDeath="Assets/Audio/Fx/WolfDeath.wav" wolfAttack="Assets/Audio/Fx/WolfAttack.wav" />
 		<enemyWalk x="3126" y="650" texturepath="Assets/Enemy/Werewolf.png" wolfDeath="Assets/Audio/Fx/WolfDeath.wav" wolfAttack="Assets/Audio/Fx/WolfAttack.wav" />
@@ -46,6 +46,7 @@
 		<item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
 		<recover x="600" y="512" texturepath="Assets/Textures/cor.png"/>
 		<recover x="700" y="512" texturepath="Assets/Textures/cor.png"/>
+		<powerUp x="800" y="512" texturepath="Assets/Textures/powerUp.png"/>
 	</scene>
 	<animations>
 		<idle loop="true" speed="0.1f">

@@ -4,6 +4,7 @@
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
+#include "PowerUp.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -97,6 +98,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::RECOVER:
 		entity = new Recover();
 		break;
+	case EntityType::POWERUP:
+		entity = new PowerUp();
+		break;
 	default:
 		break;
 	}
@@ -171,6 +175,20 @@ void EntityManager::GetRecovers(List<Entity*>& itemsList) const
 	for (entity = entities.start; entity != NULL; entity = entity->next)
 	{
 		if (entity->data->type == EntityType::RECOVER)
+		{
+			itemsList.Add(entity->data);
+		}
+	}
+}
+void EntityManager::GetPowerUps(List<Entity*>& itemsList) const
+{
+	itemsList.Clear();
+
+	ListItem<Entity*>* entity;
+
+	for (entity = entities.start; entity != NULL; entity = entity->next)
+	{
+		if (entity->data->type == EntityType::POWERUP)
 		{
 			itemsList.Add(entity->data);
 		}

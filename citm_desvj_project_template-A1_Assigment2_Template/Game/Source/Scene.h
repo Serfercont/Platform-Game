@@ -61,6 +61,7 @@ private:
 	List<Entity*> EyeList;
 	List<Entity*> ItemList;
 	List<Entity*> RecoverList;
+	List<Entity*> PowerUpList;
 };
 
 #endif // __SCENE_H__

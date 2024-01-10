@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "EnemyWalk.h"
 #include "Recover.h"
+#include "PowerUp.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -46,6 +47,13 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 	RecoverList;
 
+	for (pugi::xml_node itemNode = config.child("powerUp"); itemNode; itemNode = itemNode.next_sibling("powerUp"))
+	{
+		PowerUp* item = (PowerUp*)app->entityManager->CreateEntity(EntityType::POWERUP);
+		item->parameters = itemNode;
+	}
+	PowerUpList;
+
 	if (config.child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
@@ -71,6 +79,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	app->entityManager->GetEyes(EyeList);
 	app->entityManager->GetItems(ItemList);
 	app->entityManager->GetRecovers(RecoverList);
+	app->entityManager->GetPowerUps(PowerUpList);
 	if (config.child("map")) {
 		//Get the map name from the config file and assigns the value in the module
 		app->map->name = config.child("map").attribute("name").as_string();

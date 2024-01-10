@@ -29,6 +29,7 @@ bool Player::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
+	powerUpTexture = parameters.attribute("powerUpTexture").as_string();
 
 	knightAttack= parameters.attribute("audioAttack").as_string();
 	knightDie= parameters.attribute("audioDeath").as_string();
@@ -52,6 +53,7 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	powerUpText = app->tex->Load(powerUpTexture);
 
 	audioAttack = app->audio->LoadFx(knightAttack);
 	audioDie = app->audio->LoadFx(knightDie);
@@ -168,7 +170,7 @@ bool Player::Update(float dt)
 		pbody->body->SetLinearVelocity(currentVelocity);
 		
 	}
-	//que hace si est� tocando con el pincho
+	//si esta tocando con el pincho
 	if (spike == true || health==0)
 	{
 		currentVelocity.x = 0;
@@ -256,12 +258,27 @@ bool Player::Update(float dt)
 
 	if (right)
 	{
-		app->render->DrawTexture(texture, position.x, position.y, &rect);
+		if (!powerUp)
+		{
+			app->render->DrawTexture(texture, position.x, position.y, &rect);
+		}
+		else
+		{
+			app->render->DrawTexture(powerUpText, position.x, position.y, &rect);
+		}
+		
 	}
 	else
 	{
+		if (!powerUp)
+		{
+			app->render->DrawTexture(texture, flipPos.x, position.y, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			app->render->DrawTexture(powerUpText, flipPos.x, position.y, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
+		}
 		
-		app->render->DrawTexture(texture, flipPos.x, position.y, &rect,1.0f,0, INT_MAX,INT_MAX,SDL_FLIP_HORIZONTAL);
 	}
 	//Movimiento camara 
 
@@ -350,10 +367,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		
 		break;
-	case ColliderType::RECOVER:
-		health =health+1;
-		LOG("%i", health);
+	case ColliderType::POWERUP:
 
+		powerUp = true;
 		break;
+	case ColliderType::RECOVER:
+		if (health<3)
+		{
+			health = health + 1;
+		}
+		break;	
 	}
 }

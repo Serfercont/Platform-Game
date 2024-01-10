@@ -33,6 +33,7 @@ public:
 	int health = 3;
 	int score = 0;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* powerUpText = NULL;
 	PhysBody* pbody;
 	PhysBody* damage;
 
