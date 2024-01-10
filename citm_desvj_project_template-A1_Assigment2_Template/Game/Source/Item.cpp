@@ -29,19 +29,24 @@ bool Item::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircleSensor(position.x + 16, position.y + 16, 10, bodyType::KINEMATIC);
 	pbody->ctype = ColliderType::ITEM;
+	pbody->listener = this;
 
 	return true;
 }
 
 bool Item::Update(float dt)
 {
-	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
 	app->render->DrawTexture(texture, position.x, position.y);
+
+	if (pop)
+	{
+		pbody->body->SetActive(false);
+		app->entityManager->DestroyEntity(this);
+		app->physics->world->DestroyBody(pbody->body);
+	}
 
 	return true;
 }
@@ -49,4 +54,14 @@ bool Item::Update(float dt)
 bool Item::CleanUp()
 {
 	return true;
+}
+
+void Item::OnCollision(PhysBody* physA, PhysBody* physB) {
+
+	switch (physB->ctype)
+	{
+	case ColliderType::PLAYER:
+		pop = true;
+		break;
+	}
 }

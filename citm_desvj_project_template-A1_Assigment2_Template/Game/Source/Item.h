@@ -21,6 +21,8 @@ public:
 	bool Update(float dt);
 
 	bool CleanUp();
+	
+	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 public:
 
@@ -28,6 +30,7 @@ public:
 
 private:
 
+	bool pop= false;
 	SDL_Texture* texture;
 	const char* texturePath;
 	PhysBody* pbody;

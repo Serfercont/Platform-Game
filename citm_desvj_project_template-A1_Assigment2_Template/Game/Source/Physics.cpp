@@ -103,6 +103,41 @@ PhysBody* Physics::CreateRectangle(int x, int y, int width, int height, bodyType
 
 	return pbody;
 }
+PhysBody* Physics::CreateRectangleSensor(int x, int y, int width, int height, bodyType type)
+{
+	// Create BODY at position x,y
+	b2BodyDef body;
+	if (type == DYNAMIC) body.type = b2_dynamicBody;
+	if (type == STATIC) body.type = b2_staticBody;
+	if (type == KINEMATIC) body.type = b2_kinematicBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	// Add BODY to the world
+	b2Body* b = world->CreateBody(&body);
+
+	// Create SHAPE
+	b2PolygonShape box;
+	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+
+	// Create FIXTURE
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 1.0f;
+	fixture.isSensor = true;
+
+	// Add fixture to the BODY
+	b->CreateFixture(&fixture);
+
+	// Create our custom PhysBody class
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = width;
+	pbody->height = height;
+
+	// Return our PhysBody class
+	return pbody;
+}
 
 PhysBody* Physics::CreateCircle(int x, int y, int radious, bodyType type)
 {
@@ -141,28 +176,31 @@ PhysBody* Physics::CreateCircle(int x, int y, int radious, bodyType type)
 	// Return our PhysBody class
 	return pbody;
 }
-
-PhysBody* Physics::CreateRectangleSensor(int x, int y, int width, int height, bodyType type)
+PhysBody* Physics::CreateCircleSensor(int x, int y, int radious, bodyType type)
 {
 	// Create BODY at position x,y
+	// Create BODY at position x,y
 	b2BodyDef body;
+
 	if (type == DYNAMIC) body.type = b2_dynamicBody;
 	if (type == STATIC) body.type = b2_staticBody;
 	if (type == KINEMATIC) body.type = b2_kinematicBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	body.fixedRotation = true;
 	// Add BODY to the world
 	b2Body* b = world->CreateBody(&body);
 
 	// Create SHAPE
-	b2PolygonShape box;
-	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+	b2CircleShape circle;
+	circle.m_radius = PIXEL_TO_METERS(radious);
 
 	// Create FIXTURE
 	b2FixtureDef fixture;
-	fixture.shape = &box;
+	fixture.shape = &circle;
 	fixture.density = 1.0f;
 	fixture.isSensor = true;
+	b->ResetMassData();
 
 	// Add fixture to the BODY
 	b->CreateFixture(&fixture);
@@ -171,8 +209,8 @@ PhysBody* Physics::CreateRectangleSensor(int x, int y, int width, int height, bo
 	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
 	b->SetUserData(pbody);
-	pbody->width = width;
-	pbody->height = height;
+	pbody->width = radious * 0.5f;
+	pbody->height = radious * 0.5f;
 
 	// Return our PhysBody class
 	return pbody;

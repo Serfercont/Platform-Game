@@ -37,6 +37,7 @@ public:
 
 	void GetWolves(List<Entity*>& WolvesList) const;
 	void GetEyes(List<Entity*>& EyeList) const;
+	void GetItems(List<Entity*>& ItemsList) const;
 
 public:
 

@@ -14,6 +14,8 @@ enum class EntityType
 	ITEM,
 	ENEMYWALK,
 	ENEMYFLY,
+	POWERUP,
+	RECOVER,
 	UNKNOWN
 };
 

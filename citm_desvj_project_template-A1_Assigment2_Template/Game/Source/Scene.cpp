@@ -31,24 +31,18 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	// iterate all objects in the scene
 	// Check https://pugixml.org/docs/quickstart.html#access
-	/*for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+	for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
 	{
 		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
-	}*/
+	}
+	ItemList;
 
 	if (config.child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
 	}
-	/*if (config.child("enemyFly")) {
-		enemyFly = (EnemyFly*)app->entityManager->CreateEntity(EntityType::ENEMYFLY);
-		enemyFly->parameters = config.child("enemyFly");
-	}*/
-	/*if (config.child("enemyWalk")) {
-		enemyWalk = (EnemyWalk*)app->entityManager->CreateEntity(EntityType::ENEMYWALK);
-		enemyWalk->parameters = config.child("enemyWalk");
-	}*/
+	
 	for (pugi::xml_node itemNode = config.child("enemyWalk"); itemNode; itemNode = itemNode.next_sibling("enemyWalk"))
 	{
 		EnemyWalk* item = (EnemyWalk*)app->entityManager->CreateEntity(EntityType::ENEMYWALK);
@@ -67,6 +61,7 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	app->entityManager->GetWolves(WolfList);
 	app->entityManager->GetEyes(EyeList);
+	app->entityManager->GetItems(ItemList);
 	if (config.child("map")) {
 		//Get the map name from the config file and assigns the value in the module
 		app->map->name = config.child("map").attribute("name").as_string();

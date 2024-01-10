@@ -57,6 +57,7 @@ private:
 	pugi::xml_node configNode;
 	List<Entity*> WolfList;
 	List<Entity*> EyeList;
+	List<Entity*> ItemList;
 };
 
 #endif // __SCENE_H__

@@ -145,6 +145,20 @@ void EntityManager::GetEyes(List<Entity*>& eyesList) const
 		}
 	}
 }
+void EntityManager::GetItems(List<Entity*>& itemsList) const
+{
+	itemsList.Clear();
+
+	ListItem<Entity*>* entity;
+
+	for (entity = entities.start; entity != NULL; entity = entity->next)
+	{
+		if (entity->data->type == EntityType::ENEMYWALK)
+		{
+			itemsList.Add(entity->data);
+		}
+	}
+}
 
 bool EntityManager::Update(float dt)
 {

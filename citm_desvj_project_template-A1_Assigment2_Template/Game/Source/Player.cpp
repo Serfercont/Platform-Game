@@ -318,6 +318,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
+		score = score ++;
+
 		break;
 	case ColliderType::PLATFORM:
 		isjumpping = false;
