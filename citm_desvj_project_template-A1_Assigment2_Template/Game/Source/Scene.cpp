@@ -58,6 +58,10 @@ bool Scene::Awake(pugi::xml_node& config)
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
 	}
+	if (config.child("ability")) {
+		ability = (Ability*)app->entityManager->CreateEntity(EntityType::ABILITY);
+		ability->parameters = config.child("ability");
+	}
 	
 	for (pugi::xml_node itemNode = config.child("enemyWalk"); itemNode; itemNode = itemNode.next_sibling("enemyWalk"))
 	{

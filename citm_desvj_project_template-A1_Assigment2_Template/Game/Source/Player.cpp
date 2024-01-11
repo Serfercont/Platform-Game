@@ -23,14 +23,11 @@ Player::~Player() {
 }
 
 bool Player::Awake() {
-
-	
-
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 	powerUpTexture = parameters.attribute("powerUpTexture").as_string();
-
+	
 	knightAttack= parameters.attribute("audioAttack").as_string();
 	knightDie= parameters.attribute("audioDeath").as_string();
 	knightWalk= parameters.attribute("audioWalk").as_string();
@@ -47,6 +44,8 @@ bool Player::Start() {
 	atack1Anim.LoadAnimations("attack1");
 	deadAnim.LoadAnimations("dead");
 	jumpAnim.LoadAnimations("jump");
+	attackPower.LoadAnimations("ability");
+	
 
 	InitPosX = position.x;
 	InitPosY = position.y;
@@ -89,9 +88,7 @@ bool Player::Update(float dt)
 			app->audio->PlayFx(audioWin);
 			audio = false;
 		}
-		
 	}
-
 	if (godMode)
 	{
 		pbody->body->GetFixtureList()->SetSensor(true);
@@ -320,6 +317,7 @@ void Player::Attack()
 		currentAnimation->loopCount = 0;
 	}
 }
+
 
 bool Player::CleanUp()
 {

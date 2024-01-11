@@ -5,6 +5,8 @@
 #include "Textures.h"
 #include "Scene.h"
 #include "PowerUp.h"
+#include "Ability.h"
+#include "Recover.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -100,6 +102,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::POWERUP:
 		entity = new PowerUp();
+		break;
+	case EntityType::ABILITY:
+		entity = new Ability();
 		break;
 	default:
 		break;

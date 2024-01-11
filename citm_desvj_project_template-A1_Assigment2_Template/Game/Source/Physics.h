@@ -36,6 +36,7 @@ enum class ColliderType {
 	ENEMYDAMAGE,
 	POWERUP,
 	RECOVER,
+	ABILITY,
 	VICTORY
 	// ..
 };

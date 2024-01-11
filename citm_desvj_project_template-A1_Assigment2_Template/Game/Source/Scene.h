@@ -6,7 +6,7 @@
 #include "Item.h"
 #include "EnemyWalk.h"
 #include "EnemyFly.h"
-#include "Recover.h"
+#include "Ability.h"
 
 struct SDL_Texture;
 
@@ -38,7 +38,7 @@ public:
 	bool CleanUp();
 
 	Player* player;
-	Recover* recover;
+	Ability* ability;
 	bool LoadState(pugi::xml_node node);
 	bool SaveState(pugi::xml_node node);
 

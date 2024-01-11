@@ -27,6 +27,7 @@ public:
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 	void Attack();
+	void AttackPowerUp();
 
 public:
 	float speed = 0.4f;
@@ -48,7 +49,7 @@ public:
 	int InitPosX;
 	int InitPosY;
 	bool spike=false;
-	bool powerUp= false;
+	bool powerUp= true;
 	bool isAttacking = false;
 	bool attackCreated;
 
@@ -68,6 +69,7 @@ public:
 	Animation atack1Anim;
 	Animation atack2Anim;
 	Animation atack3Anim;
+	Animation attackPower;
 	Animation jumpAnim;
 	Animation deadAnim;
 	Animation defendAnim;

@@ -16,6 +16,7 @@ enum class EntityType
 	ENEMYFLY,
 	POWERUP,
 	RECOVER,
+	ABILITY,
 	UNKNOWN
 };
 
