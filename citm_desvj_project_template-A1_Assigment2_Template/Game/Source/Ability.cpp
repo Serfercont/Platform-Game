@@ -34,35 +34,50 @@ bool Ability::Start() {
 	attack.LoadAnimations("ability");
 	
 	texture = app->tex->Load(texturePath);
+	position.x = app->scene->player->position.x;
+	position.y = app->scene->player->position.y;
+
+	pbody = app->physics->CreateCircleSensor(position.x + 16, position.y + 16, 10, bodyType::KINEMATIC);
+	pbody->ctype = ColliderType::ABILITY;
+	pbody->listener = this;
+	//pbody->body->SetActive(false);
 
 	return true;
 }
 
 bool Ability::Update(float dt)
 {
+	
 	position.x = app->scene->player->position.x;
 	position.y = app->scene->player->position.y;
-
+	flipPos.x = position.x - 16;
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && app->scene->player->powerUp)
 	{
+		pbody->body->SetActive(true);
+		attacking = true;
 		LOG("W pulsada");
 		if (app->scene->player->right)
 		{
-			pbody = app->physics->CreateCircleSensor(position.x + 16, position.y + 16, 10, bodyType::KINEMATIC);
-			pbody->ctype = ColliderType::ABILITY;
-			pbody->listener = this;
-			currentAnimation = &attack;
-			SDL_Rect rect = currentAnimation->GetCurrentFrame();
-			app->render->DrawTexture(texture, position.x, position.y, &rect);
+			if (attacking)
+			{
+				int posX = position.x + 16;
+				int posY = position.y + 8;
+				pbody->body->SetTransform(b2Vec2(posX, posY), pbody->body->GetAngle());
+				currentAnimation = &attack;
+				SDL_Rect rect = currentAnimation->GetCurrentFrame();
+				app->render->DrawTexture(texture, posX, posY, &rect);
+			}
+			
+			
 		}
 		else
 		{
-			pbody = app->physics->CreateCircleSensor(position.x - 16, position.y + 16, 10, bodyType::KINEMATIC);
-			pbody->ctype = ColliderType::ABILITY;
-			pbody->listener = this;
+			pbody->body->SetTransform(b2Vec2(position.x-16, position.y-16), pbody->body->GetAngle());
 			currentAnimation = &attack;
 			SDL_Rect rect = currentAnimation->GetCurrentFrame();
 			app->render->DrawTexture(texture, flipPos.x, position.y, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
+			
+			
 		}
 		
 	}
@@ -70,6 +85,7 @@ bool Ability::Update(float dt)
 
 	if (pop)
 	{
+		attacking = false;
 		pbody->body->SetActive(false);
 		app->entityManager->DestroyEntity(this);
 		app->physics->world->DestroyBody(pbody->body);

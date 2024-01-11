@@ -32,6 +32,7 @@ public:
 	bool isPicked = false;
 	Animation* currentAnimation = nullptr;
 	Animation attack;
+	bool attacking = false;
 	float speed = 0.4f;
 
 private:

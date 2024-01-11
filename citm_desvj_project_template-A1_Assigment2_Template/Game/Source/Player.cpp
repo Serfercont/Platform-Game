@@ -76,6 +76,10 @@ bool Player::Update(float dt)
 	flipPos.x = position.x - 10;
 	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
 
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && powerUp)
+	{
+		currentAnimation = &atack1Anim;
+	}
 	//currentAnimation = &idleAnim;
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		godMode = !godMode;		

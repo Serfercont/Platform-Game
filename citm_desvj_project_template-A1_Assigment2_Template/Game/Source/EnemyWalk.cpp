@@ -247,6 +247,10 @@ void EnemyWalk::OnCollision(PhysBody* physA, PhysBody* physB) {
 		die = true;
 		currentAnimation = &deadAnim;
 		break;
+	case ColliderType::ABILITY:
+		die = true;
+		currentAnimation = &deadAnim;
+		break;
 
 	}
 }

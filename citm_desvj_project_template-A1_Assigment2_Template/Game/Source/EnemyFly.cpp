@@ -279,6 +279,9 @@ void EnemyFly::OnCollision(PhysBody* physA, PhysBody* physB) {
 			fall = false;
 		}
 		break;
+	case ColliderType::ABILITY:
+		fall = true;
+		break;
 
 	}
 
