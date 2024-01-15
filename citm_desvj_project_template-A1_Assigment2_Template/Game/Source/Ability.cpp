@@ -67,22 +67,16 @@ bool Ability::Update(float dt)
 				SDL_Rect rect = currentAnimation->GetCurrentFrame();
 				app->render->DrawTexture(texture, posX, posY, &rect);
 			}
-			
-			
 		}
 		else
 		{
 			pbody->body->SetTransform(b2Vec2(position.x-16, position.y-16), pbody->body->GetAngle());
 			currentAnimation = &attack;
 			SDL_Rect rect = currentAnimation->GetCurrentFrame();
-			app->render->DrawTexture(texture, flipPos.x, position.y, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
-			
-			
+			app->render->DrawTexture(texture, flipPos.x, position.y, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);	
 		}
 		
 	}
-	
-
 	if (pop)
 	{
 		attacking = false;

@@ -19,6 +19,7 @@ class Scene;
 class EntityManager;
 class Map;
 class Physics;
+class FadeToBlack;
 
 class App
 {
@@ -92,6 +93,7 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene* scene;
+	FadeToBlack* fade;
 	EntityManager* entityManager;
 	Map* map;
 	Physics* physics;

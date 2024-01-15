@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "EnemyWalk.h"
+#include "FadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -33,6 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics();
 	scene = new Scene();
 	map = new Map();
+	fade = new FadeToBlack();
 	entityManager = new EntityManager();
 
 

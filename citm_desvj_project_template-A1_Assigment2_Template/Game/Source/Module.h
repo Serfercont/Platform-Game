@@ -69,8 +69,29 @@ public:
 		return true;
 	}
 
-public:
+	void Enable()
+	{
+		if (!isEnabled)
+		{
+			isEnabled = true;
+			Start();
+		}
+	}
 
+	// Switches isEnabled and calls CleanUp() method
+	void Disable()
+	{
+		if (isEnabled)
+		{
+			isEnabled = false;
+			CleanUp();
+		}
+	}
+
+	inline bool IsEnabled() const { return isEnabled; }
+
+public:
+	bool isEnabled = true;
 	SString name;
 	bool active;
 

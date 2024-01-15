@@ -28,6 +28,7 @@
     <ClCompile Include="Source\Recover.cpp" />
     <ClCompile Include="Source\PowerUp.cpp" />
     <ClCompile Include="Source\Ability.cpp" />
+    <ClCompile Include="Source\FadeToBlack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -83,6 +84,7 @@
     <ClInclude Include="Source\Recover.h" />
     <ClInclude Include="Source\PowerUp.h" />
     <ClInclude Include="Source\Ability.h" />
+    <ClInclude Include="Source\FadeToBlack.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
