@@ -90,10 +90,7 @@ bool Player::Update(float dt)
 	{
 		if (!scene2Active)
 		{
-			app->scene2 = new Scene2();
-			app->AddModule(app->scene2);
 			app->fade->FadeToBlackFunction((Module*)app->scene, (Module*)app->scene2, false, false, 60);
-			scene2Active = true;
 		}
 		bool audio=true;
 		if (audio)

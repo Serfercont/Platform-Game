@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="200" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="1">
  <properties>
-  <property name="Navegation" type="bool" value="true"/>
+  <property name="Navigation" type="bool" value="true"/>
  </properties>
  <tileset firstgid="1" name="Tiles" tilewidth="32" tileheight="32" tilecount="132" columns="11">
   <image source="Tiles.png" width="352" height="384"/>
  </tileset>
- <tileset firstgid="133" name="Colisions" tilewidth="32" tileheight="32" tilecount="5" columns="5">
+ <tileset firstgid="133" name="Collision" tilewidth="32" tileheight="32" tilecount="5" columns="5">
   <image source="Colisions.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="138" name="Tiles2" tilewidth="32" tileheight="32" tilecount="132" columns="11">

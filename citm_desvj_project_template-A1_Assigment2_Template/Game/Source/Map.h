@@ -148,7 +148,7 @@ private:
 
 
 public: 
-
+	bool mapLoaded;
 	MapData mapData;
 	SString name;
 	SString path;
@@ -156,7 +156,6 @@ public:
 
 private:
 	MapLayer* navigationLayer;
-	bool mapLoaded;
 	int blockedGid = 49;
 };
 

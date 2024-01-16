@@ -28,6 +28,7 @@ Scene2::~Scene2()
 // Called before render is available
 bool Scene2::Awake(pugi::xml_node& config)
 {
+	app->AddModule(app->map);
 	configNode = config;
 	LOG("Loading Scene2");
 	bool ret = true;
