@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="200" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="1">
+ <properties>
+  <property name="Navegation" type="bool" value="true"/>
+ </properties>
  <tileset firstgid="1" name="Tiles" tilewidth="32" tileheight="32" tilecount="132" columns="11">
   <image source="Tiles.png" width="352" height="384"/>
  </tileset>
@@ -19,6 +22,9 @@
   <image source="Colisions.png" width="160" height="32"/>
  </tileset>
  <layer id="1" name="Colisiones" width="50" height="200">
+  <properties>
+   <property name="Draw" type="bool" value="false"/>
+  </properties>
   <data encoding="csv">
 135,0,0,0,0,0,135,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 135,0,0,0,0,0,135,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -1259,7 +1265,8 @@
  </layer>
  <layer id="8" name="PathFinding" width="50" height="200" opacity="0.37">
   <properties>
-   <property name="Navigation" type="bool" value="true"/>
+   <property name="Draw" type="bool" value="false"/>
+   <property name="Navegation" type="bool" value="true"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
