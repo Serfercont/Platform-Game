@@ -9,6 +9,7 @@
 #include "Physics.h"
 #include "EnemyWalk.h"
 #include "FadeToBlack.h"
+#include "Scene2.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -33,6 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	physics = new Physics();
 	scene = new Scene();
+	scene2 = new Scene2();
 	map = new Map();
 	fade = new FadeToBlack();
 	entityManager = new EntityManager();
@@ -48,6 +50,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(map);
 	AddModule(entityManager);
+	AddModule(fade);
+	//this module:
+	//AddModule(scene2);
 
 	// Render last to swap buffer
 	AddModule(render);

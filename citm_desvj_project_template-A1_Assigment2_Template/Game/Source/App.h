@@ -20,6 +20,7 @@ class EntityManager;
 class Map;
 class Physics;
 class FadeToBlack;
+class Scene2;
 
 class App
 {
@@ -93,6 +94,7 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene* scene;
+	Scene2* scene2;
 	FadeToBlack* fade;
 	EntityManager* entityManager;
 	Map* map;

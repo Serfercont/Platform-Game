@@ -52,6 +52,7 @@ public:
 	bool powerUp= false;
 	bool isAttacking = false;
 	bool attackCreated;
+	bool scene2Active = false;
 
 	iPoint flipPos;
 
