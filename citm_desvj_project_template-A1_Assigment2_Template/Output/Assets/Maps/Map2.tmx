@@ -21,7 +21,7 @@
  <tileset firstgid="296" name="Colisions" tilewidth="32" tileheight="32" tilecount="5" columns="5">
   <image source="Colisions.png" width="160" height="32"/>
  </tileset>
- <layer id="1" name="Colisiones" width="50" height="200">
+ <layer id="1" name="Collision" width="50" height="200">
   <properties>
    <property name="Draw" type="bool" value="false"/>
   </properties>
