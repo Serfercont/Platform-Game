@@ -263,6 +263,60 @@ bool Scene::SaveState(pugi::xml_node node)
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	// Release all items
+	for (ListItem<Entity*>* item = ItemList.start; item != nullptr; item = item->next)
+	{
+		app->entityManager->DestroyEntity(item->data);
+	}
+	ItemList.Clear();
+
+	// Release all recovers
+	for (ListItem<Entity*>* item = RecoverList.start; item != nullptr; item = item->next)
+	{
+		app->entityManager->DestroyEntity(item->data);
+	}
+	RecoverList.Clear();
+
+	// Release all power-ups
+	for (ListItem<Entity*>* item = PowerUpList.start; item != nullptr; item = item->next)
+	{
+		app->entityManager->DestroyEntity(item->data);
+	}
+	PowerUpList.Clear();
+
+	// Release the player
+	if (player != nullptr)
+	{
+		app->entityManager->DestroyEntity(player);
+		player = nullptr;
+	}
+
+	// Release the ability (if it exists)
+	if (ability != nullptr)
+	{
+		app->entityManager->DestroyEntity(ability);
+		ability = nullptr;
+	}
+
+	// Release all wolves
+	for (ListItem<Entity*>* item = WolfList.start; item != nullptr; item = item->next)
+	{
+		app->entityManager->DestroyEntity(item->data);
+	}
+	WolfList.Clear();
+
+	// Release all flying eyes
+	for (ListItem<Entity*>* item = EyeList.start; item != nullptr; item = item->next)
+	{
+		app->entityManager->DestroyEntity(item->data);
+	}
+	EyeList.Clear();
+
+	// Release the map
+	app->map->CleanUp();
+
+	// Unload textures
 	app->tex->UnLoad(fondo0);
 	app->tex->UnLoad(fondo1);
 	app->tex->UnLoad(fondo2);

@@ -128,6 +128,7 @@ public:
 
     // Load new map
 	bool Load(SString mapFileName);
+	bool Unload();
 
 	iPoint MapToWorld(int x, int y) const;
 	iPoint Map::WorldToMap(int x, int y);

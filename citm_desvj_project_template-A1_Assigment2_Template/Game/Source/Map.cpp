@@ -457,3 +457,4 @@ void Map::CreateNavigationMap(int& width, int& height, uchar** buffer) const
 }
 
 
+
