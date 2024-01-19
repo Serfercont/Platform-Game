@@ -131,7 +131,7 @@
 			<frame x="1240" y="131" width="120" height="100"/>
 
 		</enemyWalk>
-		<enemyRun loop="true" speed="0.4f">
+		<enemyRun loop="true" speed="0.2f">
 			<frame x="30" y="232" width="120" height="100"/>
 			<frame x="151" y="232" width="120" height="100"/>
 			<frame x="272" y="232" width="120" height="100"/>

@@ -49,7 +49,7 @@ public:
 	int InitPosX;
 	int InitPosY;
 	bool spike=false;
-	bool powerUp= false;
+	bool powerUp= true;
 	bool isAttacking = false;
 	bool attackCreated;
 	bool scene2Active = false;

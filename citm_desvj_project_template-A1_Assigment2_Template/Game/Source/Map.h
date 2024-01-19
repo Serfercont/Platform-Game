@@ -146,6 +146,8 @@ private:
 	int GetTileWidth();
 	int GetTileHeight();
 
+	void UpdateTileLoadSize(ListItem<MapLayer*>* mapLayerItem);
+
 
 public: 
 	bool mapLoaded;
@@ -155,6 +157,16 @@ public:
 	PathFinding* pathfinding;
 
 private:
+	int startMapWidth = 0;
+	int startMapHeight = 0;
+	int startHeight=0;
+	int startWidth=0;
+	int endMapWidth = 0;
+	int endMapHeight = 0;
+	int endHeight=0;
+	int endWidth=0;
+	int tilesToLoad = 32;
+	int tilesSize = 32;
 	MapLayer* navigationLayer;
 	int blockedGid = 49;
 };

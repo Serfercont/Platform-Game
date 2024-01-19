@@ -10,7 +10,6 @@
 #include "Physics.h"
 #include "Map.h"
 #include "FadeToBlack.h"
-#include "Scene2.h"
 #include <map>
 #include <chrono>
 #include <thread>
@@ -90,7 +89,7 @@ bool Player::Update(float dt)
 	{
 		if (!scene2Active)
 		{
-			app->fade->FadeToBlackFunction((Module*)app->scene, (Module*)app->scene2, false, false, 60);
+			
 		}
 		bool audio=true;
 		if (audio)

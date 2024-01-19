@@ -43,7 +43,7 @@ private:
 
 	iPoint flipPos;
 
-	PhysBody* pbody;
+	PhysBody* damage;
 	
 };
 

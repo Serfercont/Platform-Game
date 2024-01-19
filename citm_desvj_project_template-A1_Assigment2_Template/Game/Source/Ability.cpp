@@ -37,9 +37,7 @@ bool Ability::Start() {
 	position.x = app->scene->player->position.x;
 	position.y = app->scene->player->position.y;
 
-	pbody = app->physics->CreateCircleSensor(position.x + 16, position.y + 16, 10, bodyType::KINEMATIC);
-	pbody->ctype = ColliderType::ABILITY;
-	pbody->listener = this;
+
 	//pbody->body->SetActive(false);
 
 	return true;
@@ -48,53 +46,38 @@ bool Ability::Start() {
 bool Ability::Update(float dt)
 {
 	
-	position.x = app->scene->player->position.x;
-	position.y = app->scene->player->position.y;
-	flipPos.x = position.x - 16;
+	position.x = app->scene->player->position.x+50;
+	position.y = app->scene->player->position.y+8;
+	flipPos.x = position.x - 32;
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && app->scene->player->powerUp)
 	{
-		pbody->body->SetActive(true);
-		attacking = true;
 		LOG("W pulsada");
 		if (app->scene->player->right)
 		{
-			if (attacking)
-			{
-				int posX = position.x + 16;
-				int posY = position.y + 8;
-				pbody->body->SetTransform(b2Vec2(posX, posY), pbody->body->GetAngle());
-				currentAnimation = &attack;
-				SDL_Rect rect = currentAnimation->GetCurrentFrame();
-				app->render->DrawTexture(texture, posX, posY, &rect);
-			}
+			damage = app->physics->CreateRectangleSensor(position.x + 50, position.y + 8, 20, 40, bodyType::KINEMATIC);
+			damage->listener = this;
+			damage->ctype = ColliderType::DAMAGE;
+			currentAnimation = &attack;
+			SDL_Rect rect = currentAnimation->GetCurrentFrame();
+			app->render->DrawTexture(texture, position.x, position.y, &rect);
 		}
 		else
 		{
-			pbody->body->SetTransform(b2Vec2(position.x-16, position.y-16), pbody->body->GetAngle());
-			currentAnimation = &attack;
-			SDL_Rect rect = currentAnimation->GetCurrentFrame();
-			app->render->DrawTexture(texture, flipPos.x, position.y, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);	
+			damage = app->physics->CreateRectangleSensor(position.x - 50, position.y + 8, 20, 40, bodyType::KINEMATIC);
+			damage->listener = this;
+			damage->ctype = ColliderType::DAMAGE;
 		}
 		
 	}
 	if (pop)
 	{
 		attacking = false;
-		pbody->body->SetActive(false);
+		damage->body->SetActive(false);
 		app->entityManager->DestroyEntity(this);
-		app->physics->world->DestroyBody(pbody->body);
+		app->physics->world->DestroyBody(damage->body);
 	}
 
 	return true;
-}
-void Ability:: Move()
-{
-	b2Vec2 currentVelocity = pbody->body->GetLinearVelocity();
-	if (app->scene->player->right)
-	{
-		currentAnimation = &attack;
-		currentVelocity.x = +speed * 10;
-	}
 }
 
 bool Ability::CleanUp()
