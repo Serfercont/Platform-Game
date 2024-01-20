@@ -1,6 +1,7 @@
 #include "FadeToBlack.h"
 #include "App.h"
 #include "Render.h"
+#include "Scene.h"
 
 #include "SDL/include/SDL_render.h"
 
@@ -33,8 +34,6 @@ bool FadeToBlack::Update(float dt)
 		++frameCount;
 		if (frameCount >= maxFadeFrames)
 		{
-			moduleToDisable->Disable();
-			moduleToEnable->Enable();
 			currentStep = Fade_Step::FROM_BLACK;
 		}
 	}
@@ -44,6 +43,14 @@ bool FadeToBlack::Update(float dt)
 		if (frameCount <= 0)
 		{
 			currentStep = Fade_Step::NONE;
+			fadeDone = true;
+			
+		}
+		if (!active)
+		{
+			active = true;
+			if (levelIdx==1) app->scene->GoLvl1();
+			else if (levelIdx == 2) app->scene->GoLvl2();
 			
 		}
 	}
@@ -65,7 +72,7 @@ bool FadeToBlack::PostUpdate()
 	return true;
 }
 
-bool FadeToBlack::FadeToBlackFunction(Module* moduleToDisable, Module* moduleToEnable, bool fadeOut, bool fadeIn, float frames)
+bool FadeToBlack::FadeToBlackFunction(int levelIdx, float frames)
 {
 	bool ret = false;
 
@@ -74,18 +81,12 @@ bool FadeToBlack::FadeToBlackFunction(Module* moduleToDisable, Module* moduleToE
 	{
 		currentStep = Fade_Step::TO_BLACK;
 		frameCount = 0;
-		maxFadeFrames = static_cast<Uint32>(frames);
-
-		if (fadeOut) fOut = true;
-		else fOut = false;
-
-		if (fadeIn) fIn = true;
-		else fIn = false;
-
-		this->moduleToDisable = moduleToDisable;
-		this->moduleToEnable = moduleToEnable;
+		maxFadeFrames = frames;
+		this->levelIdx = levelIdx;
 		ret = true;
 	}
+	active = false;
+	fadeDone = false;
 
 	return ret;
 }

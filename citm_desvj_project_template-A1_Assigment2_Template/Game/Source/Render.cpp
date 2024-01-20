@@ -1,6 +1,7 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
+#include "Scene.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -51,8 +52,17 @@ bool Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = app->win->screenSurface->w;
 		camera.h = app->win->screenSurface->h;
-		camera.x = 0;
-		camera.y = -20;
+		if (!app->scene->player->scene2Active)
+		{
+			camera.x = 0;
+			camera.y = -20;
+		}
+		/*else if (app->scene->player->scene2Active)
+		{
+			camera.x = -5120;
+			camera.y = -20;
+		}*/
+		
 	}
 
 	return ret;

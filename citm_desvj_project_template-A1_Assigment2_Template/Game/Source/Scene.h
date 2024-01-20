@@ -42,6 +42,9 @@ public:
 	bool LoadState(pugi::xml_node node);
 	bool SaveState(pugi::xml_node node);
 
+	void GoLvl1();
+	void GoLvl2();
+
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
@@ -62,6 +65,13 @@ private:
 	List<Entity*> ItemList;
 	List<Entity*> RecoverList;
 	List<Entity*> PowerUpList;
+
+	iPoint spawn1= { 85,650 };
+	iPoint spawn2 = { 5200,300 };
+
+public:
+	bool level1=false;
+	bool level2=true;
 };
 
 #endif // __SCENE_H__

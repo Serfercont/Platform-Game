@@ -11,6 +11,7 @@
 #include "EnemyWalk.h"
 #include "Recover.h"
 #include "PowerUp.h"
+#include "FadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -122,6 +123,8 @@ bool Scene::Start()
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
 
+	app->fade->FadeToBlackFunction(2, 60);
+
 	return true;
 }
 
@@ -141,6 +144,12 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x -= (int)ceil(camSpeed * dt);
+
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		app->render->camera.y += (int)ceil(camSpeed * dt);
+
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		app->render->camera.y -= (int)ceil(camSpeed * dt);
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
@@ -257,6 +266,24 @@ bool Scene::SaveState(pugi::xml_node node)
 	pconditionsNode.append_attribute("right").set_value(player->right);
 
 	return true;
+}
+
+void Scene::GoLvl1()
+{
+	player->pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(spawn1.x), PIXEL_TO_METERS(spawn1.y)), 0);
+	level1 = true;
+	level2 = false;
+	player->scene2Active = false;
+	app->render->camera.x = -11;
+}
+
+void Scene::GoLvl2() 
+{
+	player->pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(spawn2.x), PIXEL_TO_METERS(spawn2.y)), 0);
+	level1 = false;
+	level2 = true;
+	player->scene2Active = true;
+	app->render->camera.x = -5124;
 }
 
 // Called before quitting

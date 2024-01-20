@@ -87,10 +87,7 @@ bool Player::Update(float dt)
 	}
 	if (position.x>=4400 && position.x<=4450)
 	{
-		if (!scene2Active)
-		{
-			
-		}
+		app->fade->FadeToBlackFunction(2, 60.0f);
 		bool audio=true;
 		if (audio)
 		{
@@ -202,12 +199,23 @@ bool Player::Update(float dt)
 				}
 				spike = false;
 				isAlive = true;
-				position.x = 700;
-				position.y = 1350;
+				if (!scene2Active)
+				{
+					position.x = 700;
+					position.y = 1350;
+					app->render->camera.x = 0;
+				}
+				else
+				{
+					position.x = 5850;
+					position.y = 1350;
+					app->render->camera.x = -5124;
+				}
+				
 				pbody->SetPosition(position.x, position.y);
 				currentAnimation = &idleAnim;
 				health = 3;
-				app->render->camera.x = 0;
+				
 			}
 		}
 	}
@@ -287,13 +295,24 @@ bool Player::Update(float dt)
 		
 	}
 	//Movimiento camara 
-
-
-	if (app->render->camera.x - position.x + 400 <= -24 && app->render->camera.x - position.x + 400 >= -7532) {
+	LOG("camera y: %d", app->render->camera.y);
+	LOG("player y: %d", position.y);
+	LOG("camera y - player y: %d", app->render->camera.y - position.y + 400);
+	if (app->render->camera.x - position.x + 400 <= -24 && app->render->camera.x - position.x + 400 >= -7532 && !scene2Active) {
 		app->render->camera.x = -position.x + 400;
-	
 	}
-		currentAnimation->Update();
+
+	else if (app->render->camera.x - position.x + 400 <= -10260 && app->render->camera.x - position.x + 400 >= -11384 && scene2Active) {
+		app->render->camera.x = -position.x + 400;
+		app->render->camera.y = -position.y + 400;
+		
+	}
+	else if (app->render->camera.y - position.y <= 103 && app->render->camera.y - position.y >= -11538 && scene2Active)
+	{
+		app->render->camera.y = -position.y+400;
+	}
+	
+	currentAnimation->Update();
 
 	return true;
 }
