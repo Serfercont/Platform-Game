@@ -68,14 +68,21 @@ bool SceneIntro::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
    		app->fade->FadeToBlackScene(this, (Module*)app->scene, 60);
-		
-
-		app->entityManager->Enable();
-		app->map->Enable();
+		//goTimer = true;
 		
 		
 	}
-		
+	 // dt es el tiempo transcurrido desde el último frame
+	/*if (goTimer)
+	{
+		timer += dt;
+	}
+	if (timer >= 950.5f )
+	{
+		app->entityManager->Enable();
+		app->map->Enable();
+	}*/
+
 
 	
 

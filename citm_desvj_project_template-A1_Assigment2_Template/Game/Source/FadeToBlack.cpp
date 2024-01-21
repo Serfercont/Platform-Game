@@ -2,6 +2,8 @@
 #include "App.h"
 #include "Render.h"
 #include "Scene.h"
+#include "Map.h"
+#include "EntityManager.h"
 
 #include "SDL/include/SDL_render.h"
 
@@ -37,6 +39,12 @@ bool FadeToBlack::Update(float dt)
 			moduleToDisable->Disable();
 			moduleToEnable->Enable();
 			currentStep = Fade_Step::FROM_BLACK;
+
+		}
+		if (app->scene->active)
+		{
+			app->map->Enable();
+			app->entityManager->Enable();
 		}
 	}
 	else
@@ -46,7 +54,6 @@ bool FadeToBlack::Update(float dt)
 		{
 			currentStep = Fade_Step::NONE;
 			fadeDone = true;
-			
 		}
 		if (!active)
 		{
@@ -96,7 +103,7 @@ bool FadeToBlack::FadeToBlackScene(Module* moduleToDisable, Module* moduleToEnab
 {
 	bool ret = false;
 
-	// If we are already in a fade process, ignore this call
+	
 	if (currentStep == Fade_Step::NONE) {
 		currentStep = Fade_Step::TO_BLACK;
 		frameCount = 0;

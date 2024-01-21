@@ -42,6 +42,9 @@
 		float textPosX, textPosY = 0;
 		uint texW, texH;
 		uint windowW, windowH;
+		float timer = 0.0f;
+		bool goTimer=false;
+
 		
 		
 		pugi::xml_node configNode;
