@@ -34,11 +34,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures(this);
 	audio = new Audio(this);
 	physics = new Physics(this);
-	scene = new Scene(this);
+	scene = new Scene(this,false);
 	sceneintro = new SceneIntro(this);
-	map = new Map(this);
-	fade = new FadeToBlack(this);
-	entityManager = new EntityManager(this);
+	map = new Map(this,false);
+	fade = new FadeToBlack(this,false);
+	entityManager = new EntityManager(this,false);
 
 
 	// Ordered for awake / Start / Update
@@ -127,6 +127,11 @@ bool App::Start()
 
 	while(item != NULL && ret == true)
 	{
+		if (!item->data->active)
+		{
+			item = item->next;
+			continue;
+		}
 		ret = item->data->Start();
 		item = item->next;
 	}
@@ -329,6 +334,11 @@ bool App::CleanUp()
 
 	while(item != NULL && ret == true)
 	{
+		if (!item->data->active)
+		{
+			item = item->prev;
+			continue;
+		}
 		ret = item->data->CleanUp();
 		item = item->prev;
 	}

@@ -17,7 +17,7 @@ public:
 
 	void Init()
 	{
-		active = true;
+		//active = true;
 	}
 
 	// Called before render is available
@@ -70,27 +70,24 @@ public:
 		return true;
 	}
 
-	void Enable()
+
+	void Module::Enable()
 	{
-		if (!isEnabled)
+		if (!active)
 		{
-			isEnabled = true;
+			active = true;
 			Start();
 		}
 	}
 
-	// Switches isEnabled and calls CleanUp() method
-	void Disable()
+	void Module::Disable()
 	{
-		if (isEnabled)
+		if (active)
 		{
-			isEnabled = false;
+			active = false;
 			CleanUp();
 		}
 	}
-
-	inline bool IsEnabled() const { return isEnabled; }
-
 public:
 	bool isEnabled = true;
 	SString name;

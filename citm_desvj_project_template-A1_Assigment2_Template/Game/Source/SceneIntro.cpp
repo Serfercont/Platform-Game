@@ -62,7 +62,7 @@ bool SceneIntro::Update(float dt)
 {
 	//Draw
 	SDL_Rect RectfondoInicial{ 0,0,windowW,windowH };
-	app->render->DrawTexture(FotoInicial1, 0, 0, &RectfondoInicial);
+	app->render->DrawTexture(FotoInicial1, 0, 0,NULL,SDL_FLIP_NONE,0);
 	/*if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		;*/
 
