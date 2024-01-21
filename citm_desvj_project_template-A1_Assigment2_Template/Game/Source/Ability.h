@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Animation.h"
 #include "EntityManager.h"
+#include "Timer.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -25,7 +26,6 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
-	void Move();
 
 public:
 
@@ -35,6 +35,8 @@ public:
 	bool attacking = false;
 	float speed = 0.4f;
 	bool derecha = false;
+	Timer timer;
+	bool timerPaused = false;
 
 private:
 

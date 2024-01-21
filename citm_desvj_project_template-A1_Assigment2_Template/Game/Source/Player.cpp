@@ -295,9 +295,9 @@ bool Player::Update(float dt)
 		
 	}
 	//Movimiento camara 
-	LOG("camera y: %d", app->render->camera.y);
+	/*LOG("camera y: %d", app->render->camera.y);
 	LOG("player y: %d", position.y);
-	LOG("camera y - player y: %d", app->render->camera.y - position.y + 400);
+	LOG("camera y - player y: %d", app->render->camera.y - position.y + 400);*/
 
 	if (app->render->camera.x - position.x + 400 <= -24 && app->render->camera.x - position.x + 400 >= -7532 && !scene2Active) {
 		app->render->camera.x = -position.x + 400;

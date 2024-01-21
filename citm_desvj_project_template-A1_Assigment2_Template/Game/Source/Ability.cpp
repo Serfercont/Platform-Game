@@ -11,6 +11,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Player.h"
+#include "Timer.h"
 
 
 Ability::Ability() : Entity(EntityType::ABILITY)
@@ -24,6 +25,7 @@ bool Ability::Awake() {
 
 	
 	texturePath = parameters.attribute("texturepath").as_string();
+	timer = Timer();
 
 	return true;
 }
@@ -45,11 +47,15 @@ bool Ability::Start() {
 
 bool Ability::Update(float dt)
 {
-	position.x = app->scene->player->position.x+50;
-	position.y = app->scene->player->position.y+8;
-	flipPos.x = position.x - 32;
+	position.x = app->scene->player->position.x;
+	position.y = app->scene->player->position.y;
+	flipPos.x = position.x-32;
+	flipPos.y = position.y;
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && app->scene->player->powerUp && !attacking)
 	{
+		timer.Start();
+		timerPaused = false;
+		
 		LOG("W pulsada");
 		if (app->scene->player->right)
 		{
@@ -64,47 +70,58 @@ bool Ability::Update(float dt)
 			damageAb = app->physics->CreateRectangleSensor(position.x - 50, position.y + 8, 20, 40, bodyType::KINEMATIC);
 			damageAb->listener = this;
 			damageAb->ctype = ColliderType::DAMAGE;
+			currentAnimation = &attack;
 			derecha = false;
 		}
 		attacking = true;
 	}
 
-	if (attacking && damageAb)
+	if (attacking && damageAb && derecha)
 	{
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		b2Vec2 pos = damageAb->body->GetPosition();
-		app->render->DrawTexture(texture, pos.x, pos.y, &rect);
+		position.x = METERS_TO_PIXELS(damageAb->body->GetTransform().p.x);
+		position.y = METERS_TO_PIXELS(damageAb->body->GetTransform().p.y);
+		app->render->DrawTexture(texture, position.x-50, position.y-16, &rect);
+	}
+	else if(attacking && damageAb && !derecha)
+	{
+		SDL_Rect rect = currentAnimation->GetCurrentFrame();
+		position.x = METERS_TO_PIXELS(damageAb->body->GetTransform().p.x);
+		position.y = METERS_TO_PIXELS(damageAb->body->GetTransform().p.y);
+		app->render->DrawTexture(texture, position.x-50, position.y-16, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
 	}
 
 	if (attacking)
 	{
+		b2Vec2 currentVelocity = damageAb->body->GetLinearVelocity();
 		if (!derecha)
 		{
-			b2Vec2 currentVelocity = damageAb->body->GetLinearVelocity();
 			currentVelocity.x = -speed * 16;
 			damageAb->body->SetLinearVelocity(currentVelocity);
 		}
 		else
 		{
-			b2Vec2 currentVelocity = damageAb->body->GetLinearVelocity();
 			currentVelocity.x = speed * 16;
 			damageAb->body->SetLinearVelocity(currentVelocity);
 		}
 		
 	}
+
+	if (timer.ReadSec() >=3 && !timerPaused) {
+		timerPaused = true;
+		pop = true;
+	}
 	
-	if (pop)
-	{
-		if (damageAb)
-		{
+	if (pop) {
+		if (damageAb) {
 			attacking = false;
 			damageAb->body->SetActive(false);
-			// No necesitas destruir el cuerpo aquí, puedes hacerlo durante la limpieza.
 			damageAb->body->GetWorld()->DestroyBody(damageAb->body);
-			damageAb = NULL;
+			damageAb = nullptr;
 		}
-		pop = false; // Restablecer la bandera después de limpiar.
+		pop = false;
 	}
+
 
 
 	return true;
