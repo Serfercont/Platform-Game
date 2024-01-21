@@ -34,7 +34,9 @@ bool SceneIntro::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool SceneIntro::Start()
 {
-	
+	LOG("Loading SceneIntro Assets");
+	bool ret = true;
+	FotoInicial1 = app->tex->Load("Assets/Textures/EscenaDeIntroduccion.png");
 	//app->audio->PlayMusic(configNode.child("mainmusic").attribute("path").as_string());
 
 	//Get the size of the window
@@ -58,7 +60,9 @@ bool SceneIntro::PreUpdate()
 // Called each loop iteration
 bool SceneIntro::Update(float dt)
 {
-
+	//Draw
+	SDL_Rect RectfondoInicial{ 0,0,windowW,windowH };
+	app->render->DrawTexture(FotoInicial1, 0, 0, &RectfondoInicial);
 	/*if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		;*/
 

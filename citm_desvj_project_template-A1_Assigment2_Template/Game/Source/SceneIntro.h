@@ -45,6 +45,8 @@
 		
 		
 		pugi::xml_node configNode;
+
+		SDL_Texture* FotoInicial1;
 		
 	};
 
