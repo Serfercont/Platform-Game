@@ -30,6 +30,7 @@
     <ClCompile Include="Source\Ability.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\Scene2.cpp" />
+    <ClCompile Include="Source\SceneIntro.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -87,6 +88,7 @@
     <ClInclude Include="Source\Ability.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\Scene2.h" />
+    <ClInclude Include="Source\SceneIntro.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

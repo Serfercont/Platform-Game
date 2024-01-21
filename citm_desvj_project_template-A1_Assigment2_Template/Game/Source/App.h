@@ -15,6 +15,7 @@ class Input;
 class Render;
 class Textures;
 class Audio;
+class SceneIntro;
 class Scene;
 class EntityManager;
 class Map;
@@ -96,6 +97,7 @@ public:
 	Scene* scene;
 	Scene2* scene2;
 	FadeToBlack* fade;
+	SceneIntro* sceneintro;
 	EntityManager* entityManager;
 	Map* map;
 	Physics* physics;
