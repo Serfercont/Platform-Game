@@ -72,19 +72,6 @@ bool SceneIntro::Update(float dt)
 		
 		
 	}
-	 // dt es el tiempo transcurrido desde el último frame
-	/*if (goTimer)
-	{
-		timer += dt;
-	}
-	if (timer >= 950.5f )
-	{
-		app->entityManager->Enable();
-		app->map->Enable();
-	}*/
-
-
-	
 
 	return true;
 }
