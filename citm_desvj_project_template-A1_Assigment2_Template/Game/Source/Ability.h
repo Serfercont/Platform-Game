@@ -34,6 +34,7 @@ public:
 	Animation attack;
 	bool attacking = false;
 	float speed = 0.4f;
+	bool derecha = false;
 
 private:
 
@@ -43,7 +44,7 @@ private:
 
 	iPoint flipPos;
 
-	PhysBody* damage;
+	PhysBody* damageAb;
 	
 };
 

@@ -123,7 +123,7 @@ bool Scene::Start()
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
 
-	app->fade->FadeToBlackFunction(2, 60);
+	//app->fade->FadeToBlackFunction(2, 60);
 
 	return true;
 }

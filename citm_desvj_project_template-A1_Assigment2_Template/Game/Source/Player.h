@@ -43,13 +43,13 @@ public:
 	int pickCoinFxId;
 	bool right;
 	bool left;
-	/*bool isAlive=true;*/
+	bool isAlive=true;
 	bool checkColumn;
 	bool godMode=false;
 	int InitPosX;
 	int InitPosY;
 	bool spike=false;
-	bool powerUp= false;
+	bool powerUp= true;
 	bool isAttacking = false;
 	bool attackCreated;
 	bool scene2Active = false;

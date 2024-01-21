@@ -298,6 +298,7 @@ bool Player::Update(float dt)
 	LOG("camera y: %d", app->render->camera.y);
 	LOG("player y: %d", position.y);
 	LOG("camera y - player y: %d", app->render->camera.y - position.y + 400);
+
 	if (app->render->camera.x - position.x + 400 <= -24 && app->render->camera.x - position.x + 400 >= -7532 && !scene2Active) {
 		app->render->camera.x = -position.x + 400;
 	}
@@ -307,7 +308,7 @@ bool Player::Update(float dt)
 		app->render->camera.y = -position.y + 400;
 		
 	}
-	else if (app->render->camera.y - position.y <= 103 && app->render->camera.y - position.y >= -11538 && scene2Active)
+	else if (app->render->camera.y - position.y <= 103 && app->render->camera.y - position.y >= -11600 && scene2Active)
 	{
 		app->render->camera.y = -position.y+400;
 	}
