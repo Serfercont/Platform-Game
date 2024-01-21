@@ -10,9 +10,10 @@ class App;
 class Module
 {
 public:
-
-	Module() : active(false)
-	{}
+	App* app;
+	Module(App* parent,bool startEnabled) : app(parent),active(startEnabled)
+	{
+	}
 
 	void Init()
 	{

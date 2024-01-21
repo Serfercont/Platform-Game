@@ -28,17 +28,17 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	frames = 0;
 
-	win = new Window();
-	input = new Input();
-	render = new Render();
-	tex = new Textures();
-	audio = new Audio();
-	physics = new Physics();
-	scene = new Scene();
-	sceneintro = new SceneIntro();
-	map = new Map();
-	fade = new FadeToBlack();
-	entityManager = new EntityManager();
+	win = new Window(this);
+	input = new Input(this);
+	render = new Render(this);
+	tex = new Textures(this);
+	audio = new Audio(this);
+	physics = new Physics(this);
+	scene = new Scene(this);
+	sceneintro = new SceneIntro(this);
+	map = new Map(this);
+	fade = new FadeToBlack(this);
+	entityManager = new EntityManager(this);
 
 
 	// Ordered for awake / Start / Update

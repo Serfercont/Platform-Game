@@ -11,7 +11,7 @@
 #include "Defs.h"
 #include "Log.h"
 
-SceneIntro::SceneIntro() : Module()
+SceneIntro::SceneIntro(App* app, bool start_enabled) : Module(app,start_enabled)
 {
 	name.Create("scene");
 }

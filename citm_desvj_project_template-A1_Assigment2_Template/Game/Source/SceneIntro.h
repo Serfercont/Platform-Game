@@ -11,7 +11,7 @@
 	{
 	public:
 
-		SceneIntro();
+		SceneIntro(App* app, bool start_enabled = true);
 
 		// Destructor
 		virtual ~SceneIntro();

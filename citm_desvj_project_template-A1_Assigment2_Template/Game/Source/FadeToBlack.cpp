@@ -5,7 +5,7 @@
 
 #include "SDL/include/SDL_render.h"
 
-FadeToBlack::FadeToBlack() : Module()
+FadeToBlack::FadeToBlack(App* app, bool start_enabled) : Module(app,start_enabled)
 {
 
 	screenRect = { 0, 0, 2000, 2000 };
