@@ -31,6 +31,8 @@ public:
 	// After the first step, the modules should be switched
 	bool FadeToBlackFunction(int levelIdx, float frames);
 
+	bool FadeToBlackScene(Module* moduleToDisable, Module* moduleToEnable, float frames);
+
 private:
 
 	enum Fade_Step
@@ -52,6 +54,8 @@ private:
 
 public:
 	bool fadeDone = false;
+	Module* moduleToEnable = nullptr;
+	Module* moduleToDisable = nullptr;
 };
 
 #endif //__FADETOBLACK_H__

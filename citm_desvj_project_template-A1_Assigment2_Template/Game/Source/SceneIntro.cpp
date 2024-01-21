@@ -3,10 +3,12 @@
 #include "Input.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "Map.h"	
+#include "EntityManager.h"	
 #include "Render.h"
 #include "Window.h"
 #include "Physics.h"
-
+#include "FadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -63,8 +65,17 @@ bool SceneIntro::Update(float dt)
 	//Draw
 	SDL_Rect RectfondoInicial{ 0,0,windowW,windowH };
 	app->render->DrawTexture(FotoInicial1, 0, 0,NULL,SDL_FLIP_NONE,0);
-	/*if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		;*/
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+   		app->fade->FadeToBlackScene(this, (Module*)app->scene, 60);
+		
+
+		app->entityManager->Enable();
+		app->map->Enable();
+		
+		
+	}
+		
 
 	
 
