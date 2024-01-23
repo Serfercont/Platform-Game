@@ -7,6 +7,7 @@
 #include "PowerUp.h"
 #include "Ability.h"
 #include "Recover.h"
+#include "EnemyBoss.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -105,6 +106,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::ABILITY:
 		entity = new Ability();
+		break;
+	case EntityType::ENEMYBOSS:
+		entity = new EnemyBoss();
 		break;
 	default:
 		break;

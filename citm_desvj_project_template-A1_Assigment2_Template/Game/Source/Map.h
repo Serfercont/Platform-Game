@@ -157,8 +157,7 @@ public:
 	PathFinding* pathfinding;
 
 private:
-	int startMapWidth = 0;
-	int startMapHeight = 0;
+
 	int startHeight=0;
 	int startWidth=0;
 	int endMapWidth = 0;

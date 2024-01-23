@@ -17,7 +17,8 @@ enum class EntityType
 	POWERUP,
 	RECOVER,
 	ABILITY,
-	UNKNOWN
+	UNKNOWN,
+	ENEMYBOSS,
 };
 
 class Entity

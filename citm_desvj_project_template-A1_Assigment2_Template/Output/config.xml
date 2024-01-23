@@ -39,6 +39,7 @@
 		<enemyFly x="500" y="450" texturepath="Assets/Enemy/FlyingEye.png" eyeDeath ="Assets/Audio/Fx/EyeDeath.wav" eyeFlying ="Assets/Audio/Fx/FlyingEye.wav"/>
 		<enemyFly x="2200" y="450" texturepath="Assets/Enemy/FlyingEye.png" eyeDeath ="Assets/Audio/Fx/EyeDeath.wav" eyeFlying ="Assets/Audio/Fx/FlyingEye.wav"/>
 		<enemyFly x="2600" y="250" texturepath="Assets/Enemy/FlyingEye.png" eyeDeath ="Assets/Audio/Fx/EyeDeath.wav" eyeFlying ="Assets/Audio/Fx/FlyingEye.wav"/>
+		<finalBoss x="500" y=" 655" texturepath="Assets/Enemy/finalBoss.png"/>
 		<item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
 		<item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
 		<item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
@@ -190,7 +191,54 @@
 			<frame x="87" y="201" width="56" height="56"/>
 			<frame x="144" y="201" width="56" height="56"/>
 			<frame x="201" y="201" width="56" height="56"/>
-
 		</flyHit>
+		<bossIdle>
+			<frame x="0" y="0" width="100" height="100"/>
+			<frame x="100" y="0" width="100" height="100"/>
+			<frame x="200" y="0" width="100" height="100"/>
+			<frame x="300" y="0" width="100" height="100"/>
+		</bossIdle>
+		<bossAttack1>
+			<frame x="0" y="100" width="100" height="100"/>
+			<frame x="100" y="100" width="100" height="100"/>
+			<frame x="200" y="100" width="100" height="100"/>
+			<frame x="300" y="100" width="100" height="100"/>
+			<frame x="400" y="100" width="100" height="100"/>
+			<frame x="500" y="100" width="100" height="100"/>
+		</bossAttack1>
+		<bossAttack2>
+			<frame x="0" y="200" width="100" height="100"/>
+			<frame x="100" y="200" width="100" height="100"/>
+			<frame x="200" y="200" width="100" height="100"/>
+			<frame x="300" y="200" width="100" height="100"/>
+			<frame x="400" y="200" width="100" height="100"/>
+			<frame x="500" y="200" width="100" height="100"/>
+		</bossAttack2>
+		<bossInvocar>
+			<frame x="0" y="400" width="100" height="100"/>
+			<frame x="100" y="400" width="100" height="100"/>
+			<frame x="200" y="400" width="100" height="100"/>
+			<frame x="300" y="400" width="100" height="100"/>
+		</bossInvocar>
+		<bossDeath>
+			<frame x="0" y="600" width="100" height="100"/>
+			<frame x="100" y="600" width="100" height="100"/>
+			<frame x="200" y="600" width="100" height="100"/>
+			<frame x="300" y="600" width="100" height="100"/>
+			<frame x="400" y="600" width="100" height="100"/>
+			<frame x="500" y="600" width="100" height="100"/>
+			<frame x="600" y="600" width="100" height="100"/>
+			<frame x="700" y="600" width="100" height="100"/>
+			<frame x="800" y="600" width="100" height="100"/>
+			<frame x="900" y="600" width="100" height="100"/>
+			<frame x="0" y="700" width="100" height="100"/>
+			<frame x="100" y="700" width="100" height="100"/>
+			<frame x="200" y="700" width="100" height="100"/>
+			<frame x="300" y="700" width="100" height="100"/>
+			<frame x="400" y="700" width="100" height="100"/>
+			<frame x="500" y="700" width="100" height="100"/>
+			<frame x="600" y="700" width="100" height="100"/>
+			<frame x="700" y="700" width="100" height="100"/>
+		</bossDeath>
 	</animations>
 </config>

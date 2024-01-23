@@ -96,6 +96,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Ability.cpp" />
+    <ClCompile Include="Source\EnemyBoss.cpp" />
     <ClCompile Include="Source\EnemyFly.cpp" />
     <ClCompile Include="Source\EnemyWalk.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="PQueue.h" />
     <ClInclude Include="Source\Ability.h" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\EnemyBoss.h" />
     <ClInclude Include="Source\EnemyFly.h" />
     <ClInclude Include="Source\EnemyWalk.h" />
     <ClInclude Include="Source\Entity.h" />

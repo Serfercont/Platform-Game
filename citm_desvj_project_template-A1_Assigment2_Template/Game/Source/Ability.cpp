@@ -107,7 +107,7 @@ bool Ability::Update(float dt)
 		
 	}
 
-	if (timer.ReadSec() >=3 && !timerPaused) {
+	if (timer.ReadSec() >=2 && !timerPaused) {
 		timerPaused = true;
 		pop = true;
 	}
