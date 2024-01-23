@@ -15,7 +15,7 @@
 
 SceneDeath::SceneDeath(App* app, bool start_enabled) : Module(app, start_enabled)
 {
-	name.Create("scene");
+	name.Create("sceneDeath");
 }
 
 // Destructor
@@ -38,7 +38,7 @@ bool SceneDeath::Start()
 {
 	LOG("Loading SceneDeath Assets");
 	bool ret = true;
-	GameOver = app->tex->Load("Assets/Textures/GameOver.png");
+	GameOver = app->tex->Load("Assets/Textures/GameOver.jpg");
 	app->audio->PlayMusic(configNode.child("gameOver").attribute("path").as_string());
 
 	//Get the size of the window
@@ -67,7 +67,7 @@ bool SceneDeath::Update(float dt)
 	app->render->DrawTexture(GameOver, 0, 0, NULL, SDL_FLIP_NONE, 0);
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		app->fade->FadeToBlackScene(this, (Module*)app->sceneintro, 60);
+		app->fade->FadeToBlackScene(this, (Module*)app->scene, 60);
 		//goTimer = true;
 
 

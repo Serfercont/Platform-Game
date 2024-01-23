@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "EnemyWalk.h"
 #include "FadeToBlack.h"
+#include "SceneDeath.h"
 
 
 #include "Defs.h"
@@ -36,7 +37,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics(this);
 	scene = new Scene(this,false);
 	sceneintro = new SceneIntro(this);
-	scenedeath = new SceneDeath(this);
+	scenedeath = new SceneDeath(this,false);
 	map = new Map(this,false);
 	fade = new FadeToBlack(this);
 	entityManager = new EntityManager(this,false);

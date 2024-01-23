@@ -46,6 +46,12 @@ bool FadeToBlack::Update(float dt)
 			app->map->Enable();
 			app->entityManager->Enable();
 		}
+		else 
+		{
+			app->map->Disable();
+			app->entityManager->Disable();
+		}
+
 	}
 	else
 	{
