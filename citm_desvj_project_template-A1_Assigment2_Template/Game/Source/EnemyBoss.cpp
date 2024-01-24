@@ -36,11 +36,11 @@ bool EnemyBoss::Awake() {
 bool EnemyBoss::Start() {
 
 
-	walkIdleAnim.LoadAnimations("enemyIdle");
-	attack1Anim.LoadAnimations("enemyWalk");
-	attack2Anim.LoadAnimations("enemyRun");
-	invocaAnim.LoadAnimations("enemyAttack");
-	deadAnim.LoadAnimations("enemyDead");
+	walkIdleAnim.LoadAnimations("bossIdle");
+	attack1Anim.LoadAnimations("bossAttack1");
+	attack2Anim.LoadAnimations("bossAttack2");
+	invocaAnim.LoadAnimations("bossInvocar");
+	deadAnim.LoadAnimations("bossDeath");
 	texture = app->tex->Load(texturePath);
 	currentAnimation = &walkIdleAnim;
 

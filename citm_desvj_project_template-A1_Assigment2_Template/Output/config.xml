@@ -192,53 +192,55 @@
 			<frame x="144" y="201" width="56" height="56"/>
 			<frame x="201" y="201" width="56" height="56"/>
 		</flyHit>
-		<bossIdle>
-			<frame x="30" y="30" width="79" height="79"/>
+    <bossIdle loop="true" speed="0.075f">
+      <frame x="30" y="30" width="79" height="79"/>
 			<frame x="110" y="30" width="79" height="79"/>
 			<frame x="190" y="30" width="79" height="79"/>
 			<frame x="270" y="30" width="79" height="79"/>
 		</bossIdle>
-		<bossAttack1>
-			<frame x="0" y="100" width="100" height="100"/>
-			<frame x="100" y="100" width="100" height="100"/>
-			<frame x="200" y="100" width="100" height="100"/>
-			<frame x="300" y="100" width="100" height="100"/>
-			<frame x="400" y="100" width="100" height="100"/>
-			<frame x="500" y="100" width="100" height="100"/>
+    <bossAttack1 loop="false" speed="0.1f">
+			<frame x="30" y="110" width="79" height="79"/>
+			<frame x="110" y="110" width="79" height="79"/>
+			<frame x="190" y="110" width="79" height="79"/>
+			<frame x="270" y="110" width="79" height="79"/>
+			<frame x="350" y="110" width="79" height="79"/>
+			<frame x="430" y="110" width="79" height="79"/>
 		</bossAttack1>
-		<bossAttack2>
-			<frame x="0" y="200" width="100" height="100"/>
-			<frame x="100" y="200" width="100" height="100"/>
-			<frame x="200" y="200" width="100" height="100"/>
-			<frame x="300" y="200" width="100" height="100"/>
-			<frame x="400" y="200" width="100" height="100"/>
-			<frame x="500" y="200" width="100" height="100"/>
+    <bossAttack2 loop="false" speed="0.1f">
+      <frame x="30" y="190" width="79" height="79"/>
+      <frame x="110" y="190" width="79" height="79"/>
+      <frame x="190" y="190" width="72" height="79"/>
+      <frame x="263" y="190" width="86" height="79"/>
+      <frame x="350" y="190" width="79" height="79"/>
+      <frame x="430" y="190" width="79" height="79"/>
 		</bossAttack2>
-		<bossInvocar>
-			<frame x="0" y="400" width="100" height="100"/>
-			<frame x="100" y="400" width="100" height="100"/>
-			<frame x="200" y="400" width="100" height="100"/>
-			<frame x="300" y="400" width="100" height="100"/>
+		<bossInvocar loop="false" speed="0.1f">
+      <frame x="30" y="270" width="79" height="79"/>
+      <frame x="110" y="270" width="79" height="79"/>
+      <frame x="190" y="270" width="79" height="79"/>
+      <frame x="270" y="270" width="79" height="79"/>
+      <frame x="350" y="270" width="79" height="79"/>
+
 		</bossInvocar>
-		<bossDeath>
-			<frame x="0" y="600" width="100" height="100"/>
-			<frame x="100" y="600" width="100" height="100"/>
-			<frame x="200" y="600" width="100" height="100"/>
-			<frame x="300" y="600" width="100" height="100"/>
-			<frame x="400" y="600" width="100" height="100"/>
-			<frame x="500" y="600" width="100" height="100"/>
-			<frame x="600" y="600" width="100" height="100"/>
-			<frame x="700" y="600" width="100" height="100"/>
-			<frame x="800" y="600" width="100" height="100"/>
-			<frame x="900" y="600" width="100" height="100"/>
-			<frame x="0" y="700" width="100" height="100"/>
-			<frame x="100" y="700" width="100" height="100"/>
-			<frame x="200" y="700" width="100" height="100"/>
-			<frame x="300" y="700" width="100" height="100"/>
-			<frame x="400" y="700" width="100" height="100"/>
-			<frame x="500" y="700" width="100" height="100"/>
-			<frame x="600" y="700" width="100" height="100"/>
-			<frame x="700" y="700" width="100" height="100"/>
+		<bossDeath loop="false" speed="0.1f">
+			<frame x="30" y="350" width="79" height="79"/>
+			<frame x="110" y="350" width="79" height="79"/>
+			<frame x="190" y="350" width="79" height="79"/>
+			<frame x="270" y="350" width="79" height="79"/>
+			<frame x="350" y="350" width="79" height="79"/>
+			<frame x="430" y="350" width="79" height="79"/>
+			<frame x="510" y="350" width="79" height="79"/>
+			<frame x="590" y="350" width="79" height="79"/>
+			<frame x="670" y="350" width="79" height="79"/>
+			<frame x="750" y="350" width="79" height="79"/>
+			<frame x="30" y="430" width="79" height="79"/>
+			<frame x="110" y="430" width="79" height="79"/>
+			<frame x="190" y="430" width="79" height="79"/>
+			<frame x="270" y="430" width="79" height="79"/>
+			<frame x="350" y="430" width="79" height="79"/>
+			<frame x="430" y="430" width="79" height="79"/>
+			<frame x="510" y="430" width="79" height="79"/>
+			<frame x="670" y="430" width="79" height="79"/>
 		</bossDeath>
 	</animations>
 </config>
