@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
-
+#include "Animation.h"
 struct SDL_Texture;
 
 class Item : public Entity
@@ -29,7 +29,8 @@ public:
 	bool isPicked = false;
 
 private:
-
+	Animation* currentAnimation = nullptr;
+	Animation coinAnim;
 	bool pop= false;
 	SDL_Texture* texture;
 	const char* texturePath;

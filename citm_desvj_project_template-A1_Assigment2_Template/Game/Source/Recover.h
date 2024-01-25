@@ -35,6 +35,7 @@ private:
 	SDL_Texture* texture;
 	const char* texturePath;
 	PhysBody* pbody;
+
 };
 
 #endif // __RECOVER_H__

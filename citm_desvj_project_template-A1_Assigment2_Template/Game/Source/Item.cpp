@@ -1,4 +1,5 @@
 #include "Item.h"
+#include"Animation.h"
 #include "App.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -29,25 +30,28 @@ bool Item::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	coinAnim.LoadAnimations("coinAnim");
+
 	pbody = app->physics->CreateCircleSensor(position.x + 16, position.y + 16, 10, bodyType::KINEMATIC);
 	pbody->ctype = ColliderType::ITEM;
 	pbody->listener = this;
-
+	currentAnimation = &coinAnim;
 	return true;
 }
 
 bool Item::Update(float dt)
 {
 
-	app->render->DrawTexture(texture, position.x, position.y);
-
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x, position.y,&rect);
+	
 	if (pop)
 	{
 		pbody->body->SetActive(false);
 		app->entityManager->DestroyEntity(this);
 		app->physics->world->DestroyBody(pbody->body);
 	}
-
+	coinAnim.Update();
 	return true;
 }
 
