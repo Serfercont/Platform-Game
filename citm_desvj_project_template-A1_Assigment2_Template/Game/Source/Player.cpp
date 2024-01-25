@@ -176,6 +176,7 @@ bool Player::Update(float dt)
 	//si esta tocando con el pincho
 	if (spike == true || health==0)
 	{
+		//app->map->Disable();
 		currentVelocity.x = 0;
 		isAlive = false;
 		isAttacking = false;
@@ -218,6 +219,7 @@ bool Player::Update(float dt)
 				
 			}
 		}
+		//app->fade->FadeToBlackScene((Module*)app->scene, (Module*)app->scenedeath, 60);
 	}
 
 	if (isjumpping)

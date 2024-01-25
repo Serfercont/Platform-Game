@@ -20,6 +20,7 @@ class Scene;
 class EntityManager;
 class Map;
 class Physics;
+class SceneDeath;
 class FadeToBlack;
 class Scene2;
 class GuiManager;
@@ -100,6 +101,7 @@ public:
 	Scene2* scene2;
 	FadeToBlack* fade;
 	SceneIntro* sceneintro;
+	SceneDeath* scenedeath;
 	EntityManager* entityManager;
 	Map* map;
 	Physics* physics;

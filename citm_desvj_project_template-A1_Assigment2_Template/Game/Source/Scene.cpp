@@ -170,6 +170,7 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(fondo3, -150, 110, &Rectfondo3, 0.7f);
 	app->render->DrawTexture(fondo4, -150,0, &Rectfondo4, 0.4f);
 
+
 	/*const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 	for (uint i = 0; i < path->Count(); ++i)
 	{
@@ -345,7 +346,7 @@ bool Scene::CleanUp()
 	EyeList.Clear();
 
 	// Release the map
-	app->map->CleanUp();
+	//app->map->CleanUp();
 
 	// Unload textures
 	app->tex->UnLoad(fondo0);
