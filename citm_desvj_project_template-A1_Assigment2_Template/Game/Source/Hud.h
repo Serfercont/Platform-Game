@@ -13,7 +13,7 @@ class Hud : public Module
 {
 public:
 
-	Hud(bool enabled = true);
+	Hud(App* app, bool start_enabled);
 
 	virtual ~Hud();
 

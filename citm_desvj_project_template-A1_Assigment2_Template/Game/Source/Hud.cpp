@@ -19,7 +19,7 @@
 
 using namespace std;
 
-Hud::Hud(bool enabled) : Module(enabled)
+Hud::Hud(App* app, bool start_enabled) : Module(app,start_enabled)
 {
 	name.Create("scenemenu");
 }

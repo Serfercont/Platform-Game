@@ -45,8 +45,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map(this,false);
 	fade = new FadeToBlack(this);
 	entityManager = new EntityManager(this,false);
-	guiManager = new GuiManager();
-	hud = new Hud();
+	guiManager = new GuiManager(this,true);
+	hud = new Hud(this, false);
 
 
 	// Ordered for awake / Start / Update
