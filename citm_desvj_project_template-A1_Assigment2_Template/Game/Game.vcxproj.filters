@@ -31,6 +31,11 @@
     <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\SceneIntro.cpp" />
     <ClCompile Include="Source\EnemyBoss.cpp" />
+    <ClCompile Include="Source\GuiControlButton.cpp" />
+    <ClCompile Include="Source\GuiControlCheckBox.cpp" />
+    <ClCompile Include="Source\GuiManager.cpp" />
+    <ClCompile Include="Source\Hud.cpp" />
+    <ClCompile Include="Source\GuiControlSlider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -89,6 +94,12 @@
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\SceneIntro.h" />
     <ClInclude Include="Source\EnemyBoss.h" />
+    <ClInclude Include="Source\GuiControl.h" />
+    <ClInclude Include="Source\GuiControlButton.h" />
+    <ClInclude Include="Source\GuiControlCheckBox.h" />
+    <ClInclude Include="Source\GuiManager.h" />
+    <ClInclude Include="Source\Hud.h" />
+    <ClInclude Include="Source\GuiControlSlider.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

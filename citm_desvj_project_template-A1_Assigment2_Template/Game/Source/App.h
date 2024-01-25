@@ -22,6 +22,8 @@ class Map;
 class Physics;
 class FadeToBlack;
 class Scene2;
+class GuiManager;
+class Hud;
 
 class App
 {
@@ -101,6 +103,8 @@ public:
 	EntityManager* entityManager;
 	Map* map;
 	Physics* physics;
+	GuiManager* guiManager;
+	Hud* hud;
 	bool vsync;
 	bool unlimitFrames = false;
 
