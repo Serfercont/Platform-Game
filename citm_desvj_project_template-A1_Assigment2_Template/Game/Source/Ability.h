@@ -33,7 +33,7 @@ public:
 	Animation* currentAnimation = nullptr;
 	Animation attack;
 	bool attacking = false;
-	float speed = 0.4f;
+	float speed = 0.6f;
 	bool derecha = false;
 	Timer timer;
 	bool timerPaused = false;

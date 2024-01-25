@@ -28,6 +28,7 @@ enum class ColliderType {
 	ITEM,
 	PLATFORM, 
 	SPIKES,
+	CHECKPOINT,
 	COLUMN,
 	UNKNOWN,
 	ENEMYWALK,
