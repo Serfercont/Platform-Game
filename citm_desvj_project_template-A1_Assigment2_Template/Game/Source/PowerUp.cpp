@@ -31,17 +31,19 @@ bool PowerUp::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	powerUpAnim.LoadAnimations("powerUpAnim");
 	pbody = app->physics->CreateCircleSensor(position.x + 16, position.y + 16, 10, bodyType::KINEMATIC);
 	pbody->ctype = ColliderType::POWERUP;
 	pbody->listener = this;
-
+	
+	currentAnimation = &powerUpAnim;
 	return true;
 }
 
 bool PowerUp::Update(float dt)
 {
-
-	app->render->DrawTexture(texture, position.x, position.y);
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x, position.y,&rect);
 
 	if (pop)
 	{
@@ -49,7 +51,7 @@ bool PowerUp::Update(float dt)
 		app->entityManager->DestroyEntity(this);
 		app->physics->world->DestroyBody(pbody->body);
 	}
-
+	powerUpAnim.Update();
 	return true;
 }
 

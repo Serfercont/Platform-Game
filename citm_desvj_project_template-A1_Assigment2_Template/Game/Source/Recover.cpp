@@ -22,7 +22,8 @@ bool Recover::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
-
+	potionAnim.LoadAnimations("potionAnim");
+	currentAnimation = &potionAnim;
 	return true;
 }
 
@@ -39,8 +40,8 @@ bool Recover::Start() {
 
 bool Recover::Update(float dt)
 {
-
-	app->render->DrawTexture(texture, position.x, position.y);
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x, position.y, &rect);
 
 	if (pop)
 	{
@@ -48,7 +49,7 @@ bool Recover::Update(float dt)
 		app->entityManager->DestroyEntity(this);
 		app->physics->world->DestroyBody(pbody->body);
 	}
-
+	potionAnim.Update();
 	return true;
 }
 

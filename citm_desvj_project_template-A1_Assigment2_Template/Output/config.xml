@@ -242,7 +242,7 @@
 			<frame x="510" y="430" width="79" height="79"/>
 			<frame x="670" y="430" width="79" height="79"/>
 		</bossDeath>
-    <potionAnim loop="true" speed="0.1f">
+    <potionAnim loop="true" speed="0.15f">
       <frame x="1" y="1" width="31" height="55"/>
       <frame x="33" y="1" width="31" height="55"/>
       <frame x="65" y="1" width="31" height="55"/>
@@ -251,7 +251,7 @@
       <frame x="161" y="1" width="31" height="55"/>
       
     </potionAnim>
-    <coinAnim loop="true" speed="0.1f">
+    <coinAnim loop="true" speed="0.15f">
       <frame x="1" y="1" width="31" height="55"/>
       <frame x="33" y="1" width="31" height="55"/>
       <frame x="65" y="1" width="31" height="55"/>
@@ -260,7 +260,7 @@
       <frame x="161" y="1" width="31" height="55"/>
 
     </coinAnim>
-    <powerUpAnim loop="true" speed="0.1f">
+    <powerUpAnim loop="true" speed="0.15f">
       <frame x="1" y="1" width="31" height="55"/>
       <frame x="33" y="1" width="31" height="55"/>
       <frame x="65" y="1" width="31" height="55"/>

@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Point.h"
+#include "Animation.h"
 #include "EntityManager.h"
 #include "SDL/include/SDL.h"
 
@@ -30,7 +31,8 @@ public:
 	bool isPicked = false;
 
 private:
-
+	Animation* currentAnimation = nullptr;
+	Animation powerUpAnim;
 	bool pop = false;
 	SDL_Texture* texture;
 	const char* texturePath;
