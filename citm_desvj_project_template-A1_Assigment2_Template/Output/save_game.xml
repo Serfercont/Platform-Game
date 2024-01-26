@@ -6,36 +6,41 @@
 	<audio />
 	<physics />
 	<scene>
-		<player x="2964" y="709" />
+		<player x="6286" y="5512" />
 		<Wolf1>
-			<wolfPosition x="426" y="655" isAlive="false" />
+			<wolfPosition x="633" y="751" isAlive="false" />
 		</Wolf1>
 		<Wolf2>
-			<wolfPosition x="3065" y="623" isAlive="true" />
+			<wolfPosition x="3144" y="623" isAlive="false" />
 		</Wolf2>
 		<Wolf3>
-			<wolfPosition x="1575" y="463" isAlive="false" />
+			<wolfPosition x="2054" y="751" isAlive="true" />
 		</Wolf3>
 		<Wolf4>
-			<wolfPosition x="3066" y="751" isAlive="false" />
+			<wolfPosition x="3016" y="751" isAlive="false" />
 		</Wolf4>
 		<Wolf5>
-			<wolfPosition x="4342" y="751" isAlive="true" />
+			<wolfPosition x="5655" y="7852" isAlive="true" />
 		</Wolf5>
 		<Eye1>
-			<eyePosition x="409" y="664" isAlive="false" />
+			<eyePosition x="751" y="647" isAlive="true" />
 		</Eye1>
 		<Eye2>
-			<eyePosition x="2032" y="664" isAlive="false" />
+			<eyePosition x="3407" y="760" isAlive="true" />
 		</Eye2>
 		<Eye3>
-			<eyePosition x="2327" y="25593" isAlive="false" />
+			<eyePosition x="2959" y="464" isAlive="true" />
 		</Eye3>
-		<pconditions godmode="false" isAlive="true" isjumpping="false" isWalking="true" right="true" />
+		<pconditions godmode="true" isAlive="true" isjumpping="false" isWalking="true" right="true" />
 	</scene>
 	<:anonymous />
+	<scene />
+	<sceneDeath />
 	<entitymanager />
+	<scenemenu />
+	<guiManager />
+	<fadetoblack />
 	<renderer>
-		<camera x="-2564" y="-20" />
+		<camera x="-5694" y="-5112" />
 	</renderer>
 </game_state>

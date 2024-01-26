@@ -54,6 +54,13 @@ public:
 	bool attackCreated;
 	bool scene2Active = false;
 
+	
+	bool check1 = false;
+	bool check2 = false;
+	bool check3 = false;
+	bool check4 = false;
+	bool check5 = false;
+
 	iPoint flipPos;
 
 	uint audioWalk;
