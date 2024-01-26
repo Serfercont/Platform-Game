@@ -14,6 +14,7 @@ public:
 	App* app;
 	Module(App* parent,bool startEnabled) : app(parent),active(startEnabled)
 	{
+
 	}
 
 	void Init()

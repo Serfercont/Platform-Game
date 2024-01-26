@@ -21,7 +21,7 @@ using namespace std;
 
 Hud::Hud(App* app, bool start_enabled) : Module(app,start_enabled)
 {
-	name.Create("scenemenu");
+	name.Create("hud");
 }
 
 Hud::~Hud()
@@ -40,21 +40,36 @@ bool Hud::Start()
 {
 
 	lifeBarTexture = app->tex->Load("Assets/Textures/ghost_shadow.png");
-	deadScreenTexture = app->tex->Load("Assets/Textures/Screens/die_screen.png");
+	deadScreenTexture = app->tex->Load("Assets/UI/GameOver.png");
 
 	timer = Timer();
 	timer.Start();
+
+	textPosX = (float)windowW / 2 - (float)texW / 2;
+	textPosY = (float)windowH / 2 - (float)texH / 2;
+
 
 	return true;
 }
 
 bool Hud::Update(float dt)
 {
-	if (app->scene->player->health == 100) app->render->DrawTexture(lifeBarTexture, 0, 0, NULL, SDL_FLIP_NONE, 0);
-
+	//if (app->scene->player->health == 100) app->render->DrawTexture(lifeBarTexture, 0, 0, NULL, SDL_FLIP_NONE, 0);
+	SDL_Rect RectfondoInicial{ 0,0,1244,780 };
 	DrawTimer();
 
-	
+	if (playerDeadHud && !spacePressed)
+	{
+		app->scene->pause = true;
+		app->render->DrawTexture(deadScreenTexture, -100, 0, &RectfondoInicial, SDL_FLIP_NONE, 0);
+		if (app->input->GetKey(SDL_SCANCODE_SPACE)==KEY_DOWN &&!spacePressed)
+		{
+			playerDeadHud = false;
+			spacePressed = true;
+			
+			app->scene->pause = false;
+		}
+	}
 
 
 	return true;

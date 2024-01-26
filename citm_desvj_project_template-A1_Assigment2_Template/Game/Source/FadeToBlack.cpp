@@ -36,22 +36,15 @@ bool FadeToBlack::Update(float dt)
 		++frameCount;
 		if (frameCount >= maxFadeFrames)
 		{
-			moduleToDisable->Disable();
-			moduleToEnable->Enable();
+			if (modules)
+			{
+				moduleToDisable->Disable();
+				moduleToEnable->Enable();
+			}
+			
 			currentStep = Fade_Step::FROM_BLACK;
-
+			modules = false;
 		}
-		if (app->scene->active)
-		{
-			app->map->Enable();
-			app->entityManager->Enable();
-		}
-		else 
-		{
-			app->map->Disable();
-			app->entityManager->Disable();
-		}
-
 	}
 	else
 	{
@@ -108,17 +101,17 @@ bool FadeToBlack::FadeToBlackFunction(int levelIdx, float frames)
 bool FadeToBlack::FadeToBlackScene(Module* moduleToDisable, Module* moduleToEnable, float frames)
 {
 	bool ret = false;
-
+	modules = true;
 	
 	if (currentStep == Fade_Step::NONE) {
+
 		currentStep = Fade_Step::TO_BLACK;
 		frameCount = 0;
-		maxFadeFrames = static_cast<Uint32>(frames);
+		maxFadeFrames = frames;
 
 		this->moduleToDisable = moduleToDisable;
 		this->moduleToEnable = moduleToEnable;
 
-		
 		ret = true;
 	}
 

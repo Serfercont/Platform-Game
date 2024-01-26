@@ -48,7 +48,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fade = new FadeToBlack(this);
 	entityManager = new EntityManager(this,false);
 	guiManager = new GuiManager(this,true);
-	hud = new Hud(this, false);
+	hud = new Hud(this, true);
 
 
 	// Ordered for awake / Start / Update
@@ -61,10 +61,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	AddModule(scene);
 	AddModule(map);
-	AddModule(sceneintro);
-	AddModule(scenedeath);
 	AddModule(entityManager);
 	AddModule(hud);
+	AddModule(sceneintro);
+	AddModule(scenedeath);
 	AddModule(scenemenu);
 	AddModule(guiManager);
 	AddModule(fade);

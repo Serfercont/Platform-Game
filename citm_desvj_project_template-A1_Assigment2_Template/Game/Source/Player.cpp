@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "Map.h"
 #include "FadeToBlack.h"
+#include "Hud.h"
 #include <map>
 #include <chrono>
 #include <thread>
@@ -249,8 +250,10 @@ bool Player::Update(float dt)
 		}
 		if (currentAnimation->HasFinished())
 		{
-			if (!isAlive)
+			app->hud->playerDeadHud = true;
+			if (!isAlive && app->hud->spacePressed)
 			{
+				
 				//respawn
 				if (damage)
 				{
@@ -259,7 +262,6 @@ bool Player::Update(float dt)
 					damage = NULL;
 				}
 				spike = false;
-				isAlive = true;
 				if (!scene2Active && !check1)
 				{
 					position.x = 700;
@@ -302,14 +304,15 @@ bool Player::Update(float dt)
 					app->render->camera.x = -5124;
 				}
 				
-				
+				isAlive = true;
 				pbody->SetPosition(position.x, position.y);
 				currentAnimation = &idleAnim;
 				health = 3;
-				
+				app->hud->spacePressed = false;
+				powerUp = false;
 			}
 		}
-		app->fade->FadeToBlackScene((Module*)app->scene, (Module*)app->scenedeath, 60);
+		//app->fade->FadeToBlackScene((Module*)app->scene, (Module*)app->scenedeath, 60);
 	}
 
 	if (isjumpping)

@@ -56,6 +56,7 @@ public:
 	bool fadeDone = false;
 	Module* moduleToEnable = nullptr;
 	Module* moduleToDisable = nullptr;
+	bool modules = false;
 };
 
 #endif //__FADETOBLACK_H__

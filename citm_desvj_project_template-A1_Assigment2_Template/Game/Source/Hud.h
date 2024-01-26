@@ -35,6 +35,10 @@ private:
 	SDL_Texture* lifeBarTexture;
 	SDL_Texture* deadScreenTexture;
 
+	float textPosX, textPosY = 0;
+	uint texW, texH;
+	uint windowW, windowH;
+
 };
 
 #endif // __HUD_H__

@@ -62,6 +62,7 @@ bool EnemyWalk::Start() {
 
 bool EnemyWalk::Update(float dt)
 {
+	
 	flipPos.x = position.x - 10;
 	origin = app->map->WorldToMap(position.x, position.y);
 	destiny = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
@@ -195,7 +196,10 @@ bool EnemyWalk::Update(float dt)
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
 	}
-
+	if (app->scene->pause)
+	{
+		velocity.x = 0;
+	}
 	pbody->body->SetLinearVelocity(velocity);
 	//enemyPbody->body->SetTransform({ pbody->body->GetPosition().x, pbody->body->GetPosition().y - PIXEL_TO_METERS(10) }, 0);
 

@@ -92,6 +92,8 @@ bool SceneMenu::Update(float dt)
 	{
 		app->fade->FadeToBlackScene(this, (Module*)app->scene, 60);
 		app->guiManager->Disable();
+		app->map->Enable();
+		app->entityManager->Enable();
 	}
 	else if (exitButton->state==GuiControlState::PRESSED)
 	{
