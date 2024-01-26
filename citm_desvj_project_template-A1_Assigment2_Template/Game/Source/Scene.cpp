@@ -187,7 +187,6 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(parallax2, 5120, 0, &Rectparallax1, 0);
 	app->render->DrawTexture(parallax1, 5120, 0, &Rectparallax0, 0);
 	
-	
 
 
 
@@ -299,7 +298,8 @@ void Scene::GoLvl1()
 	level1 = true;
 	level2 = false;
 	player->scene2Active = false;
-	app->render->camera.x = -11;
+	app->render->camera.x =0;
+	app->render->camera.y = -30;
 }
 
 void Scene::GoLvl2() 

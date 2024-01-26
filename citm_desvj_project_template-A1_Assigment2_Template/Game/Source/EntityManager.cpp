@@ -210,6 +210,11 @@ bool EntityManager::Update(float dt)
 	ListItem<Entity*>* item;
 	Entity* pEntity = NULL;
 
+	if (app->scene->pause)
+	{
+		return true;
+	}
+
 	for (item = entities.start; item != NULL && ret == true; item = item->next)
 	{
 		pEntity = item->data;

@@ -81,6 +81,7 @@ private:
 public:
 	bool level1=false;
 	bool level2=true;
+	bool pause=false;
 };
 
 #endif // __SCENE_H__

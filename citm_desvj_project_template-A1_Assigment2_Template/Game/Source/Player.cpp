@@ -47,7 +47,6 @@ bool Player::Start() {
 	jumpAnim.LoadAnimations("jump");
 	attackPower.LoadAnimations("ability");
 	
-
 	InitPosX = position.x;
 	InitPosY = position.y;
 
@@ -255,14 +254,25 @@ bool Player::Update(float dt)
 	{
 		currentVelocity.y = -GRAVITY_Y;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		position.x = 700;
-		position.y = 1350;
-		pbody->SetPosition(position.x, position.y);
-		app->render->camera.x = 0;
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		app->fade->FadeToBlackFunction(1, 60.0f);
 		
 	}
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		if (scene2Active)
+		{
+			app->fade->FadeToBlackFunction(2, 60.0f);
+		}
+		else
+		{
+			app->fade->FadeToBlackFunction(1, 60.0f);
+		}
+	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F2)== KEY_DOWN)
+	{
+		app->fade->FadeToBlackFunction(2, 60.0f);
+	}
 	//Set the velocity of the pbody of the player
 	pbody->body->SetLinearVelocity(currentVelocity);
 
