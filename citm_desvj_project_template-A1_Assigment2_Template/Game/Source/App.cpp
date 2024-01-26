@@ -42,7 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics(this);
 	scene = new Scene(this,false);
 	sceneintro = new SceneIntro(this);
-	scenemenu = new SceneMenu(this);
+	scenemenu = new SceneMenu(this,false);
 	scenedeath = new SceneDeath(this,false);
 	map = new Map(this,false);
 	fade = new FadeToBlack(this);
@@ -62,6 +62,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(map);
 	AddModule(sceneintro);
+	AddModule(scenemenu);
 	AddModule(scenedeath);
 	AddModule(entityManager);
 	AddModule(hud);

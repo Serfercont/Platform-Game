@@ -38,7 +38,7 @@ bool SceneMenu::Start()
 {
 	LOG("Loading SceneMenu Assets");
 	bool ret = true;
-	MainMenu = app->tex->Load("Assets/Textures/Fondo Juego.png");
+	MainMenu = app->tex->Load("Assets/Textures/MainMenu.png");
 	
 
 	//Get the size of the window
