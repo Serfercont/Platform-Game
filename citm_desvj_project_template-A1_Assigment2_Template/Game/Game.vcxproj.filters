@@ -37,7 +37,7 @@
     <ClCompile Include="Source\Hud.cpp" />
     <ClCompile Include="Source\GuiControlSlider.cpp" />
     <ClCompile Include="Source\SceneDeath.cpp" />
-
+    <ClCompile Include="Source\SceneMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -103,6 +103,7 @@
     <ClInclude Include="Source\Hud.h" />
     <ClInclude Include="Source\GuiControlSlider.h" />
     <ClInclude Include="Source\SceneDeath.h" />
+    <ClInclude Include="Source\SceneMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

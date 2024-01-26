@@ -67,7 +67,7 @@ bool SceneIntro::Update(float dt)
 	app->render->DrawTexture(FotoInicial1, 0, 0,NULL,SDL_FLIP_NONE,0);
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-   		app->fade->FadeToBlackScene(this, (Module*)app->scene, 60);
+   		app->fade->FadeToBlackScene(this, (Module*)app->scenemenu, 60);
 		//goTimer = true;
 		
 		
