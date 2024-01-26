@@ -173,6 +173,67 @@ bool Player::Update(float dt)
 		pbody->body->SetLinearVelocity(currentVelocity);
 		
 	}
+
+	if (position.x >=2878 && position.x<=2953)
+	{
+		if (!check1)
+		{
+			app->SaveRequest();
+			check1 = true;
+			check2 = false;
+			check3 = false;
+			check4 = false;
+			check5 = false;
+		}
+	}
+	if (position.x >=5734 && position.x <=5844 && position.y>=1428 && position.y<=1637)
+	{
+		if (!check2)
+		{
+			app->SaveRequest();
+			check1 = false;
+			check2 = true;
+			check3 = false;
+			check4 = false;
+			check5 = false;
+		}
+	}
+	if (position.x >= 5849 && position.x <= 5940 && position.y >= 2626 && position.y <= 2821)
+	{
+		if (!check3)
+		{
+			app->SaveRequest();
+			check1 = false;
+			check2 = false;
+			check3 = true;
+			check4 = false;
+			check5 = false;
+		}
+	}
+	if (position.x >= 5215 && position.x <= 5284 && position.y >= 3809 && position.y <= 4005)
+	{
+		if (!check4)
+		{
+			app->SaveRequest();
+			check1 = false;
+			check2 = false;
+			check3 = false;
+			check4 = true;
+			check5 = false;
+		}
+	}
+	if (position.x >= 6280 && position.x <= 6393 && position.y >= 5365 && position.y <= 5564)
+	{
+		if (!check5) 
+		{
+			app->SaveRequest();
+			check1 = false;
+			check2 = false;
+			check3 = false;
+			check4 = false;
+			check5 = true;
+		}
+	}
 	//si esta tocando con el pincho
 	if (spike == true || health==0)
 	{
@@ -200,18 +261,48 @@ bool Player::Update(float dt)
 				}
 				spike = false;
 				isAlive = true;
-				if (!scene2Active)
+				if (!scene2Active && !check1)
 				{
 					position.x = 700;
 					position.y = 1350;
 					app->render->camera.x = 0;
 				}
-				else
+				else if (!scene2Active && check1)
+				{
+					position.x = 3478;
+					position.y = 1350;
+					app->render->camera.x = 0;
+				}
+				else if (scene2Active && check1)
 				{
 					position.x = 5850;
 					position.y = 1350;
 					app->render->camera.x = -5124;
 				}
+				else if (scene2Active && check2)
+				{
+					position.x = 6374;
+					position.y = 2280;
+				}
+				else if (scene2Active && check3)
+				{
+					position.x = 6471;
+					position.y = 3463;
+					app->render->camera.x = -5124;
+				}
+				else if (scene2Active && check4)
+				{
+					position.x = 5837;
+					position.y = 4647;
+					app->render->camera.x = -5124;
+				}
+				else if (scene2Active && check5)
+				{
+					position.x = 6902;
+					position.y = 6206;
+					app->render->camera.x = -5124;
+				}
+				
 				
 				pbody->SetPosition(position.x, position.y);
 				currentAnimation = &idleAnim;
@@ -297,9 +388,10 @@ bool Player::Update(float dt)
 		
 	}
 	//Movimiento camara 
-	/*LOG("camera y: %d", app->render->camera.y);
-	LOG("player y: %d", position.y);
-	LOG("camera y - player y: %d", app->render->camera.y - position.y + 400);*/
+	//LOG("camera y: %d", app->render->camera.y);
+	/*LOG("player x: %d", position.x);
+	LOG("player y: %d", position.y);*/
+	//LOG("camera y - player y: %d", app->render->camera.y - position.y + 400);*/
 
 	if (app->render->camera.x - position.x + 400 <= -24 && app->render->camera.x - position.x + 400 >= -7532 && !scene2Active) {
 		app->render->camera.x = -position.x + 400;
