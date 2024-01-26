@@ -60,6 +60,13 @@ private:
 	SDL_Texture* fondo2;
 	SDL_Texture* fondo3;
 	SDL_Texture* fondo4;
+
+	SDL_Texture* parallax1;
+	SDL_Texture* parallax2;
+	SDL_Texture* parallax3;
+	SDL_Texture* parallax4;
+	SDL_Texture* parallax5;
+
 	SDL_Texture* mouseTileTex = nullptr;
 	pugi::xml_node configNode;
 	List<Entity*> WolfList;
