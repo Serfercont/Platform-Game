@@ -3,6 +3,9 @@
 #define __SCENEMENU_H__
 
 #include "Module.h"
+#include "GuiManager.h"
+#include "GuiControl.h"
+#include "GuiControlButton.h"
 
 
 struct SDL_Texture;
@@ -50,6 +53,29 @@ private:
 	pugi::xml_node configNode;
 
 	SDL_Texture* MainMenu;
+
+	SDL_Texture* playOff;
+	SDL_Texture* playOn;
+
+	SDL_Texture* contiuneOff;
+	SDL_Texture* continueOn;
+
+	SDL_Texture* settingsOff;
+	SDL_Texture* settingsOn;
+
+	SDL_Texture* creditsOff;
+	SDL_Texture* creditsOn;
+	
+	SDL_Texture* exitOff;
+	SDL_Texture* exitOn;
+
+	GuiControlButton* playButton;
+	GuiControlButton* continueButton;
+	GuiControlButton* settingsButton;
+	GuiControlButton* creditsButton;
+	GuiControlButton* exitButton;
+
+	
 
 };
 

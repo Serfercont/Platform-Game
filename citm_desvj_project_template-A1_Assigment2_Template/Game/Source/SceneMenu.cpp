@@ -9,6 +9,8 @@
 #include "Window.h"
 #include "Physics.h"
 #include "FadeToBlack.h"
+#include "Scene.h"
+#include "GuiManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -39,8 +41,29 @@ bool SceneMenu::Start()
 	LOG("Loading SceneMenu Assets");
 	bool ret = true;
 	MainMenu = app->tex->Load("Assets/UI/MainMenu.png");
+	playOff = app->tex->Load("Assets/UI/PlayOFF.png");
+	playOn = app->tex->Load("Assets/UI/PlayON.png");
+	contiuneOff = app->tex->Load("Assets/UI/ContinueOFF.png");
+	continueOn = app->tex->Load("Assets/UI/ContinueON.png");
+	settingsOff = app->tex->Load("Assets/UI/SettingsOFF.png");
+	settingsOn = app->tex->Load("Assets/UI/SettingsON.png");
+	creditsOff = app->tex->Load("Assets/UI/CreditsOFF.png");
+	creditsOn = app->tex->Load("Assets/UI/CreditsON.png");
+	exitOff = app->tex->Load("Assets/UI/ExitOFF.png");
+	exitOn = app->tex->Load("Assets/UI/ExitON.png");
 	
 
+	playButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, NULL, playOff, playOn, NULL, { 610, 310, 288, 73 }, this);
+	continueButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, NULL, contiuneOff, continueOn, NULL, { 610, 392,288, 73 }, this);
+	settingsButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, NULL, settingsOff, settingsOn, NULL, { 610, 474, 288, 73 }, this);
+	creditsButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, NULL, creditsOff, creditsOn, NULL, { 610, 556, 288, 73 }, this);
+	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, NULL, exitOff, exitOn, NULL, { 610, 638, 288, 73 }, this);
+
+	playButton->state = GuiControlState::NORMAL;
+	continueButton->state = GuiControlState::NORMAL;
+	settingsButton->state = GuiControlState::NORMAL;
+	creditsButton->state = GuiControlState::NORMAL;
+	exitButton->state = GuiControlState::NORMAL;
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
 
@@ -64,13 +87,15 @@ bool SceneMenu::Update(float dt)
 {
 	//Draw
 	SDL_Rect RectfondoInicial{ 0,0,windowW,windowH };
-	app->render->DrawTexture(MainMenu, 0, 0, NULL, SDL_FLIP_NONE, 0);
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	app->render->DrawTexture(MainMenu, 0, 0, &RectfondoInicial, SDL_FLIP_NONE, 0);
+	if (playButton->state == GuiControlState::PRESSED)
 	{
 		app->fade->FadeToBlackScene(this, (Module*)app->scene, 60);
-		//goTimer = true;
-
-
+		app->guiManager->Disable();
+	}
+	else if (exitButton->state==GuiControlState::PRESSED)
+	{
+		SDL_Quit();
 	}
 
 	return true;
