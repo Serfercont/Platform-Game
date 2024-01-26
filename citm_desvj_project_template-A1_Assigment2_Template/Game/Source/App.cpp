@@ -62,10 +62,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(map);
 	AddModule(sceneintro);
-	AddModule(scenemenu);
 	AddModule(scenedeath);
 	AddModule(entityManager);
 	AddModule(hud);
+	AddModule(scenemenu);
 	AddModule(guiManager);
 	AddModule(fade);
 	//this module:

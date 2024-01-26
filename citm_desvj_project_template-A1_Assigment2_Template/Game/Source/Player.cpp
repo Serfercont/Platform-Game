@@ -219,7 +219,7 @@ bool Player::Update(float dt)
 				
 			}
 		}
-		//app->fade->FadeToBlackScene((Module*)app->scene, (Module*)app->scenedeath, 60);
+		app->fade->FadeToBlackScene((Module*)app->scene, (Module*)app->scenedeath, 60);
 	}
 
 	if (isjumpping)

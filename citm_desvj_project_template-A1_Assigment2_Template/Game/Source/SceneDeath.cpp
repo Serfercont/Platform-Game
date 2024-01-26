@@ -38,7 +38,7 @@ bool SceneDeath::Start()
 {
 	LOG("Loading SceneDeath Assets");
 	bool ret = true;
-	GameOver = app->tex->Load("Assets/Textures/GameOver.jpg");
+	GameOver = app->tex->Load("Assets/UI/GameOver.png");
 	app->audio->PlayMusic(configNode.child("gameOver").attribute("path").as_string());
 
 	//Get the size of the window
