@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "SceneIntro.h"
+#include "SceneMenu.h"
 #include "Scene.h"
 #include "Map.h"
 #include "Physics.h"
@@ -41,6 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics(this);
 	scene = new Scene(this,false);
 	sceneintro = new SceneIntro(this);
+	scenemenu = new SceneMenu(this);
 	scenedeath = new SceneDeath(this,false);
 	map = new Map(this,false);
 	fade = new FadeToBlack(this);

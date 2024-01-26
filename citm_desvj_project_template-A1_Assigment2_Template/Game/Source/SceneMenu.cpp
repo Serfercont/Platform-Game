@@ -1,4 +1,4 @@
-#include "SceneIntro.h"
+#include "SceneMenu.h"
 #include "App.h"
 #include "Input.h"
 #include "Textures.h"
@@ -13,39 +13,39 @@
 #include "Defs.h"
 #include "Log.h"
 
-SceneIntro::SceneIntro(App* app, bool start_enabled) : Module(app,start_enabled)
+SceneMenu::SceneMenu(App* app, bool start_enabled) : Module(app, start_enabled)
 {
-	name.Create("scene");
+	name.Create("sceneMenu");
 }
 
 // Destructor
-SceneIntro::~SceneIntro()
+SceneMenu::~SceneMenu()
 {}
 
 // Called before render is available
-bool SceneIntro::Awake(pugi::xml_node& config)
+bool SceneMenu::Awake(pugi::xml_node& config)
 {
 	configNode = config;
-	LOG("Loading SceneIntro");
+	LOG("Loading SceneMenu");
 	bool ret = true;
 
-	
+
 	return ret;
 }
 
 // Called before the first frame
-bool SceneIntro::Start()
+bool SceneMenu::Start()
 {
-	LOG("Loading SceneIntro Assets");
+	LOG("Loading SceneMenu Assets");
 	bool ret = true;
-	FotoInicial1 = app->tex->Load("Assets/Textures/EscenaDeIntroduccion.png");
-	//app->audio->PlayMusic(configNode.child("mainmusic").attribute("path").as_string());
+	MainMenu = app->tex->Load("Assets/Textures/Fondo Juego.png");
+	
 
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
 
 	//Get the size of the texture
-	
+
 
 	textPosX = (float)windowW / 2 - (float)texW / 2;
 	textPosY = (float)windowH / 2 - (float)texH / 2;
@@ -54,30 +54,30 @@ bool SceneIntro::Start()
 }
 
 // Called each loop iteration
-bool SceneIntro::PreUpdate()
+bool SceneMenu::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool SceneIntro::Update(float dt)
+bool SceneMenu::Update(float dt)
 {
 	//Draw
 	SDL_Rect RectfondoInicial{ 0,0,windowW,windowH };
-	app->render->DrawTexture(FotoInicial1, 0, 0,NULL,SDL_FLIP_NONE,0);
+	app->render->DrawTexture(MainMenu, 0, 0, NULL, SDL_FLIP_NONE, 0);
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-   		app->fade->FadeToBlackScene(this, (Module*)app->scenemenu, 60);
+		app->fade->FadeToBlackScene(this, (Module*)app->scene, 60);
 		//goTimer = true;
-		
-		
+
+
 	}
 
 	return true;
 }
 
 // Called each loop iteration
-bool SceneIntro::PostUpdate()
+bool SceneMenu::PostUpdate()
 {
 	bool ret = true;
 
@@ -89,9 +89,10 @@ bool SceneIntro::PostUpdate()
 
 
 // Called before quitting
-bool SceneIntro::CleanUp()
+bool SceneMenu::CleanUp()
 {
 	LOG("Freeing scene");
-	
+
 	return true;
 }
+
