@@ -35,6 +35,7 @@ bool Player::Awake() {
 	knightWalk= parameters.attribute("audioWalk").as_string();
 	knightJump = parameters.attribute("audioJump").as_string();
 	knightWin = parameters.attribute("audioWin").as_string();
+	Checkpoint = parameters.attribute("audioCheck").as_string();
 
 	return true;
 }
@@ -60,6 +61,7 @@ bool Player::Start() {
 	audioWalk = app->audio->LoadFx(knightWalk);
 	audioJump = app->audio->LoadFx(knightJump);
 	audioWin = app->audio->LoadFx(knightWin);
+	audioCheck=app->audio->LoadFx(Checkpoint);
 
 
 	currentAnimation = &idleAnim;
@@ -178,6 +180,11 @@ bool Player::Update(float dt)
 	{
 		if (!check1)
 		{
+			if (!check1Played)
+			{
+				app->audio->PlayFx(audioCheck);
+				check1Played = true;
+			}
 			app->SaveRequest();
 			check1 = true;
 			check2 = false;
@@ -190,6 +197,11 @@ bool Player::Update(float dt)
 	{
 		if (!check2)
 		{
+			if (!check2Played)
+			{
+				app->audio->PlayFx(audioCheck);
+				check2Played = true;
+			}
 			app->SaveRequest();
 			check1 = false;
 			check2 = true;
@@ -202,6 +214,11 @@ bool Player::Update(float dt)
 	{
 		if (!check3)
 		{
+			if (!check3Played)
+			{
+				app->audio->PlayFx(audioCheck);
+				check3Played = true;
+			}
 			app->SaveRequest();
 			check1 = false;
 			check2 = false;
@@ -214,6 +231,11 @@ bool Player::Update(float dt)
 	{
 		if (!check4)
 		{
+			if (!check4Played)
+			{
+				app->audio->PlayFx(audioCheck);
+				check4Played = true;
+			}
 			app->SaveRequest();
 			check1 = false;
 			check2 = false;
@@ -226,6 +248,11 @@ bool Player::Update(float dt)
 	{
 		if (!check5) 
 		{
+			if (!check5Played)
+			{
+				app->audio->PlayFx(audioCheck);
+				check5Played = true;
+			}
 			app->SaveRequest();
 			check1 = false;
 			check2 = false;
@@ -274,6 +301,12 @@ bool Player::Update(float dt)
 					position.y = 1350;
 					app->render->camera.x = 0;
 				}
+				else if (scene2Active && !check1)
+				{
+					position.x = 5850;
+					position.y = 1350;
+					app->render->camera.x = -5124;
+				}
 				else if (scene2Active && check1)
 				{
 					position.x = 5850;
@@ -310,11 +343,14 @@ bool Player::Update(float dt)
 				health = 3;
 				app->hud->spacePressed = false;
 				powerUp = false;
+				deathCounter = deathCounter + 1;
 			}
 		}
-		//app->fade->FadeToBlackScene((Module*)app->scene, (Module*)app->scenedeath, 60);
 	}
-
+	if (deathCounter==5)
+	{
+		
+	}
 	if (isjumpping)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && isAlive &&!isAttacking)
@@ -401,10 +437,10 @@ bool Player::Update(float dt)
 		
 	}
 	//Movimiento camara 
-	//LOG("camera y: %d", app->render->camera.y);
-	/*LOG("player x: %d", position.x);
-	LOG("player y: %d", position.y);*/
-	//LOG("camera y - player y: %d", app->render->camera.y - position.y + 400);*/
+	LOG("camera y: %d", app->render->camera.y);
+	LOG("player x: %d", position.x);
+	LOG("player y: %d", position.y);
+	LOG("camera y - player y: %d", app->render->camera.y - position.y + 400);
 
 	if (app->render->camera.x - position.x + 400 <= -24 && app->render->camera.x - position.x + 400 >= -7532 && !scene2Active) {
 		app->render->camera.x = -position.x + 400;

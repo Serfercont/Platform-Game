@@ -68,8 +68,7 @@ bool SceneDeath::Update(float dt)
 	app->render->DrawTexture(GameOver, 0, 0, NULL, SDL_FLIP_NONE, 0);
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		app->fade->FadeToBlackScene(this, (Module*)app->scenemenu, 60);
-		app->guiManager->Enable();
+		SDL_Quit();
 		//goTimer = true;
 
 

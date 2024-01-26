@@ -116,7 +116,7 @@ bool EnemyWalk::Update(float dt)
 		}
 	}
 
-	if (attack && currentAnimation==&attackAnim && currentAnimation->GetCurrentFrameCount()>=4 && !attackBody)
+	if (attack && currentAnimation==&attackAnim && currentAnimation->GetCurrentFrameCount()>=2 && !attackBody)
 	{
 		if (right)
 		{
@@ -134,7 +134,7 @@ bool EnemyWalk::Update(float dt)
 		}
 	}
 	//LOG("current frame %i", currentAnimation->GetCurrentFrameCount());
-	if (attack && currentAnimation== &attackAnim && currentAnimation->GetCurrentFrameCount()>=6.8 &&attackBody)
+	if (attack && currentAnimation== &attackAnim && currentAnimation->GetCurrentFrameCount()>=4 &&attackBody)
 	{
 		attack = false;
 		attackBody = false;
@@ -193,7 +193,7 @@ bool EnemyWalk::Update(float dt)
 	}
 	if (!tp)
 	{
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
+ 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
 	}
 	if (app->scene->pause)
@@ -210,7 +210,6 @@ bool EnemyWalk::Update(float dt)
 	}
 	else
 	{
-
 		app->render->DrawTexture(texture, flipPos.x-50, position.y-80, &rect, 1.0f, 0, INT_MAX, INT_MAX, SDL_FLIP_HORIZONTAL);
 	}
 	currentAnimation->Update();

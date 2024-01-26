@@ -59,7 +59,7 @@ bool Ability::Update(float dt)
 		LOG("W pulsada");
 		if (app->scene->player->right)
 		{
-			damageAb = app->physics->CreateRectangleSensor(position.x + 50, position.y + 8, 20, 40, bodyType::KINEMATIC);
+			damageAb = app->physics->CreateRectangleSensor(position.x + 50, position.y +40, 20, 55, bodyType::KINEMATIC);
 			damageAb->listener = this;
 			damageAb->ctype = ColliderType::DAMAGE;
 			currentAnimation = &attack;
@@ -67,7 +67,7 @@ bool Ability::Update(float dt)
 		}
 		else
 		{
-			damageAb = app->physics->CreateRectangleSensor(position.x - 50, position.y + 8, 20, 40, bodyType::KINEMATIC);
+			damageAb = app->physics->CreateRectangleSensor(position.x - 50, position.y + 40, 20, 55, bodyType::KINEMATIC);
 			damageAb->listener = this;
 			damageAb->ctype = ColliderType::DAMAGE;
 			currentAnimation = &attack;

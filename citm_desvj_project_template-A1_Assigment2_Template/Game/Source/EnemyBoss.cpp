@@ -84,7 +84,7 @@ bool EnemyBoss::Update(float dt)
 		currentAnimation->loopCount = 0;
 	}
 
-	if (die == true)
+	if (health==0)
 	{
 		velocity.x = 0;
 		isAlive = false;
@@ -237,12 +237,12 @@ void EnemyBoss::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype) {
 
 	case ColliderType::DAMAGE:
-		die = true;
-		currentAnimation = &deadAnim;
+		health=health-1;
+		
 		break;
 	case ColliderType::ABILITY:
-		die = true;
-		currentAnimation = &deadAnim;
+		health = health -1;
+		
 		break;
 
 	}

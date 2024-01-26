@@ -6,41 +6,69 @@
 	<audio />
 	<physics />
 	<scene>
-		<player x="6286" y="5512" />
+		<player x="5263" y="3915" />
 		<Wolf1>
-			<wolfPosition x="633" y="751" isAlive="false" />
+			<wolfPosition x="516" y="655" isAlive="true" />
 		</Wolf1>
 		<Wolf2>
-			<wolfPosition x="3144" y="623" isAlive="false" />
+			<wolfPosition x="3144" y="623" isAlive="true" />
 		</Wolf2>
 		<Wolf3>
-			<wolfPosition x="2054" y="751" isAlive="true" />
+			<wolfPosition x="1616" y="463" isAlive="true" />
 		</Wolf3>
 		<Wolf4>
-			<wolfPosition x="3016" y="751" isAlive="false" />
+			<wolfPosition x="3142" y="751" isAlive="true" />
 		</Wolf4>
 		<Wolf5>
-			<wolfPosition x="5655" y="7852" isAlive="true" />
+			<wolfPosition x="4342" y="751" isAlive="true" />
 		</Wolf5>
+		<Wolf6>
+			<wolfPosition x="5684" y="1135" isAlive="true" />
+		</Wolf6>
+		<Wolf7>
+			<wolfPosition x="6127" y="3439" isAlive="true" />
+		</Wolf7>
+		<Wolf8>
+			<wolfPosition x="5956" y="3823" isAlive="true" />
+		</Wolf8>
+		<Wolf9>
+			<wolfPosition x="5674" y="5679" isAlive="true" />
+		</Wolf9>
+		<Wolf10>
+			<wolfPosition x="6185" y="5615" isAlive="true" />
+		</Wolf10>
 		<Eye1>
-			<eyePosition x="751" y="647" isAlive="true" />
+			<eyePosition x="516" y="514" isAlive="true" />
 		</Eye1>
 		<Eye2>
-			<eyePosition x="3407" y="760" isAlive="true" />
+			<eyePosition x="2216" y="514" isAlive="true" />
 		</Eye2>
 		<Eye3>
-			<eyePosition x="2959" y="464" isAlive="true" />
+			<eyePosition x="2616" y="314" isAlive="true" />
 		</Eye3>
+		<Eye4>
+			<eyePosition x="6228" y="601" isAlive="true" />
+		</Eye4>
+		<Eye5>
+			<eyePosition x="6292" y="1996" isAlive="true" />
+		</Eye5>
+		<Eye6>
+			<eyePosition x="5807" y="1939" isAlive="true" />
+		</Eye6>
+		<Eye7>
+			<eyePosition x="5946" y="4613" isAlive="true" />
+		</Eye7>
 		<pconditions godmode="true" isAlive="true" isjumpping="false" isWalking="true" right="true" />
 	</scene>
 	<:anonymous />
+	<entitymanager />
+	<hud />
 	<scene />
 	<sceneDeath />
-	<entitymanager />
-	<scenemenu />
+	<sceneMenu />
 	<guiManager />
 	<fadetoblack />
 	<renderer>
-		<camera x="-5694" y="-5112" />
+		<camera x="-5124" y="-3515" />
 	</renderer>
 </game_state>

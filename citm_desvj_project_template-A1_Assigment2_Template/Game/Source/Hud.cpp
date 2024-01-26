@@ -39,8 +39,23 @@ bool Hud::Awake(pugi::xml_node& config)
 bool Hud::Start()
 {
 
-	lifeBarTexture = app->tex->Load("Assets/Textures/ghost_shadow.png");
-	deadScreenTexture = app->tex->Load("Assets/UI/GameOver.png");
+	deadScreenTexture = app->tex->Load("Assets/UI/respawn.png");
+	GameOver = app->tex->Load("Assets/UI/GameOver.png");
+	corazon1 = app->tex->Load("Assets/UI/1corazon.png");
+	corazon2 = app->tex->Load("Assets/UI/2corazones.png");
+	corazon3 = app->tex->Load("Assets/UI/3corazones.png");
+	moneda0 = app->tex->Load("Assets/UI/moneda0.png");
+	moneda1 = app->tex->Load("Assets/UI/moneda1.png");
+	moneda2 = app->tex->Load("Assets/UI/moneda2.png");
+	moneda3 = app->tex->Load("Assets/UI/moneda3.png");
+	moneda4 = app->tex->Load("Assets/UI/moneda4.png");
+	moneda5 = app->tex->Load("Assets/UI/moneda5.png");
+	moneda6 = app->tex->Load("Assets/UI/moneda6.png");
+	moneda7 = app->tex->Load("Assets/UI/moneda7.png");
+	moneda8 = app->tex->Load("Assets/UI/moneda8.png");
+	moneda9 = app->tex->Load("Assets/UI/moneda9.png");
+	moneda10 = app->tex->Load("Assets/UI/moneda10.png");
+
 
 	timer = Timer();
 	timer.Start();
@@ -54,14 +69,72 @@ bool Hud::Start()
 
 bool Hud::Update(float dt)
 {
-	//if (app->scene->player->health == 100) app->render->DrawTexture(lifeBarTexture, 0, 0, NULL, SDL_FLIP_NONE, 0);
-	SDL_Rect RectfondoInicial{ 0,0,1244,780 };
+	if (app->scene->player->health>=3)
+	{
+		app->render->DrawTexture(corazon3, 0, 0, NULL, SDL_FLIP_NONE, 0);
+	}
+	else if (app->scene->player->health==2)
+	{
+		app->render->DrawTexture(corazon2, 0, 0, NULL, SDL_FLIP_NONE, 0);
+	}
+	else if (app->scene->player->health == 1)
+	{
+		app->render->DrawTexture(corazon1, 0, 0, NULL, SDL_FLIP_NONE, 0);
+	}
+
 	DrawTimer();
 
-	if (playerDeadHud && !spacePressed)
+	if (app->scene->player->score==0)
+	{
+		app->render->DrawTexture(moneda0, 600, 40, NULL, SDL_FLIP_NONE, 0);
+	}
+	else if (app->scene->player->score == 1)
+	{
+		app->render->DrawTexture(moneda1, 600, 40, NULL, SDL_FLIP_NONE, 0);
+
+	}
+	else if (app->scene->player->score == 2)
+	{
+		app->render->DrawTexture(moneda2, 600, 40, NULL, SDL_FLIP_NONE, 0);
+	}
+	else if (app->scene->player->score == 3)
+	{
+		app->render->DrawTexture(moneda3, 600, 40, NULL, SDL_FLIP_NONE, 0);
+	}
+	else if (app->scene->player->score == 4)
+	{
+		app->render->DrawTexture(moneda4, 600, 40, NULL, SDL_FLIP_NONE, 0);
+	}
+	else if (app->scene->player->score == 5)
+	{
+		app->render->DrawTexture(moneda5, 600, 40, NULL, SDL_FLIP_NONE, 0);
+	}
+	else if (app->scene->player->score == 6)
+	{
+		app->render->DrawTexture(moneda6, 600, 40, NULL, SDL_FLIP_NONE, 0);
+	}
+	else if (app->scene->player->score == 7)
+	{
+		app->render->DrawTexture(moneda7, 600, 40, NULL, SDL_FLIP_NONE, 0);
+	}
+	else if (app->scene->player->score == 8)
+	{
+		app->render->DrawTexture(moneda8, 600, 40, NULL, SDL_FLIP_NONE, 0);
+	}
+	else if (app->scene->player->score == 9)
+	{
+		app->render->DrawTexture(moneda9, 600, 40, NULL, SDL_FLIP_NONE, 0);
+	}
+	else if (app->scene->player->score == 10)
+	{
+		app->render->DrawTexture(moneda10, 600, 40, NULL, SDL_FLIP_NONE, 0);
+	}
+	
+
+	if (playerDeadHud && !spacePressed && app->scene->player->deathCounter != 5)
 	{
 		app->scene->pause = true;
-		app->render->DrawTexture(deadScreenTexture, -100, 0, &RectfondoInicial, SDL_FLIP_NONE, 0);
+		app->render->DrawTexture(deadScreenTexture, 0, 0, NULL, SDL_FLIP_NONE, 0);
 		if (app->input->GetKey(SDL_SCANCODE_SPACE)==KEY_DOWN &&!spacePressed)
 		{
 			playerDeadHud = false;
@@ -71,12 +144,23 @@ bool Hud::Update(float dt)
 		}
 	}
 
+	if (app->scene->player->deathCounter==5)
+	{
+		app->scene->pause = true;
+		app->render->DrawTexture(GameOver, 0, 0, NULL, SDL_FLIP_NONE, 0);
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !spacePressed)
+		{
+			SDL_Quit();
+		}
+	}
+
 
 	return true;
 }
 
 void Hud::DrawTimer()
 {
+	/*NO FUNCIONA EL TIMER*/
 	int time = 100000 - timer.ReadMSec();
 	int minutes = time / 60000;
 	int seconds = (time / 1000) % 60;
@@ -88,7 +172,7 @@ void Hud::DrawTimer()
 	std::string timerTextStr = timerTextStream.str();
 	const char* timerTextCStr = timerTextStr.c_str();
 
-	//app->render->DrawText(timerTextCStr, 200, 25, 100, 25);
+	app->render->DrawText(timerTextCStr, 200, 25, 100, 25);
 }
 
 bool Hud::CleanUp()

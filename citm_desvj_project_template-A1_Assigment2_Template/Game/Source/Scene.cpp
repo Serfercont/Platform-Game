@@ -176,18 +176,34 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(fondo3, -150, 110, &Rectfondo3, 0.7f);
 	app->render->DrawTexture(fondo4, -150,0, &Rectfondo4, 0.4f);
 
-	/*SDL_Rect Rectparallax0{ 0,0,1400,6400 };
-	SDL_Rect Rectparallax1{ 0,0,1400 ,6400};
-	SDL_Rect Rectparallax2{ 0,0,1400,6400};
-	SDL_Rect Rectparallax3{ 0,0,1400 ,6400};
-	SDL_Rect Rectparallax4{ 0,0,1400,6400};
-	app->render->DrawTexture(parallax5, 5120, 0, &Rectparallax4, 0);
-	app->render->DrawTexture(parallax4, 5120, 0, &Rectparallax3, 0);
-	app->render->DrawTexture(parallax3, 5120, 0, &Rectparallax2, 0);
-	app->render->DrawTexture(parallax2, 5120, 0, &Rectparallax1, 0);
-	app->render->DrawTexture(parallax1, 5120, 0, &Rectparallax0, 0);*/
+	SDL_Rect Rectparallax0{ 0,0,1600,6400 };
+	SDL_Rect Rectparallax1{ 0,0,1600 ,6400};
+	SDL_Rect Rectparallax2{ 0,0,1600,6400};
+	SDL_Rect Rectparallax3{ 0,0,1600 ,6400};
+	SDL_Rect Rectparallax4{ 0,0,1600,6400};
 	
-
+	
+	if (player->scene2Active)
+	{
+		app->tex->UnLoad(fondo0);
+		app->tex->UnLoad(fondo1);
+		app->tex->UnLoad(fondo2);
+		app->tex->UnLoad(fondo3);
+		app->tex->UnLoad(fondo4);
+		app->render->DrawTexture(parallax5, 4000, 0, &Rectparallax4, 0);
+		app->render->DrawTexture(parallax4, 5120, 0, &Rectparallax3, 0);
+		app->render->DrawTexture(parallax3, 5120, 0, &Rectparallax2, 0);
+		app->render->DrawTexture(parallax2, 5120, 0, &Rectparallax1, 0);
+		app->render->DrawTexture(parallax1, 5120, 0, &Rectparallax0, 0);
+	}
+	else if (!player->scene2Active)
+	{
+		app->render->DrawTexture(fondo0, -100, 0, &Rectfondo0, 0.2f);
+		app->render->DrawTexture(fondo1, -150, -100, &Rectfondo1, 0.4f);
+		app->render->DrawTexture(fondo2, -150, 110, &Rectfondo2, 0.6f);
+		app->render->DrawTexture(fondo3, -150, 110, &Rectfondo3, 0.7f);
+		app->render->DrawTexture(fondo4, -150, 0, &Rectfondo4, 0.4f);
+	}
 
 
 	/*const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();

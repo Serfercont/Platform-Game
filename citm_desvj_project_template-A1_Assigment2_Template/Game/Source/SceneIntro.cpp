@@ -70,7 +70,6 @@ bool SceneIntro::Update(float dt)
    		app->fade->FadeToBlackScene(this, (Module*)app->scenemenu, 60);
 		//goTimer = true;
 		
-		
 	}
 
 	return true;

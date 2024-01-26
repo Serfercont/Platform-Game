@@ -33,6 +33,7 @@ public:
 	float speed = 0.4f;
 	int health = 3;
 	int score = 0;
+	int deathCounter = 0;
 	SDL_Texture* texture = NULL;
 	SDL_Texture* powerUpText = NULL;
 	PhysBody* pbody;
@@ -49,7 +50,7 @@ public:
 	int InitPosX;
 	int InitPosY;
 	bool spike=false;
-	bool powerUp= true;
+	bool powerUp= false;
 	bool isAttacking = false;
 	bool attackCreated;
 	bool scene2Active = false;
@@ -61,6 +62,12 @@ public:
 	bool check4 = false;
 	bool check5 = false;
 
+	bool check1Played = false;
+	bool check2Played = false;
+	bool check3Played = false;
+	bool check4Played = false;
+	bool check5Played = false;
+
 	iPoint flipPos;
 
 	uint audioWalk;
@@ -68,6 +75,7 @@ public:
 	uint audioDie;
 	uint audioJump;
 	uint audioWin;
+	uint audioCheck;
 
 	//std::map<std::string, Animation> animations;
 

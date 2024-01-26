@@ -57,6 +57,7 @@ public:
 	//bool isAlive=true;
 	bool isAttacking = false;
 	bool attackBody = false;
+	int health = 15;
 
 	DynArray<iPoint> lastPath;
 };

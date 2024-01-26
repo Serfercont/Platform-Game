@@ -47,12 +47,17 @@ private:
 	uint windowW, windowH;
 	float timer = 0.0f;
 	bool goTimer = false;
+	bool onMenu = true;
+	bool onCredits = false;
+	
 
 
 
 	pugi::xml_node configNode;
 
 	SDL_Texture* MainMenu;
+	SDL_Texture* credits;
+
 
 	SDL_Texture* playOff;
 	SDL_Texture* playOn;
@@ -69,11 +74,15 @@ private:
 	SDL_Texture* exitOff;
 	SDL_Texture* exitOn;
 
+	SDL_Texture* goBackON;
+	SDL_Texture* goBackOFF;
+
 	GuiControlButton* playButton;
 	GuiControlButton* continueButton;
 	GuiControlButton* settingsButton;
 	GuiControlButton* creditsButton;
 	GuiControlButton* exitButton;
+	GuiControlButton* goBackButton;
 
 	
 
